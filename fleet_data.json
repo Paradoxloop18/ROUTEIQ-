@@ -1,0 +1,3747 @@
+{
+  "routesData": {
+    "Route 03": {
+      "routeId": "Route 03",
+      "busPlate": "TS-08-UB-4503",
+      "campus": "CMRGI",
+      "capacity": 50,
+      "currentCount": 50,
+      "status": "On Route",
+      "inchargeName": "ES Babu",
+      "inchargePhone": "+91 9030368361",
+      "color": "#10b981",
+      "stops": [
+        {
+          "bp": "301",
+          "name": "Radhika",
+          "time": "7:30",
+          "seq": 1,
+          "lat": 17.4764,
+          "lng": 78.5583
+        },
+        {
+          "bp": "302",
+          "name": "Lal Bazar (Petrol Bunk)",
+          "time": "7:40",
+          "seq": 2,
+          "lat": 17.4891,
+          "lng": 78.5284
+        },
+        {
+          "bp": "303",
+          "name": "Teachers Colony",
+          "time": "7:45",
+          "seq": 3,
+          "lat": 17.502,
+          "lng": 78.5085
+        },
+        {
+          "bp": "304",
+          "name": "Kanajiguda",
+          "time": "7:47",
+          "seq": 4,
+          "lat": 17.514,
+          "lng": 78.498
+        },
+        {
+          "bp": "305",
+          "name": "Green Fields (D Mart)",
+          "time": "7:50",
+          "seq": 5,
+          "lat": 17.531,
+          "lng": 78.491
+        },
+        {
+          "bp": "306",
+          "name": "St. Andrews School",
+          "time": "7:53",
+          "seq": 6,
+          "lat": 17.545,
+          "lng": 78.489
+        },
+        {
+          "bp": "307",
+          "name": "CMRGI",
+          "time": "8:50",
+          "seq": 7,
+          "lat": 17.6044,
+          "lng": 78.4862
+        }
+      ]
+    },
+    "Route 13": {
+      "routeId": "Route 13",
+      "busPlate": "TS-08-UB-4513",
+      "campus": "CMRGI",
+      "capacity": 50,
+      "currentCount": 44,
+      "status": "On Route",
+      "inchargeName": "P. Mahesh Babu",
+      "inchargePhone": "+91 9966785688",
+      "color": "#f59e0b",
+      "stops": [
+        {
+          "seq": 1,
+          "code": "BP-1301",
+          "name": "Dilsuknagar Saibaba Temple",
+          "time": "07:15 AM",
+          "lat": 17.3688,
+          "lng": 78.5247,
+          "type": "Boarding Stop"
+        },
+        {
+          "seq": 2,
+          "code": "BP-1302",
+          "name": "Dilsuknagar Chandana Bro's",
+          "time": "07:17 AM",
+          "lat": 17.3712,
+          "lng": 78.523,
+          "type": "Boarding Stop"
+        },
+        {
+          "seq": 3,
+          "code": "BP-1303",
+          "name": "TV Tower Malakpet",
+          "time": "07:20 AM",
+          "lat": 17.3753,
+          "lng": 78.5085,
+          "type": "Boarding Stop"
+        },
+        {
+          "seq": 4,
+          "code": "BP-1304",
+          "name": "Moosarambagh",
+          "time": "07:22 AM",
+          "lat": 17.3792,
+          "lng": 78.505,
+          "type": "Boarding Stop"
+        },
+        {
+          "seq": 5,
+          "code": "BP-1305",
+          "name": "Ali Caf\u00e9",
+          "time": "07:25 AM",
+          "lat": 17.388,
+          "lng": 78.5082,
+          "type": "Boarding Stop"
+        },
+        {
+          "seq": 6,
+          "code": "BP-1306",
+          "name": "Amberpet PS",
+          "time": "07:27 AM",
+          "lat": 17.3942,
+          "lng": 78.514,
+          "type": "Boarding Stop"
+        },
+        {
+          "seq": 7,
+          "code": "BP-1307",
+          "name": "Thilak Nagar X Road",
+          "time": "07:30 AM",
+          "lat": 17.3995,
+          "lng": 78.511,
+          "type": "Boarding Stop"
+        },
+        {
+          "seq": 8,
+          "code": "BP-1308",
+          "name": "Renova Hospital",
+          "time": "08:15 AM",
+          "lat": 17.478,
+          "lng": 78.49,
+          "type": "Boarding Stop"
+        },
+        {
+          "seq": 9,
+          "code": "BP-1309",
+          "name": "Cine Planet",
+          "time": "08:17 AM",
+          "lat": 17.53,
+          "lng": 78.489,
+          "type": "Boarding Stop"
+        },
+        {
+          "seq": 10,
+          "code": "BP-1310",
+          "name": "CMRGI",
+          "time": "08:50 AM",
+          "lat": 17.6044,
+          "lng": 78.4862,
+          "type": "Destination Campus"
+        }
+      ]
+    },
+    "Route 16": {
+      "routeId": "Route 16",
+      "busPlate": "TS-08-UB-4516",
+      "campus": "CMRGI",
+      "capacity": 50,
+      "currentCount": 50,
+      "status": "On Route",
+      "inchargeName": "M. Naresh Kumar",
+      "inchargePhone": "+91 9912135502",
+      "color": "#3b82f6",
+      "stops": [
+        {
+          "bp": "1601",
+          "name": "Ramanthapur",
+          "time": "7:20",
+          "seq": 1,
+          "lat": 17.398,
+          "lng": 78.537
+        },
+        {
+          "bp": "1602",
+          "name": "Lalitha Nagar",
+          "time": "7:25",
+          "seq": 2,
+          "lat": 17.408,
+          "lng": 78.528
+        },
+        {
+          "bp": "1603",
+          "name": "Jamia Osmania",
+          "time": "7:30",
+          "seq": 3,
+          "lat": 17.417,
+          "lng": 78.522
+        },
+        {
+          "bp": "1604",
+          "name": "Arts College",
+          "time": "7:35",
+          "seq": 4,
+          "lat": 17.421,
+          "lng": 78.517
+        },
+        {
+          "bp": "1605",
+          "name": "Varasiguda",
+          "time": "7:40",
+          "seq": 5,
+          "lat": 17.429,
+          "lng": 78.513
+        },
+        {
+          "bp": "1606",
+          "name": "Namalagundu",
+          "time": "7:45",
+          "seq": 6,
+          "lat": 17.433,
+          "lng": 78.508
+        },
+        {
+          "bp": "1607",
+          "name": "Sitafalmandi",
+          "time": "7:50",
+          "seq": 7,
+          "lat": 17.439,
+          "lng": 78.504
+        },
+        {
+          "bp": "1608",
+          "name": "Chilakalaguda",
+          "time": "7:55",
+          "seq": 8,
+          "lat": 17.445,
+          "lng": 78.501
+        },
+        {
+          "bp": "1609",
+          "name": "Mother Teresa Statue",
+          "time": "8:00",
+          "seq": 9,
+          "lat": 17.46,
+          "lng": 78.496
+        },
+        {
+          "bp": "1610",
+          "name": "CMRGI",
+          "time": "8:50",
+          "seq": 10,
+          "lat": 17.6044,
+          "lng": 78.4862
+        }
+      ]
+    },
+    "Route 19A": {
+      "routeId": "Route 19A",
+      "busPlate": "TS-08-UB-4519",
+      "campus": "CMRGI",
+      "capacity": 50,
+      "currentCount": 50,
+      "status": "On Route",
+      "inchargeName": "Laxman Reddy",
+      "inchargePhone": "+91 8074434165",
+      "color": "#8b5cf6",
+      "stops": [
+        {
+          "bp": "19A01",
+          "name": "Sathyam Theatre",
+          "time": "7:40",
+          "seq": 1,
+          "lat": 17.437,
+          "lng": 78.448
+        },
+        {
+          "bp": "19A02",
+          "name": "SR Nagar PS",
+          "time": "7:45",
+          "seq": 2,
+          "lat": 17.443,
+          "lng": 78.444
+        },
+        {
+          "bp": "19A03",
+          "name": "Balkampet",
+          "time": "7:47",
+          "seq": 3,
+          "lat": 17.449,
+          "lng": 78.451
+        },
+        {
+          "bp": "19A04",
+          "name": "Fathenagar",
+          "time": "7:50",
+          "seq": 4,
+          "lat": 17.464,
+          "lng": 78.456
+        },
+        {
+          "bp": "19A05",
+          "name": "HAL",
+          "time": "7:52",
+          "seq": 5,
+          "lat": 17.478,
+          "lng": 78.461
+        },
+        {
+          "bp": "19A06",
+          "name": "CMRGI",
+          "time": "8:50",
+          "seq": 6,
+          "lat": 17.6044,
+          "lng": 78.4862
+        }
+      ]
+    },
+    "Route 25": {
+      "routeId": "Route 25",
+      "busPlate": "TS-08-UB-4525",
+      "campus": "CMRGI",
+      "capacity": 50,
+      "currentCount": 50,
+      "status": "On Route",
+      "inchargeName": "Dr Bhaskar",
+      "inchargePhone": "+91 9849292324",
+      "color": "#06b6d4",
+      "stops": [
+        {
+          "bp": "2501",
+          "name": "Usha Mullapudi Arch",
+          "time": "7:30",
+          "seq": 1,
+          "lat": 17.493,
+          "lng": 78.399
+        },
+        {
+          "bp": "2502",
+          "name": "Patel Kunta Park",
+          "time": "7:35",
+          "seq": 2,
+          "lat": 17.498,
+          "lng": 78.406
+        },
+        {
+          "bp": "2503",
+          "name": "KL Bar & Restaurant",
+          "time": "7:37",
+          "seq": 3,
+          "lat": 17.504,
+          "lng": 78.413
+        },
+        {
+          "bp": "2504",
+          "name": "Alwyn Colony",
+          "time": "7:40",
+          "seq": 4,
+          "lat": 17.511,
+          "lng": 78.421
+        },
+        {
+          "bp": "2505",
+          "name": "Jagat Giri Gutta (IG Statue)",
+          "time": "7:42",
+          "seq": 5,
+          "lat": 17.518,
+          "lng": 78.435
+        },
+        {
+          "bp": "2506",
+          "name": "CMRGI",
+          "time": "8:50",
+          "seq": 6,
+          "lat": 17.6044,
+          "lng": 78.4862
+        }
+      ]
+    }
+  },
+  "studentsDatabase": {
+    "Route 13": [
+      {
+        "id": 1,
+        "name": "Aarav Reddy",
+        "roll": "22811A1301",
+        "year": "3rd",
+        "dept": "CSE",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-101",
+        "stop": "Dilsuknagar Saibaba Temple",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 2,
+        "name": "Saanvi Sharma",
+        "roll": "22811A1302",
+        "year": "2nd",
+        "dept": "AIML",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-102",
+        "stop": "Dilsuknagar Chandana Bro's",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 3,
+        "name": "Vihaan Kumar",
+        "roll": "22811A1303",
+        "year": "4th",
+        "dept": "ECE",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-103",
+        "stop": "TV Tower Malakpet",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 4,
+        "name": "Ananya Rao",
+        "roll": "22811A1304",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-104",
+        "stop": "Moosarambagh",
+        "fee": "Pending",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 5,
+        "name": "Aditya Varma",
+        "roll": "22811A1305",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-105",
+        "stop": "Ali Caf\u00e9",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 6,
+        "name": "Kavya Nair",
+        "roll": "22811A1306",
+        "year": "2nd",
+        "dept": "CSE",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-106",
+        "stop": "Amberpet PS",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 7,
+        "name": "Rohan Gupta",
+        "roll": "22811A1307",
+        "year": "4th",
+        "dept": "Mechanical",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-107",
+        "stop": "Thilak Nagar X Road",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 8,
+        "name": "Ishita Singh",
+        "roll": "22811A1308",
+        "year": "1st",
+        "dept": "EEE",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-108",
+        "stop": "Renova Hospital",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 9,
+        "name": "Arjun Patel",
+        "roll": "22811A1309",
+        "year": "3rd",
+        "dept": "Civil",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-109",
+        "stop": "Cine Planet",
+        "fee": "Pending",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 10,
+        "name": "Meera Joshi",
+        "roll": "22811A1310",
+        "year": "2nd",
+        "dept": "AIML",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-110",
+        "stop": "Cine Planet",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 11,
+        "name": "Nikhil Raju",
+        "roll": "22811A1311",
+        "year": "4th",
+        "dept": "CSE",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-111",
+        "stop": "Dilsuknagar Saibaba Temple",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 12,
+        "name": "Priya Menon",
+        "roll": "22811A1312",
+        "year": "1st",
+        "dept": "ECE",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-112",
+        "stop": "Dilsuknagar Chandana Bro's",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 13,
+        "name": "Siddharth Reddy",
+        "roll": "22811A1313",
+        "year": "3rd",
+        "dept": "AIML",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-113",
+        "stop": "TV Tower Malakpet",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 14,
+        "name": "Diya Krishnan",
+        "roll": "22811A1314",
+        "year": "2nd",
+        "dept": "IT",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-114",
+        "stop": "Moosarambagh",
+        "fee": "Pending",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 15,
+        "name": "Karthik Naidu",
+        "roll": "22811A1315",
+        "year": "4th",
+        "dept": "Mechanical",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-115",
+        "stop": "Ali Caf\u00e9",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 16,
+        "name": "Nandini Rao",
+        "roll": "22811A1316",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-116",
+        "stop": "Amberpet PS",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 17,
+        "name": "Rahul Sharma",
+        "roll": "22811A1317",
+        "year": "3rd",
+        "dept": "EEE",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-117",
+        "stop": "Thilak Nagar X Road",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 18,
+        "name": "Sneha Iyer",
+        "roll": "22811A1318",
+        "year": "2nd",
+        "dept": "Civil",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-118",
+        "stop": "Renova Hospital",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 19,
+        "name": "Manish Kumar",
+        "roll": "22811A1319",
+        "year": "4th",
+        "dept": "CSE",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-119",
+        "stop": "Cine Planet",
+        "fee": "Pending",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 20,
+        "name": "Lakshmi Devi",
+        "roll": "22811A1320",
+        "year": "1st",
+        "dept": "AIML",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-120",
+        "stop": "Dilsuknagar Saibaba Temple",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 21,
+        "name": "Tejaswini P",
+        "roll": "22811A1321",
+        "year": "3rd",
+        "dept": "ECE",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-121",
+        "stop": "Dilsuknagar Chandana Bro's",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 22,
+        "name": "Sriram Yadav",
+        "roll": "22811A1322",
+        "year": "2nd",
+        "dept": "IT",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-122",
+        "stop": "TV Tower Malakpet",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 23,
+        "name": "Bhavya Reddy",
+        "roll": "22811A1323",
+        "year": "4th",
+        "dept": "Data Science",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-123",
+        "stop": "Moosarambagh",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 24,
+        "name": "Vikram Singh",
+        "roll": "22811A1324",
+        "year": "1st",
+        "dept": "Mechanical",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-124",
+        "stop": "Ali Caf\u00e9",
+        "fee": "Pending",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 25,
+        "name": "Pallavi Gupta",
+        "roll": "22811A1325",
+        "year": "3rd",
+        "dept": "CSE",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-125",
+        "stop": "Amberpet PS",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 26,
+        "name": "Sai Charan",
+        "roll": "22811A1326",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-126",
+        "stop": "Thilak Nagar X Road",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 27,
+        "name": "Harini K",
+        "roll": "22811A1327",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-127",
+        "stop": "Renova Hospital",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 28,
+        "name": "Yashwanth M",
+        "roll": "22811A1328",
+        "year": "1st",
+        "dept": "AIML",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-128",
+        "stop": "Cine Planet",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 29,
+        "name": "Keerthana S",
+        "roll": "22811A1329",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-129",
+        "stop": "Dilsuknagar Saibaba Temple",
+        "fee": "Pending",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 30,
+        "name": "Pranav Chandra",
+        "roll": "22811A1330",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-130",
+        "stop": "Dilsuknagar Chandana Bro's",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 31,
+        "name": "Akhila B",
+        "roll": "22811A1331",
+        "year": "4th",
+        "dept": "Data Science",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-131",
+        "stop": "TV Tower Malakpet",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 32,
+        "name": "Varun Tej",
+        "roll": "22811A1332",
+        "year": "1st",
+        "dept": "Mechanical",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-132",
+        "stop": "Moosarambagh",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 33,
+        "name": "Ritika Jain",
+        "roll": "22811A1333",
+        "year": "3rd",
+        "dept": "CSE",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-133",
+        "stop": "Ali Caf\u00e9",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 34,
+        "name": "Abhinav R",
+        "roll": "22811A1334",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-134",
+        "stop": "Amberpet PS",
+        "fee": "Pending",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 35,
+        "name": "Madhavi L",
+        "roll": "22811A1335",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-135",
+        "stop": "Thilak Nagar X Road",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 36,
+        "name": "Sandeep Goud",
+        "roll": "22811A1336",
+        "year": "1st",
+        "dept": "AIML",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-136",
+        "stop": "Renova Hospital",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 37,
+        "name": "Neha Kapoor",
+        "roll": "22811A1337",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-137",
+        "stop": "Cine Planet",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 38,
+        "name": "Gowtham R",
+        "roll": "22811A1338",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-138",
+        "stop": "Dilsuknagar Saibaba Temple",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 39,
+        "name": "Shreya Das",
+        "roll": "22811A1339",
+        "year": "4th",
+        "dept": "Data Science",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-139",
+        "stop": "Dilsuknagar Chandana Bro's",
+        "fee": "Pending",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 40,
+        "name": "Tarun V",
+        "roll": "22811A1340",
+        "year": "1st",
+        "dept": "Mechanical",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-140",
+        "stop": "TV Tower Malakpet",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 41,
+        "name": "Anjali P",
+        "roll": "22811A1341",
+        "year": "3rd",
+        "dept": "CSE",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-141",
+        "stop": "Moosarambagh",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 42,
+        "name": "Ritesh B",
+        "roll": "22811A1342",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-142",
+        "stop": "Ali Caf\u00e9",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 43,
+        "name": "Deepika N",
+        "roll": "22811A1343",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-143",
+        "stop": "Amberpet PS",
+        "fee": "Paid",
+        "destination": "CMRGI"
+      },
+      {
+        "id": 44,
+        "name": "Lokesh K",
+        "roll": "22811A1344",
+        "year": "1st",
+        "dept": "AIML",
+        "campus": "CMRGI",
+        "receipt": "RCPT-R13-144",
+        "stop": "Thilak Nagar X Road",
+        "fee": "Pending",
+        "destination": "CMRGI"
+      }
+    ],
+    "Route 03": [
+      {
+        "id": 1,
+        "name": "Rahul Reddy",
+        "roll": "22811A0501",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-101",
+        "stop": "Radhika",
+        "fee": "Paid"
+      },
+      {
+        "id": 2,
+        "name": "Ananya Sharma",
+        "roll": "22811A0502",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-102",
+        "stop": "Lal Bazar (Petrol Bunk)",
+        "fee": "Paid"
+      },
+      {
+        "id": 3,
+        "name": "Arjun Kumar",
+        "roll": "22811A0503",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-103",
+        "stop": "Teachers Colony",
+        "fee": "Paid"
+      },
+      {
+        "id": 4,
+        "name": "Harsha Rao",
+        "roll": "22811A0504",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-104",
+        "stop": "Kanajiguda",
+        "fee": "Paid"
+      },
+      {
+        "id": 5,
+        "name": "Sneha Verma",
+        "roll": "22811A0505",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-105",
+        "stop": "Green Fields (D Mart)",
+        "fee": "Paid"
+      },
+      {
+        "id": 6,
+        "name": "Kiran Gupta",
+        "roll": "22811A0506",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-106",
+        "stop": "St. Andrews School",
+        "fee": "Paid"
+      },
+      {
+        "id": 7,
+        "name": "Divya Yadav",
+        "roll": "22811A0507",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Radhika",
+        "fee": "Pending"
+      },
+      {
+        "id": 8,
+        "name": "Siddharth Patel",
+        "roll": "22811A0508",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-108",
+        "stop": "Lal Bazar (Petrol Bunk)",
+        "fee": "Paid"
+      },
+      {
+        "id": 9,
+        "name": "Pooja Singh",
+        "roll": "22811A0509",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-109",
+        "stop": "Teachers Colony",
+        "fee": "Paid"
+      },
+      {
+        "id": 10,
+        "name": "Varun Chowdary",
+        "roll": "22811A0510",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-110",
+        "stop": "Kanajiguda",
+        "fee": "Paid"
+      },
+      {
+        "id": 11,
+        "name": "Kavya Naidu",
+        "roll": "22811A0511",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-111",
+        "stop": "Green Fields (D Mart)",
+        "fee": "Paid"
+      },
+      {
+        "id": 12,
+        "name": "Nikhil Joshi",
+        "roll": "22811A0512",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-112",
+        "stop": "St. Andrews School",
+        "fee": "Paid"
+      },
+      {
+        "id": 13,
+        "name": "Meghana Mishra",
+        "roll": "22811A0513",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-113",
+        "stop": "Radhika",
+        "fee": "Paid"
+      },
+      {
+        "id": 14,
+        "name": "Rohan Kulkarni",
+        "roll": "22811A0514",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Lal Bazar (Petrol Bunk)",
+        "fee": "Pending"
+      },
+      {
+        "id": 15,
+        "name": "Bhavana Deshmukh",
+        "roll": "22811A0515",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-115",
+        "stop": "Teachers Colony",
+        "fee": "Paid"
+      },
+      {
+        "id": 16,
+        "name": "Sai Nair",
+        "roll": "22811A0516",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-116",
+        "stop": "Kanajiguda",
+        "fee": "Paid"
+      },
+      {
+        "id": 17,
+        "name": "Pranathi Menon",
+        "roll": "22811A0517",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-117",
+        "stop": "Green Fields (D Mart)",
+        "fee": "Paid"
+      },
+      {
+        "id": 18,
+        "name": "Manish Pillai",
+        "roll": "23812A0518",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-118",
+        "stop": "St. Andrews School",
+        "fee": "Paid"
+      },
+      {
+        "id": 19,
+        "name": "Deepika Iyer",
+        "roll": "23812A0519",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-119",
+        "stop": "Radhika",
+        "fee": "Paid"
+      },
+      {
+        "id": 20,
+        "name": "Karthik Bhat",
+        "roll": "23812A0520",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-120",
+        "stop": "Lal Bazar (Petrol Bunk)",
+        "fee": "Paid"
+      },
+      {
+        "id": 21,
+        "name": "Sravani Hegde",
+        "roll": "23812A0521",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Teachers Colony",
+        "fee": "Pending"
+      },
+      {
+        "id": 22,
+        "name": "Aditya Shetty",
+        "roll": "23812A0522",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-122",
+        "stop": "Kanajiguda",
+        "fee": "Paid"
+      },
+      {
+        "id": 23,
+        "name": "Keerthana Goud",
+        "roll": "23812A0523",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-123",
+        "stop": "Green Fields (D Mart)",
+        "fee": "Paid"
+      },
+      {
+        "id": 24,
+        "name": "Teja Venkatesh",
+        "roll": "23812A0524",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-124",
+        "stop": "St. Andrews School",
+        "fee": "Paid"
+      },
+      {
+        "id": 25,
+        "name": "Mounika Chary",
+        "roll": "23812A0525",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-125",
+        "stop": "Radhika",
+        "fee": "Paid"
+      },
+      {
+        "id": 26,
+        "name": "Abhinav Raju",
+        "roll": "23812A0526",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-126",
+        "stop": "Lal Bazar (Petrol Bunk)",
+        "fee": "Paid"
+      },
+      {
+        "id": 27,
+        "name": "Niharika Prasad",
+        "roll": "23812A0527",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-127",
+        "stop": "Teachers Colony",
+        "fee": "Paid"
+      },
+      {
+        "id": 28,
+        "name": "Tarun Murthy",
+        "roll": "23812A0528",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Kanajiguda",
+        "fee": "Pending"
+      },
+      {
+        "id": 29,
+        "name": "Vaishnavi Sastry",
+        "roll": "23812A0529",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-129",
+        "stop": "Green Fields (D Mart)",
+        "fee": "Paid"
+      },
+      {
+        "id": 30,
+        "name": "Vamshi Vangala",
+        "roll": "23812A0530",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-130",
+        "stop": "St. Andrews School",
+        "fee": "Paid"
+      },
+      {
+        "id": 31,
+        "name": "Harini Kancharla",
+        "roll": "23812A0531",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-131",
+        "stop": "Radhika",
+        "fee": "Paid"
+      },
+      {
+        "id": 32,
+        "name": "Chaitanya Boppana",
+        "roll": "23812A0532",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-132",
+        "stop": "Lal Bazar (Petrol Bunk)",
+        "fee": "Paid"
+      },
+      {
+        "id": 33,
+        "name": "Akshitha Thota",
+        "roll": "23812A0533",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-133",
+        "stop": "Teachers Colony",
+        "fee": "Paid"
+      },
+      {
+        "id": 34,
+        "name": "Gautham Mothe",
+        "roll": "23812A0534",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-134",
+        "stop": "Kanajiguda",
+        "fee": "Paid"
+      },
+      {
+        "id": 35,
+        "name": "Spandana Kommula",
+        "roll": "21813A0535",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Green Fields (D Mart)",
+        "fee": "Pending"
+      },
+      {
+        "id": 36,
+        "name": "Pradeep Duggirala",
+        "roll": "21813A0536",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-136",
+        "stop": "St. Andrews School",
+        "fee": "Paid"
+      },
+      {
+        "id": 37,
+        "name": "Aravind Bandari",
+        "roll": "21813A0537",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-137",
+        "stop": "Radhika",
+        "fee": "Paid"
+      },
+      {
+        "id": 38,
+        "name": "Swathi Golla",
+        "roll": "21813A0538",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-138",
+        "stop": "Lal Bazar (Petrol Bunk)",
+        "fee": "Paid"
+      },
+      {
+        "id": 39,
+        "name": "Vikas Pothula",
+        "roll": "21813A0539",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-139",
+        "stop": "Teachers Colony",
+        "fee": "Paid"
+      },
+      {
+        "id": 40,
+        "name": "Sanjana Marri",
+        "roll": "21813A0540",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-140",
+        "stop": "Kanajiguda",
+        "fee": "Paid"
+      },
+      {
+        "id": 41,
+        "name": "Ganesh Katakam",
+        "roll": "21813A0541",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-141",
+        "stop": "Green Fields (D Mart)",
+        "fee": "Paid"
+      },
+      {
+        "id": 42,
+        "name": "Pavani Allam",
+        "roll": "21813A0542",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "St. Andrews School",
+        "fee": "Pending"
+      },
+      {
+        "id": 43,
+        "name": "Shiva Gaddam",
+        "roll": "21813A0543",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-143",
+        "stop": "Radhika",
+        "fee": "Paid"
+      },
+      {
+        "id": 44,
+        "name": "Pallavi Dharavath",
+        "roll": "21813A0544",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-144",
+        "stop": "Lal Bazar (Petrol Bunk)",
+        "fee": "Paid"
+      },
+      {
+        "id": 45,
+        "name": "Akhil Banoth",
+        "roll": "21813A0545",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-145",
+        "stop": "Teachers Colony",
+        "fee": "Paid"
+      },
+      {
+        "id": 46,
+        "name": "Sindhu Guguloth",
+        "roll": "21813A0546",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-146",
+        "stop": "Kanajiguda",
+        "fee": "Paid"
+      },
+      {
+        "id": 47,
+        "name": "Rajesh Jadhav",
+        "roll": "21813A0547",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-147",
+        "stop": "Green Fields (D Mart)",
+        "fee": "Paid"
+      },
+      {
+        "id": 48,
+        "name": "Navya Pawar",
+        "roll": "21813A0548",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-148",
+        "stop": "St. Andrews School",
+        "fee": "Paid"
+      },
+      {
+        "id": 49,
+        "name": "Mahesh Solanki",
+        "roll": "21813A0549",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Radhika",
+        "fee": "Pending"
+      },
+      {
+        "id": 50,
+        "name": "Sowmya Chauhan",
+        "roll": "21813A0550",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-150",
+        "stop": "Lal Bazar (Petrol Bunk)",
+        "fee": "Paid"
+      }
+    ],
+    "Route 16": [
+      {
+        "id": 1,
+        "name": "Rahul Reddy",
+        "roll": "22811A0551",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-101",
+        "stop": "Ramanthapur",
+        "fee": "Paid"
+      },
+      {
+        "id": 2,
+        "name": "Ananya Sharma",
+        "roll": "22811A0552",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-102",
+        "stop": "Lalitha Nagar",
+        "fee": "Paid"
+      },
+      {
+        "id": 3,
+        "name": "Arjun Kumar",
+        "roll": "22811A0553",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-103",
+        "stop": "Jamia Osmania",
+        "fee": "Paid"
+      },
+      {
+        "id": 4,
+        "name": "Harsha Rao",
+        "roll": "22811A0554",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-104",
+        "stop": "Arts College",
+        "fee": "Paid"
+      },
+      {
+        "id": 5,
+        "name": "Sneha Verma",
+        "roll": "22811A0555",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-105",
+        "stop": "Varasiguda",
+        "fee": "Paid"
+      },
+      {
+        "id": 6,
+        "name": "Kiran Gupta",
+        "roll": "22811A0556",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Namalagundu",
+        "fee": "Pending"
+      },
+      {
+        "id": 7,
+        "name": "Divya Yadav",
+        "roll": "22811A0557",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-107",
+        "stop": "Sitafalmandi",
+        "fee": "Paid"
+      },
+      {
+        "id": 8,
+        "name": "Siddharth Patel",
+        "roll": "22811A0558",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-108",
+        "stop": "Chilakalaguda",
+        "fee": "Paid"
+      },
+      {
+        "id": 9,
+        "name": "Pooja Singh",
+        "roll": "22811A0559",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-109",
+        "stop": "Mother Teresa Statue",
+        "fee": "Paid"
+      },
+      {
+        "id": 10,
+        "name": "Varun Chowdary",
+        "roll": "22811A0560",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-110",
+        "stop": "Ramanthapur",
+        "fee": "Paid"
+      },
+      {
+        "id": 11,
+        "name": "Kavya Naidu",
+        "roll": "22811A0561",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-111",
+        "stop": "Lalitha Nagar",
+        "fee": "Paid"
+      },
+      {
+        "id": 12,
+        "name": "Nikhil Joshi",
+        "roll": "22811A0562",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-112",
+        "stop": "Jamia Osmania",
+        "fee": "Paid"
+      },
+      {
+        "id": 13,
+        "name": "Meghana Mishra",
+        "roll": "22811A0563",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Arts College",
+        "fee": "Pending"
+      },
+      {
+        "id": 14,
+        "name": "Rohan Kulkarni",
+        "roll": "22811A0564",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-114",
+        "stop": "Varasiguda",
+        "fee": "Paid"
+      },
+      {
+        "id": 15,
+        "name": "Bhavana Deshmukh",
+        "roll": "22811A0565",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-115",
+        "stop": "Namalagundu",
+        "fee": "Paid"
+      },
+      {
+        "id": 16,
+        "name": "Sai Nair",
+        "roll": "22811A0566",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-116",
+        "stop": "Sitafalmandi",
+        "fee": "Paid"
+      },
+      {
+        "id": 17,
+        "name": "Pranathi Menon",
+        "roll": "22811A0567",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-117",
+        "stop": "Chilakalaguda",
+        "fee": "Paid"
+      },
+      {
+        "id": 18,
+        "name": "Manish Pillai",
+        "roll": "23812A0568",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-118",
+        "stop": "Mother Teresa Statue",
+        "fee": "Paid"
+      },
+      {
+        "id": 19,
+        "name": "Deepika Iyer",
+        "roll": "23812A0569",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-119",
+        "stop": "Ramanthapur",
+        "fee": "Paid"
+      },
+      {
+        "id": 20,
+        "name": "Karthik Bhat",
+        "roll": "23812A0570",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Lalitha Nagar",
+        "fee": "Pending"
+      },
+      {
+        "id": 21,
+        "name": "Sravani Hegde",
+        "roll": "23812A0571",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-121",
+        "stop": "Jamia Osmania",
+        "fee": "Paid"
+      },
+      {
+        "id": 22,
+        "name": "Aditya Shetty",
+        "roll": "23812A0572",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-122",
+        "stop": "Arts College",
+        "fee": "Paid"
+      },
+      {
+        "id": 23,
+        "name": "Keerthana Goud",
+        "roll": "23812A0573",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-123",
+        "stop": "Varasiguda",
+        "fee": "Paid"
+      },
+      {
+        "id": 24,
+        "name": "Teja Venkatesh",
+        "roll": "23812A0574",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-124",
+        "stop": "Namalagundu",
+        "fee": "Paid"
+      },
+      {
+        "id": 25,
+        "name": "Mounika Chary",
+        "roll": "23812A0575",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-125",
+        "stop": "Sitafalmandi",
+        "fee": "Paid"
+      },
+      {
+        "id": 26,
+        "name": "Abhinav Raju",
+        "roll": "23812A0576",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-126",
+        "stop": "Chilakalaguda",
+        "fee": "Paid"
+      },
+      {
+        "id": 27,
+        "name": "Niharika Prasad",
+        "roll": "23812A0577",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Mother Teresa Statue",
+        "fee": "Pending"
+      },
+      {
+        "id": 28,
+        "name": "Tarun Murthy",
+        "roll": "23812A0578",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-128",
+        "stop": "Ramanthapur",
+        "fee": "Paid"
+      },
+      {
+        "id": 29,
+        "name": "Vaishnavi Sastry",
+        "roll": "23812A0579",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-129",
+        "stop": "Lalitha Nagar",
+        "fee": "Paid"
+      },
+      {
+        "id": 30,
+        "name": "Vamshi Vangala",
+        "roll": "23812A0580",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-130",
+        "stop": "Jamia Osmania",
+        "fee": "Paid"
+      },
+      {
+        "id": 31,
+        "name": "Harini Kancharla",
+        "roll": "23812A0581",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-131",
+        "stop": "Arts College",
+        "fee": "Paid"
+      },
+      {
+        "id": 32,
+        "name": "Chaitanya Boppana",
+        "roll": "23812A0582",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-132",
+        "stop": "Varasiguda",
+        "fee": "Paid"
+      },
+      {
+        "id": 33,
+        "name": "Akshitha Thota",
+        "roll": "23812A0583",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-133",
+        "stop": "Namalagundu",
+        "fee": "Paid"
+      },
+      {
+        "id": 34,
+        "name": "Gautham Mothe",
+        "roll": "23812A0584",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Sitafalmandi",
+        "fee": "Pending"
+      },
+      {
+        "id": 35,
+        "name": "Spandana Kommula",
+        "roll": "21813A0585",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-135",
+        "stop": "Chilakalaguda",
+        "fee": "Paid"
+      },
+      {
+        "id": 36,
+        "name": "Pradeep Duggirala",
+        "roll": "21813A0586",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-136",
+        "stop": "Mother Teresa Statue",
+        "fee": "Paid"
+      },
+      {
+        "id": 37,
+        "name": "Aravind Bandari",
+        "roll": "21813A0587",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-137",
+        "stop": "Ramanthapur",
+        "fee": "Paid"
+      },
+      {
+        "id": 38,
+        "name": "Swathi Golla",
+        "roll": "21813A0588",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-138",
+        "stop": "Lalitha Nagar",
+        "fee": "Paid"
+      },
+      {
+        "id": 39,
+        "name": "Vikas Pothula",
+        "roll": "21813A0589",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-139",
+        "stop": "Jamia Osmania",
+        "fee": "Paid"
+      },
+      {
+        "id": 40,
+        "name": "Sanjana Marri",
+        "roll": "21813A0590",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-140",
+        "stop": "Arts College",
+        "fee": "Paid"
+      },
+      {
+        "id": 41,
+        "name": "Ganesh Katakam",
+        "roll": "21813A0591",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Varasiguda",
+        "fee": "Pending"
+      },
+      {
+        "id": 42,
+        "name": "Pavani Allam",
+        "roll": "21813A0592",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-142",
+        "stop": "Namalagundu",
+        "fee": "Paid"
+      },
+      {
+        "id": 43,
+        "name": "Shiva Gaddam",
+        "roll": "21813A0593",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-143",
+        "stop": "Sitafalmandi",
+        "fee": "Paid"
+      },
+      {
+        "id": 44,
+        "name": "Pallavi Dharavath",
+        "roll": "21813A0594",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-144",
+        "stop": "Chilakalaguda",
+        "fee": "Paid"
+      },
+      {
+        "id": 45,
+        "name": "Akhil Banoth",
+        "roll": "21813A0595",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-145",
+        "stop": "Mother Teresa Statue",
+        "fee": "Paid"
+      },
+      {
+        "id": 46,
+        "name": "Sindhu Guguloth",
+        "roll": "21813A0596",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-146",
+        "stop": "Ramanthapur",
+        "fee": "Paid"
+      },
+      {
+        "id": 47,
+        "name": "Rajesh Jadhav",
+        "roll": "21813A0597",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-147",
+        "stop": "Lalitha Nagar",
+        "fee": "Paid"
+      },
+      {
+        "id": 48,
+        "name": "Navya Pawar",
+        "roll": "21813A0598",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Jamia Osmania",
+        "fee": "Pending"
+      },
+      {
+        "id": 49,
+        "name": "Mahesh Solanki",
+        "roll": "21813A0599",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-149",
+        "stop": "Arts College",
+        "fee": "Paid"
+      },
+      {
+        "id": 50,
+        "name": "Sowmya Chauhan",
+        "roll": "21813A0600",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-150",
+        "stop": "Varasiguda",
+        "fee": "Paid"
+      }
+    ],
+    "Route 19A": [
+      {
+        "id": 1,
+        "name": "Rahul Reddy",
+        "roll": "22811A0601",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-101",
+        "stop": "Sathyam Theatre",
+        "fee": "Paid"
+      },
+      {
+        "id": 2,
+        "name": "Ananya Sharma",
+        "roll": "22811A0602",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-102",
+        "stop": "SR Nagar PS",
+        "fee": "Paid"
+      },
+      {
+        "id": 3,
+        "name": "Arjun Kumar",
+        "roll": "22811A0603",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-103",
+        "stop": "Balkampet",
+        "fee": "Paid"
+      },
+      {
+        "id": 4,
+        "name": "Harsha Rao",
+        "roll": "22811A0604",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-104",
+        "stop": "Fathenagar",
+        "fee": "Paid"
+      },
+      {
+        "id": 5,
+        "name": "Sneha Verma",
+        "roll": "22811A0605",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "HAL",
+        "fee": "Pending"
+      },
+      {
+        "id": 6,
+        "name": "Kiran Gupta",
+        "roll": "22811A0606",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-106",
+        "stop": "Sathyam Theatre",
+        "fee": "Paid"
+      },
+      {
+        "id": 7,
+        "name": "Divya Yadav",
+        "roll": "22811A0607",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-107",
+        "stop": "SR Nagar PS",
+        "fee": "Paid"
+      },
+      {
+        "id": 8,
+        "name": "Siddharth Patel",
+        "roll": "22811A0608",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-108",
+        "stop": "Balkampet",
+        "fee": "Paid"
+      },
+      {
+        "id": 9,
+        "name": "Pooja Singh",
+        "roll": "22811A0609",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-109",
+        "stop": "Fathenagar",
+        "fee": "Paid"
+      },
+      {
+        "id": 10,
+        "name": "Varun Chowdary",
+        "roll": "22811A0610",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-110",
+        "stop": "HAL",
+        "fee": "Paid"
+      },
+      {
+        "id": 11,
+        "name": "Kavya Naidu",
+        "roll": "22811A0611",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-111",
+        "stop": "Sathyam Theatre",
+        "fee": "Paid"
+      },
+      {
+        "id": 12,
+        "name": "Nikhil Joshi",
+        "roll": "22811A0612",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "SR Nagar PS",
+        "fee": "Pending"
+      },
+      {
+        "id": 13,
+        "name": "Meghana Mishra",
+        "roll": "22811A0613",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-113",
+        "stop": "Balkampet",
+        "fee": "Paid"
+      },
+      {
+        "id": 14,
+        "name": "Rohan Kulkarni",
+        "roll": "22811A0614",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-114",
+        "stop": "Fathenagar",
+        "fee": "Paid"
+      },
+      {
+        "id": 15,
+        "name": "Bhavana Deshmukh",
+        "roll": "22811A0615",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-115",
+        "stop": "HAL",
+        "fee": "Paid"
+      },
+      {
+        "id": 16,
+        "name": "Sai Nair",
+        "roll": "22811A0616",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-116",
+        "stop": "Sathyam Theatre",
+        "fee": "Paid"
+      },
+      {
+        "id": 17,
+        "name": "Pranathi Menon",
+        "roll": "22811A0617",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-117",
+        "stop": "SR Nagar PS",
+        "fee": "Paid"
+      },
+      {
+        "id": 18,
+        "name": "Manish Pillai",
+        "roll": "23812A0618",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-118",
+        "stop": "Balkampet",
+        "fee": "Paid"
+      },
+      {
+        "id": 19,
+        "name": "Deepika Iyer",
+        "roll": "23812A0619",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Fathenagar",
+        "fee": "Pending"
+      },
+      {
+        "id": 20,
+        "name": "Karthik Bhat",
+        "roll": "23812A0620",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-120",
+        "stop": "HAL",
+        "fee": "Paid"
+      },
+      {
+        "id": 21,
+        "name": "Sravani Hegde",
+        "roll": "23812A0621",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-121",
+        "stop": "Sathyam Theatre",
+        "fee": "Paid"
+      },
+      {
+        "id": 22,
+        "name": "Aditya Shetty",
+        "roll": "23812A0622",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-122",
+        "stop": "SR Nagar PS",
+        "fee": "Paid"
+      },
+      {
+        "id": 23,
+        "name": "Keerthana Goud",
+        "roll": "23812A0623",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-123",
+        "stop": "Balkampet",
+        "fee": "Paid"
+      },
+      {
+        "id": 24,
+        "name": "Teja Venkatesh",
+        "roll": "23812A0624",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-124",
+        "stop": "Fathenagar",
+        "fee": "Paid"
+      },
+      {
+        "id": 25,
+        "name": "Mounika Chary",
+        "roll": "23812A0625",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-125",
+        "stop": "HAL",
+        "fee": "Paid"
+      },
+      {
+        "id": 26,
+        "name": "Abhinav Raju",
+        "roll": "23812A0626",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Sathyam Theatre",
+        "fee": "Pending"
+      },
+      {
+        "id": 27,
+        "name": "Niharika Prasad",
+        "roll": "23812A0627",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-127",
+        "stop": "SR Nagar PS",
+        "fee": "Paid"
+      },
+      {
+        "id": 28,
+        "name": "Tarun Murthy",
+        "roll": "23812A0628",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-128",
+        "stop": "Balkampet",
+        "fee": "Paid"
+      },
+      {
+        "id": 29,
+        "name": "Vaishnavi Sastry",
+        "roll": "23812A0629",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-129",
+        "stop": "Fathenagar",
+        "fee": "Paid"
+      },
+      {
+        "id": 30,
+        "name": "Vamshi Vangala",
+        "roll": "23812A0630",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-130",
+        "stop": "HAL",
+        "fee": "Paid"
+      },
+      {
+        "id": 31,
+        "name": "Harini Kancharla",
+        "roll": "23812A0631",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-131",
+        "stop": "Sathyam Theatre",
+        "fee": "Paid"
+      },
+      {
+        "id": 32,
+        "name": "Chaitanya Boppana",
+        "roll": "23812A0632",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-132",
+        "stop": "SR Nagar PS",
+        "fee": "Paid"
+      },
+      {
+        "id": 33,
+        "name": "Akshitha Thota",
+        "roll": "23812A0633",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Balkampet",
+        "fee": "Pending"
+      },
+      {
+        "id": 34,
+        "name": "Gautham Mothe",
+        "roll": "23812A0634",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-134",
+        "stop": "Fathenagar",
+        "fee": "Paid"
+      },
+      {
+        "id": 35,
+        "name": "Spandana Kommula",
+        "roll": "21813A0635",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-135",
+        "stop": "HAL",
+        "fee": "Paid"
+      },
+      {
+        "id": 36,
+        "name": "Pradeep Duggirala",
+        "roll": "21813A0636",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-136",
+        "stop": "Sathyam Theatre",
+        "fee": "Paid"
+      },
+      {
+        "id": 37,
+        "name": "Aravind Bandari",
+        "roll": "21813A0637",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-137",
+        "stop": "SR Nagar PS",
+        "fee": "Paid"
+      },
+      {
+        "id": 38,
+        "name": "Swathi Golla",
+        "roll": "21813A0638",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-138",
+        "stop": "Balkampet",
+        "fee": "Paid"
+      },
+      {
+        "id": 39,
+        "name": "Vikas Pothula",
+        "roll": "21813A0639",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-139",
+        "stop": "Fathenagar",
+        "fee": "Paid"
+      },
+      {
+        "id": 40,
+        "name": "Sanjana Marri",
+        "roll": "21813A0640",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "HAL",
+        "fee": "Pending"
+      },
+      {
+        "id": 41,
+        "name": "Ganesh Katakam",
+        "roll": "21813A0641",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-141",
+        "stop": "Sathyam Theatre",
+        "fee": "Paid"
+      },
+      {
+        "id": 42,
+        "name": "Pavani Allam",
+        "roll": "21813A0642",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-142",
+        "stop": "SR Nagar PS",
+        "fee": "Paid"
+      },
+      {
+        "id": 43,
+        "name": "Shiva Gaddam",
+        "roll": "21813A0643",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-143",
+        "stop": "Balkampet",
+        "fee": "Paid"
+      },
+      {
+        "id": 44,
+        "name": "Pallavi Dharavath",
+        "roll": "21813A0644",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-144",
+        "stop": "Fathenagar",
+        "fee": "Paid"
+      },
+      {
+        "id": 45,
+        "name": "Akhil Banoth",
+        "roll": "21813A0645",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-145",
+        "stop": "HAL",
+        "fee": "Paid"
+      },
+      {
+        "id": 46,
+        "name": "Sindhu Guguloth",
+        "roll": "21813A0646",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-146",
+        "stop": "Sathyam Theatre",
+        "fee": "Paid"
+      },
+      {
+        "id": 47,
+        "name": "Rajesh Jadhav",
+        "roll": "21813A0647",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "SR Nagar PS",
+        "fee": "Pending"
+      },
+      {
+        "id": 48,
+        "name": "Navya Pawar",
+        "roll": "21813A0648",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-148",
+        "stop": "Balkampet",
+        "fee": "Paid"
+      },
+      {
+        "id": 49,
+        "name": "Mahesh Solanki",
+        "roll": "21813A0649",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-149",
+        "stop": "Fathenagar",
+        "fee": "Paid"
+      },
+      {
+        "id": 50,
+        "name": "Sowmya Chauhan",
+        "roll": "21813A0650",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-150",
+        "stop": "HAL",
+        "fee": "Paid"
+      }
+    ],
+    "Route 25": [
+      {
+        "id": 1,
+        "name": "Rahul Reddy",
+        "roll": "22811A0651",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-101",
+        "stop": "Usha Mullapudi Arch",
+        "fee": "Paid"
+      },
+      {
+        "id": 2,
+        "name": "Ananya Sharma",
+        "roll": "22811A0652",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-102",
+        "stop": "Patel Kunta Park",
+        "fee": "Paid"
+      },
+      {
+        "id": 3,
+        "name": "Arjun Kumar",
+        "roll": "22811A0653",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-103",
+        "stop": "KL Bar & Restaurant",
+        "fee": "Paid"
+      },
+      {
+        "id": 4,
+        "name": "Harsha Rao",
+        "roll": "22811A0654",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Alwyn Colony",
+        "fee": "Pending"
+      },
+      {
+        "id": 5,
+        "name": "Sneha Verma",
+        "roll": "22811A0655",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-105",
+        "stop": "Jagat Giri Gutta (IG Statue)",
+        "fee": "Paid"
+      },
+      {
+        "id": 6,
+        "name": "Kiran Gupta",
+        "roll": "22811A0656",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-106",
+        "stop": "Usha Mullapudi Arch",
+        "fee": "Paid"
+      },
+      {
+        "id": 7,
+        "name": "Divya Yadav",
+        "roll": "22811A0657",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-107",
+        "stop": "Patel Kunta Park",
+        "fee": "Paid"
+      },
+      {
+        "id": 8,
+        "name": "Siddharth Patel",
+        "roll": "22811A0658",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-108",
+        "stop": "KL Bar & Restaurant",
+        "fee": "Paid"
+      },
+      {
+        "id": 9,
+        "name": "Pooja Singh",
+        "roll": "22811A0659",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-109",
+        "stop": "Alwyn Colony",
+        "fee": "Paid"
+      },
+      {
+        "id": 10,
+        "name": "Varun Chowdary",
+        "roll": "22811A0660",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-110",
+        "stop": "Jagat Giri Gutta (IG Statue)",
+        "fee": "Paid"
+      },
+      {
+        "id": 11,
+        "name": "Kavya Naidu",
+        "roll": "22811A0661",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Usha Mullapudi Arch",
+        "fee": "Pending"
+      },
+      {
+        "id": 12,
+        "name": "Nikhil Joshi",
+        "roll": "22811A0662",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-112",
+        "stop": "Patel Kunta Park",
+        "fee": "Paid"
+      },
+      {
+        "id": 13,
+        "name": "Meghana Mishra",
+        "roll": "22811A0663",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-113",
+        "stop": "KL Bar & Restaurant",
+        "fee": "Paid"
+      },
+      {
+        "id": 14,
+        "name": "Rohan Kulkarni",
+        "roll": "22811A0664",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-114",
+        "stop": "Alwyn Colony",
+        "fee": "Paid"
+      },
+      {
+        "id": 15,
+        "name": "Bhavana Deshmukh",
+        "roll": "22811A0665",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-115",
+        "stop": "Jagat Giri Gutta (IG Statue)",
+        "fee": "Paid"
+      },
+      {
+        "id": 16,
+        "name": "Sai Nair",
+        "roll": "22811A0666",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRCET",
+        "destination": "CMRGI",
+        "receipt": "RCPT-CET-116",
+        "stop": "Usha Mullapudi Arch",
+        "fee": "Paid"
+      },
+      {
+        "id": 17,
+        "name": "Pranathi Menon",
+        "roll": "23812A0667",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-117",
+        "stop": "Patel Kunta Park",
+        "fee": "Paid"
+      },
+      {
+        "id": 18,
+        "name": "Manish Pillai",
+        "roll": "23812A0668",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "KL Bar & Restaurant",
+        "fee": "Pending"
+      },
+      {
+        "id": 19,
+        "name": "Deepika Iyer",
+        "roll": "23812A0669",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-119",
+        "stop": "Alwyn Colony",
+        "fee": "Paid"
+      },
+      {
+        "id": 20,
+        "name": "Karthik Bhat",
+        "roll": "23812A0670",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-120",
+        "stop": "Jagat Giri Gutta (IG Statue)",
+        "fee": "Paid"
+      },
+      {
+        "id": 21,
+        "name": "Sravani Hegde",
+        "roll": "23812A0671",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-121",
+        "stop": "Usha Mullapudi Arch",
+        "fee": "Paid"
+      },
+      {
+        "id": 22,
+        "name": "Aditya Shetty",
+        "roll": "23812A0672",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-122",
+        "stop": "Patel Kunta Park",
+        "fee": "Paid"
+      },
+      {
+        "id": 23,
+        "name": "Keerthana Goud",
+        "roll": "23812A0673",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-123",
+        "stop": "KL Bar & Restaurant",
+        "fee": "Paid"
+      },
+      {
+        "id": 24,
+        "name": "Teja Venkatesh",
+        "roll": "23812A0674",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-124",
+        "stop": "Alwyn Colony",
+        "fee": "Paid"
+      },
+      {
+        "id": 25,
+        "name": "Mounika Chary",
+        "roll": "23812A0675",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Jagat Giri Gutta (IG Statue)",
+        "fee": "Pending"
+      },
+      {
+        "id": 26,
+        "name": "Abhinav Raju",
+        "roll": "23812A0676",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-126",
+        "stop": "Usha Mullapudi Arch",
+        "fee": "Paid"
+      },
+      {
+        "id": 27,
+        "name": "Niharika Prasad",
+        "roll": "23812A0677",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-127",
+        "stop": "Patel Kunta Park",
+        "fee": "Paid"
+      },
+      {
+        "id": 28,
+        "name": "Tarun Murthy",
+        "roll": "23812A0678",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-128",
+        "stop": "KL Bar & Restaurant",
+        "fee": "Paid"
+      },
+      {
+        "id": 29,
+        "name": "Vaishnavi Sastry",
+        "roll": "23812A0679",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-129",
+        "stop": "Alwyn Colony",
+        "fee": "Paid"
+      },
+      {
+        "id": 30,
+        "name": "Vamshi Vangala",
+        "roll": "23812A0680",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-130",
+        "stop": "Jagat Giri Gutta (IG Statue)",
+        "fee": "Paid"
+      },
+      {
+        "id": 31,
+        "name": "Harini Kancharla",
+        "roll": "23812A0681",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "RCPT-REC-131",
+        "stop": "Usha Mullapudi Arch",
+        "fee": "Paid"
+      },
+      {
+        "id": 32,
+        "name": "Chaitanya Boppana",
+        "roll": "23812A0682",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMREC",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Patel Kunta Park",
+        "fee": "Pending"
+      },
+      {
+        "id": 33,
+        "name": "Akshitha Thota",
+        "roll": "21813A0683",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-133",
+        "stop": "KL Bar & Restaurant",
+        "fee": "Paid"
+      },
+      {
+        "id": 34,
+        "name": "Gautham Mothe",
+        "roll": "21813A0684",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-134",
+        "stop": "Alwyn Colony",
+        "fee": "Paid"
+      },
+      {
+        "id": 35,
+        "name": "Spandana Kommula",
+        "roll": "21813A0685",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-135",
+        "stop": "Jagat Giri Gutta (IG Statue)",
+        "fee": "Paid"
+      },
+      {
+        "id": 36,
+        "name": "Pradeep Duggirala",
+        "roll": "21813A0686",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-136",
+        "stop": "Usha Mullapudi Arch",
+        "fee": "Paid"
+      },
+      {
+        "id": 37,
+        "name": "Aravind Bandari",
+        "roll": "21813A0687",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-137",
+        "stop": "Patel Kunta Park",
+        "fee": "Paid"
+      },
+      {
+        "id": 38,
+        "name": "Swathi Golla",
+        "roll": "21813A0688",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-138",
+        "stop": "KL Bar & Restaurant",
+        "fee": "Paid"
+      },
+      {
+        "id": 39,
+        "name": "Vikas Pothula",
+        "roll": "21813A0689",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Alwyn Colony",
+        "fee": "Pending"
+      },
+      {
+        "id": 40,
+        "name": "Sanjana Marri",
+        "roll": "21813A0690",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-140",
+        "stop": "Jagat Giri Gutta (IG Statue)",
+        "fee": "Paid"
+      },
+      {
+        "id": 41,
+        "name": "Ganesh Katakam",
+        "roll": "21813A0691",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-141",
+        "stop": "Usha Mullapudi Arch",
+        "fee": "Paid"
+      },
+      {
+        "id": 42,
+        "name": "Pavani Allam",
+        "roll": "21813A0692",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-142",
+        "stop": "Patel Kunta Park",
+        "fee": "Paid"
+      },
+      {
+        "id": 43,
+        "name": "Shiva Gaddam",
+        "roll": "21813A0693",
+        "year": "1st",
+        "dept": "CSE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-143",
+        "stop": "KL Bar & Restaurant",
+        "fee": "Paid"
+      },
+      {
+        "id": 44,
+        "name": "Pallavi Dharavath",
+        "roll": "21813A0694",
+        "year": "2nd",
+        "dept": "ECE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-144",
+        "stop": "Alwyn Colony",
+        "fee": "Paid"
+      },
+      {
+        "id": 45,
+        "name": "Akhil Banoth",
+        "roll": "21813A0695",
+        "year": "3rd",
+        "dept": "IT",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-145",
+        "stop": "Jagat Giri Gutta (IG Statue)",
+        "fee": "Paid"
+      },
+      {
+        "id": 46,
+        "name": "Sindhu Guguloth",
+        "roll": "21813A0696",
+        "year": "4th",
+        "dept": "AIML",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "\u2014",
+        "stop": "Usha Mullapudi Arch",
+        "fee": "Pending"
+      },
+      {
+        "id": 47,
+        "name": "Rajesh Jadhav",
+        "roll": "21813A0697",
+        "year": "1st",
+        "dept": "Data Science",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-147",
+        "stop": "Patel Kunta Park",
+        "fee": "Paid"
+      },
+      {
+        "id": 48,
+        "name": "Navya Pawar",
+        "roll": "21813A0698",
+        "year": "2nd",
+        "dept": "EEE",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-148",
+        "stop": "KL Bar & Restaurant",
+        "fee": "Paid"
+      },
+      {
+        "id": 49,
+        "name": "Mahesh Solanki",
+        "roll": "21813A0699",
+        "year": "3rd",
+        "dept": "Mechanical",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-149",
+        "stop": "Alwyn Colony",
+        "fee": "Paid"
+      },
+      {
+        "id": 50,
+        "name": "Sowmya Chauhan",
+        "roll": "21813A0700",
+        "year": "4th",
+        "dept": "Civil",
+        "campus": "CMRIT",
+        "destination": "CMRGI",
+        "receipt": "RCPT-RIT-150",
+        "stop": "Jagat Giri Gutta (IG Statue)",
+        "fee": "Paid"
+      }
+    ]
+  },
+  "routeStops": {
+    "Route 03": [
+      {
+        "bp": "301",
+        "name": "Radhika",
+        "time": "7:30"
+      },
+      {
+        "bp": "302",
+        "name": "Lal Bazar (Petrol Bunk)",
+        "time": "7:40"
+      },
+      {
+        "bp": "303",
+        "name": "Teachers Colony",
+        "time": "7:45"
+      },
+      {
+        "bp": "304",
+        "name": "Kanajiguda",
+        "time": "7:47"
+      },
+      {
+        "bp": "305",
+        "name": "Green Fields (D Mart)",
+        "time": "7:50"
+      },
+      {
+        "bp": "306",
+        "name": "St. Andrews School",
+        "time": "7:53"
+      },
+      {
+        "bp": "307",
+        "name": "CMRGI",
+        "time": "8:50"
+      }
+    ],
+    "Route 13": [
+      {
+        "bp": "1301",
+        "name": "Dilsuknagar Saibaba Temple",
+        "time": "7:15"
+      },
+      {
+        "bp": "1302",
+        "name": "Dilsuknagar Chandana Bro's",
+        "time": "7:17"
+      },
+      {
+        "bp": "1303",
+        "name": "TV Tower Malakpet",
+        "time": "7:20"
+      },
+      {
+        "bp": "1304",
+        "name": "Moosarambagh",
+        "time": "7:22"
+      },
+      {
+        "bp": "1305",
+        "name": "Ali Caf\u00e9",
+        "time": "7:25"
+      },
+      {
+        "bp": "1306",
+        "name": "Amberpet PS",
+        "time": "7:27"
+      },
+      {
+        "bp": "1307",
+        "name": "Thilak Nagar X Road",
+        "time": "7:30"
+      },
+      {
+        "bp": "1308",
+        "name": "Renova Hospital",
+        "time": "8:15"
+      },
+      {
+        "bp": "1309",
+        "name": "Cine Planet",
+        "time": "8:17"
+      },
+      {
+        "bp": "1310",
+        "name": "CMRGI",
+        "time": "8:50"
+      }
+    ],
+    "Route 16": [
+      {
+        "bp": "1601",
+        "name": "Ramanthapur",
+        "time": "7:20"
+      },
+      {
+        "bp": "1602",
+        "name": "Lalitha Nagar",
+        "time": "7:25"
+      },
+      {
+        "bp": "1603",
+        "name": "Jamia Osmania",
+        "time": "7:30"
+      },
+      {
+        "bp": "1604",
+        "name": "Arts College",
+        "time": "7:35"
+      },
+      {
+        "bp": "1605",
+        "name": "Varasiguda",
+        "time": "7:40"
+      },
+      {
+        "bp": "1606",
+        "name": "Namalagundu",
+        "time": "7:45"
+      },
+      {
+        "bp": "1607",
+        "name": "Sitafalmandi",
+        "time": "7:50"
+      },
+      {
+        "bp": "1608",
+        "name": "Chilakalaguda",
+        "time": "7:55"
+      },
+      {
+        "bp": "1609",
+        "name": "Mother Teresa Statue",
+        "time": "8:00"
+      },
+      {
+        "bp": "1610",
+        "name": "CMRGI",
+        "time": "8:50"
+      }
+    ],
+    "Route 19A": [
+      {
+        "bp": "19A01",
+        "name": "Sathyam Theatre",
+        "time": "7:40"
+      },
+      {
+        "bp": "19A02",
+        "name": "SR Nagar PS",
+        "time": "7:45"
+      },
+      {
+        "bp": "19A03",
+        "name": "Balkampet",
+        "time": "7:47"
+      },
+      {
+        "bp": "19A04",
+        "name": "Fathenagar",
+        "time": "7:50"
+      },
+      {
+        "bp": "19A05",
+        "name": "HAL",
+        "time": "7:52"
+      },
+      {
+        "bp": "19A06",
+        "name": "CMRGI",
+        "time": "8:50"
+      }
+    ],
+    "Route 25": [
+      {
+        "bp": "2501",
+        "name": "Usha Mullapudi Arch",
+        "time": "7:30"
+      },
+      {
+        "bp": "2502",
+        "name": "Patel Kunta Park",
+        "time": "7:35"
+      },
+      {
+        "bp": "2503",
+        "name": "KL Bar & Restaurant",
+        "time": "7:37"
+      },
+      {
+        "bp": "2504",
+        "name": "Alwyn Colony",
+        "time": "7:40"
+      },
+      {
+        "bp": "2505",
+        "name": "Jagat Giri Gutta (IG Statue)",
+        "time": "7:42"
+      },
+      {
+        "bp": "2506",
+        "name": "CMRGI",
+        "time": "8:50"
+      }
+    ]
+  },
+  "routeBusNumbers": {
+    "Route 03": "TS-08-UB-4503",
+    "Route 13": "TS-08-UB-4513",
+    "Route 16": "TS-08-UB-4516",
+    "Route 19A": "TS-08-UB-4519",
+    "Route 25": "TS-08-UB-4525"
+  },
+  "routeCampuses": {
+    "Route 03": "CMRGI",
+    "Route 13": "CMRGI",
+    "Route 16": "CMRGI",
+    "Route 19A": "CMRGI",
+    "Route 25": "CMRGI"
+  },
+  "routeIncharges": {
+    "Route 03": {
+      "name": "ES Babu",
+      "phone": "+91 9030368361"
+    },
+    "Route 13": {
+      "name": "P. Mahesh Babu",
+      "phone": "+91 9966785688"
+    },
+    "Route 16": {
+      "name": "M. Naresh Kumar",
+      "phone": "+91 9912135502"
+    },
+    "Route 19A": {
+      "name": "Laxman Reddy",
+      "phone": "+91 8074434165"
+    },
+    "Route 25": {
+      "name": "Dr Bhaskar",
+      "phone": "+91 9849292324"
+    }
+  },
+  "stopCoordsRegistry": {
+    "Radhika": {
+      "lat": 17.4764,
+      "lng": 78.5583
+    },
+    "Lal Bazar (Petrol Bunk)": {
+      "lat": 17.4891,
+      "lng": 78.5284
+    },
+    "Teachers Colony": {
+      "lat": 17.502,
+      "lng": 78.5085
+    },
+    "Kanajiguda": {
+      "lat": 17.514,
+      "lng": 78.498
+    },
+    "Green Fields (D Mart)": {
+      "lat": 17.531,
+      "lng": 78.491
+    },
+    "St. Andrews School": {
+      "lat": 17.545,
+      "lng": 78.489
+    },
+    "Dilsuknagar Saibaba Temple": {
+      "lat": 17.3688,
+      "lng": 78.5247
+    },
+    "Dilsuknagar Chandana Bro's": {
+      "lat": 17.3712,
+      "lng": 78.523
+    },
+    "TV Tower Malakpet": {
+      "lat": 17.3753,
+      "lng": 78.5085
+    },
+    "Moosarambagh": {
+      "lat": 17.3792,
+      "lng": 78.505
+    },
+    "Ali Caf\u00e9": {
+      "lat": 17.388,
+      "lng": 78.5082
+    },
+    "Amberpet PS": {
+      "lat": 17.3942,
+      "lng": 78.514
+    },
+    "Thilak Nagar X Road": {
+      "lat": 17.3995,
+      "lng": 78.511
+    },
+    "Renova Hospital": {
+      "lat": 17.478,
+      "lng": 78.49
+    },
+    "Cine Planet": {
+      "lat": 17.53,
+      "lng": 78.489
+    },
+    "Ramanthapur": {
+      "lat": 17.398,
+      "lng": 78.537
+    },
+    "Lalitha Nagar": {
+      "lat": 17.408,
+      "lng": 78.528
+    },
+    "Jamia Osmania": {
+      "lat": 17.417,
+      "lng": 78.522
+    },
+    "Arts College": {
+      "lat": 17.421,
+      "lng": 78.517
+    },
+    "Varasiguda": {
+      "lat": 17.429,
+      "lng": 78.513
+    },
+    "Namalagundu": {
+      "lat": 17.433,
+      "lng": 78.508
+    },
+    "Sitafalmandi": {
+      "lat": 17.439,
+      "lng": 78.504
+    },
+    "Chilakalaguda": {
+      "lat": 17.445,
+      "lng": 78.501
+    },
+    "Mother Teresa Statue": {
+      "lat": 17.46,
+      "lng": 78.496
+    },
+    "Sathyam Theatre": {
+      "lat": 17.437,
+      "lng": 78.448
+    },
+    "SR Nagar PS": {
+      "lat": 17.443,
+      "lng": 78.444
+    },
+    "Balkampet": {
+      "lat": 17.449,
+      "lng": 78.451
+    },
+    "Fathenagar": {
+      "lat": 17.464,
+      "lng": 78.456
+    },
+    "HAL": {
+      "lat": 17.478,
+      "lng": 78.461
+    },
+    "Usha Mullapudi Arch": {
+      "lat": 17.493,
+      "lng": 78.399
+    },
+    "Patel Kunta Park": {
+      "lat": 17.498,
+      "lng": 78.406
+    },
+    "KL Bar & Restaurant": {
+      "lat": 17.504,
+      "lng": 78.413
+    },
+    "Alwyn Colony": {
+      "lat": 17.511,
+      "lng": 78.421
+    },
+    "Jagat Giri Gutta (IG Statue)": {
+      "lat": 17.518,
+      "lng": 78.435
+    },
+    "CMRGI": {
+      "lat": 17.6044,
+      "lng": 78.4862
+    }
+  },
+  "alertsData": [
+    {
+      "id": "ALT-101",
+      "routeId": "Route 12",
+      "busPlate": "TS-08-UB-4512",
+      "type": "Breakdown",
+      "severity": "Critical",
+      "status": "Active",
+      "location": "Near Kompally Junction (NH-44)",
+      "description": "Mechanical transmission breakdown reported by driver. Relief bus dispatched from Kandlakoya yard.",
+      "delayDuration": "35 mins",
+      "createdTime": "13:48 IST",
+      "updatedTime": "13:52 IST",
+      "acknowledgedBy": null
+    },
+    {
+      "id": "ALT-102",
+      "routeId": "Route 16",
+      "busPlate": "TS-08-UB-4516",
+      "type": "Delay",
+      "severity": "Warning",
+      "status": "Active",
+      "location": "Sitafalmandi Junction / Stop 7",
+      "description": "Heavy rail gate closure traffic congestion. Bus running approximately 10 minutes delayed.",
+      "delayDuration": "10 mins",
+      "createdTime": "13:55 IST",
+      "updatedTime": "13:55 IST",
+      "acknowledgedBy": null
+    }
+  ],
+  "lastUpdated": "2026-09-25T10:32:00.837Z"
+}

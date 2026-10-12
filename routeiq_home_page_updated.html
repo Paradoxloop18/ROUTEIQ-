@@ -1,0 +1,3850 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RouteIQ — Smart College Bus Tracking & Management System</title>
+  <meta name="description"
+    content="RouteIQ: Next-generation smart college bus tracking, student transport management, ESP32 GPS telemetry, and emergency incident dispatch for CMR Group of Institutions." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+
+  <!-- Android PWA & Mobile App Meta Tags -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#090d16" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="RouteIQ" />
+  <link rel="icon" type="image/svg+xml" href="icon.svg" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --bg-card: #0f172a;
+      --bg-card-hover: #172554;
+      --bg-surface: #1e293b;
+      --bg-surface-light: #334155;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-focus: #3b82f6;
+
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-glow: rgba(37, 99, 235, 0.25);
+
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #ef4444;
+      --accent-purple: #8b5cf6;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+
+      --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.25);
+      --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.4);
+      --shadow-glow: 0 0 25px rgba(37, 99, 235, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--bg-surface-light);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+
+    /* Utility Classes */
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .flex {
+      display: flex;
+    }
+
+    .items-center {
+      align-items: center;
+    }
+
+    .justify-between {
+      justify-content: space-between;
+    }
+
+    .gap-1 {
+      gap: 4px;
+    }
+
+    .gap-2 {
+      gap: 8px;
+    }
+
+    .gap-3 {
+      gap: 12px;
+    }
+
+    .gap-4 {
+      gap: 16px;
+    }
+
+    /* Button Styles */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+    }
+
+    .btn-secondary {
+      background: var(--bg-surface);
+      border-color: var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-surface-light);
+      border-color: #475569;
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+    }
+
+    .btn-danger:hover {
+      background: linear-gradient(135deg, #f87171, #ef4444);
+    }
+
+    .btn-amber {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #fff;
+    }
+
+    .btn-emerald {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border-color: transparent;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 12px;
+      border-radius: 6px;
+    }
+
+    .btn-icon {
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      border-radius: 8px;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .badge-paid {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .badge-pending {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .badge-critical {
+      background: rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      animation: pulseAlert 2s infinite;
+    }
+
+    .badge-warning {
+      background: rgba(245, 158, 11, 0.2);
+      color: #fcd34d;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .badge-info {
+      background: rgba(59, 130, 246, 0.2);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+    }
+
+    .badge-active {
+      background: rgba(6, 182, 212, 0.2);
+      color: #67e8f9;
+      border: 1px solid rgba(6, 182, 212, 0.4);
+    }
+
+    .badge-resolved {
+      background: rgba(16, 185, 129, 0.2);
+      color: #6ee7b7;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .badge-campus {
+      background: rgba(139, 92, 246, 0.15);
+      color: #c4b5fd;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+
+    @keyframes pulseAlert {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.85;
+        transform: scale(1.02);
+      }
+    }
+
+    /* Auth Screen */
+    #auth-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 24px;
+      background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #090d16 80%);
+      position: relative;
+      z-index: 10;
+    }
+
+    .auth-box {
+      width: 100%;
+      max-width: 440px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-xl);
+      padding: 36px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+
+    .brand-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 26px;
+      font-weight: 800;
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
+
+    .brand-logo span {
+      color: #fff;
+    }
+
+    .auth-subtitle {
+      color: var(--text-muted);
+      font-size: 13.5px;
+      margin-bottom: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .form-control {
+      width: 100%;
+      background: #1e293b;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: #fff;
+      padding: 10px 14px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-control:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+
+    select.form-control {
+      cursor: pointer;
+    }
+
+    .role-quick-chips {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      background: #1e293b;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    .chip:hover,
+    .chip.active {
+      background: rgba(37, 99, 235, 0.2);
+      border-color: var(--primary);
+      color: #93c5fd;
+    }
+
+    /* Main App Container */
+    #app-container {
+      display: none;
+      min-height: 100vh;
+      flex-direction: row;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 270px;
+      background: #090e1c;
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      transition: width 0.3s;
+      z-index: 20;
+    }
+
+    .sidebar-brand {
+      padding: 24px 20px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-brand h2 {
+      font-size: 20px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidebar-brand span.ver {
+      font-size: 10px;
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .sidebar-college-badge {
+      margin: 14px 16px 8px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-sm);
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    .sidebar-college-badge strong {
+      color: #cbd5e1;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+      padding: 12px 10px;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .sidebar-nav-title {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      padding: 12px 14px 6px;
+    }
+
+    .sidebar-nav li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10.5px 14px;
+      margin-bottom: 3px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-size: 13.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .sidebar-nav li:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+    }
+
+    .sidebar-nav li.active {
+      background: linear-gradient(90deg, rgba(37, 99, 235, 0.25), rgba(37, 99, 235, 0.05));
+      color: #60a5fa;
+      font-weight: 600;
+      border-left: 3px solid #3b82f6;
+    }
+
+    .sidebar-nav li .nav-icon {
+      font-size: 17px;
+      width: 22px;
+      text-align: center;
+    }
+
+    .nav-badge-alert {
+      margin-left: auto;
+      background: #ef4444;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 1px 7px;
+      border-radius: 10px;
+      animation: pulseAlert 1.8s infinite;
+    }
+
+    .sidebar-hardware-box {
+      margin: 12px 14px;
+      padding: 12px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(6, 182, 212, 0.2);
+      border-radius: var(--radius-sm);
+    }
+
+    .hw-status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      color: #67e8f9;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    .status-dot.blink {
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.3;
+      }
+    }
+
+    /* Main Content Wrapper */
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    /* Top Header Bar */
+    .top-header {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 15;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .system-mode-tag {
+      font-size: 12px;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.04);
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .role-switcher-dropdown {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+    }
+
+    .role-switcher-dropdown select {
+      background: transparent;
+      border: none;
+      color: #38bdf8;
+      font-weight: 700;
+      font-size: 13px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .user-profile-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-left: 8px;
+      border-left: 1px solid var(--border-color);
+    }
+
+    .avatar-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: #fff;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      box-shadow: 0 2px 10px rgba(59, 130, 246, 0.4);
+    }
+
+    /* Content Body & Pages */
+    .content-body {
+      padding: 28px;
+      flex: 1;
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn 0.25s ease forwards;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Cards and Grids */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-subtitle {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.8), rgba(30, 58, 138, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><path d="M0 0h80v80H0z" fill="none"/><path d="M80 0v80H0" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/></svg>');
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-xl);
+      padding: 30px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.25);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .hero-content h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-content p {
+      color: #bfdbfe;
+      font-size: 14px;
+      max-width: 620px;
+      line-height: 1.5;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* Stats Grid */
+    .grid-five {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      transition: transform 0.2s, border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--stat-accent, #3b82f6);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stat-value {
+      font-size: 30px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+
+    .stat-sub {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .grid-three {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    /* Alerts UI */
+    .alert-card-item {
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      margin-bottom: 14px;
+      border: 1px solid transparent;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .alert-critical-card {
+      background: rgba(239, 68, 68, 0.08);
+      border-color: rgba(239, 68, 68, 0.3);
+      border-left: 4px solid #ef4444;
+    }
+
+    .alert-warning-card {
+      background: rgba(245, 158, 11, 0.08);
+      border-color: rgba(245, 158, 11, 0.3);
+      border-left: 4px solid #f59e0b;
+    }
+
+    .alert-info-card {
+      background: rgba(59, 130, 246, 0.08);
+      border-color: rgba(59, 130, 246, 0.3);
+      border-left: 4px solid #3b82f6;
+    }
+
+    .alert-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .alert-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .alert-desc {
+      font-size: 13px;
+      color: #cbd5e1;
+      line-height: 1.4;
+    }
+
+    .alert-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .alert-actions-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    /* Campus Distribution Bars */
+    .campus-progress-item {
+      margin-bottom: 14px;
+    }
+
+    .campus-progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12.5px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background: var(--bg-surface);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Route Cards Grid */
+    .routes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .route-spec-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .route-spec-card:hover {
+      border-color: #3b82f6;
+      background: rgba(30, 41, 59, 0.9);
+      transform: translateY(-2px);
+    }
+
+    .route-spec-card.selected {
+      border-color: #38bdf8;
+      box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    /* Live Map Container */
+    #liveMapElement {
+      width: 100%;
+      height: 480px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      background: #0f172a;
+      z-index: 1;
+    }
+
+    .map-telemetry-hud {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      margin-top: 14px;
+    }
+
+    .hud-metric {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hud-metric-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .hud-metric-val {
+      font-size: 15px;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-top: 2px;
+    }
+
+    /* ESP32 Hardware Console */
+    .telemetry-terminal {
+      background: #060911;
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      margin-top: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #a5f3fc;
+      max-height: 180px;
+      overflow-y: auto;
+      line-height: 1.6;
+    }
+
+    .terminal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--accent-cyan);
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      border-bottom: 1px dashed rgba(6, 182, 212, 0.2);
+      padding-bottom: 4px;
+    }
+
+    /* Table Styles */
+    .table-container {
+      overflow-x: auto;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+    }
+
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      min-width: 900px;
+    }
+
+    table.data-table th {
+      background: #111c33;
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    table.data-table td {
+      padding: 12px 16px;
+      font-size: 13.5px;
+      color: #e2e8f0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      vertical-align: middle;
+    }
+
+    table.data-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Modals */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 540px;
+      padding: 28px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .modal-close-btn:hover {
+      color: #fff;
+    }
+
+    /* Student Digital Pass Modal */
+    .bus-pass-card {
+      background: linear-gradient(145deg, #1e3a8a, #0f172a);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    }
+
+    .pass-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+
+    /* Toast Notification */
+    #toastNotification {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 200;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: none;
+    }
+
+    #toastNotification.show {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Offline banner */
+    .offline-alert-banner {
+      display: none;
+      background: linear-gradient(90deg, #b91c1c, #991b1b);
+      color: #fff;
+      padding: 8px 16px;
+      font-size: 12.5px;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: 0.3px;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .sidebar {
+        width: 80px;
+      }
+
+      .sidebar-brand h2 span.text,
+      .sidebar-nav-title,
+      .sidebar-nav li span.nav-text,
+      .sidebar-college-badge,
+      .sidebar-hardware-box {
+        display: none;
+      }
+
+      .sidebar-brand {
+        justify-content: center;
+        padding: 20px 0;
+      }
+
+      .sidebar-nav li {
+        justify-content: center;
+        padding: 14px 0;
+      }
+
+      .grid-two {
+        grid-template-columns: 1fr;
+      }
+
+      .content-body {
+        padding: 18px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      #app-container {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .sidebar-nav {
+        display: flex;
+        overflow-x: auto;
+        padding: 8px;
+      }
+
+      .sidebar-nav li {
+        flex-shrink: 0;
+        padding: 8px 12px;
+      }
+
+      .top-header {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .hero-banner {
+        padding: 20px;
+      }
+
+      .hero-content h1 {
+        font-size: 21px;
+      }
+    }
+
+    /* Leaflet Custom Map Marker Style */
+    .bus-leaflet-icon {
+      background: #2563eb;
+      border: 2px solid #ffffff;
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      box-shadow: 0 0 15px rgba(37, 99, 235, 0.8), 0 0 30px rgba(37, 99, 235, 0.5);
+      animation: pulseBus 2s infinite;
+    }
+
+    @keyframes pulseBus {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
+      }
+
+      70% {
+        box-shadow: 0 0 0 14px rgba(37, 99, 235, 0);
+      }
+    }
+
+    .stop-leaflet-icon {
+      background: #0f172a;
+      border: 2px solid #38bdf8;
+      color: #38bdf8;
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    .campus-leaflet-icon {
+      background: #8b5cf6;
+      border: 2px solid #ffffff;
+      color: #ffffff;
+      border-radius: 50%;
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px rgba(139, 92, 246, 0.8);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Offline Notice Banner (PRD 7.5 & 14) -->
+  <div id="gpsOfflineBanner" class="offline-alert-banner">
+    ⚠️ DRIVER SMARTPHONE GPS OFFLINE — Displaying last known phone coordinates (Lat: 17.5401° N, Long: 78.4902° E) •
+    Timestamp: 14:02:18 IST
+  </div>
+
+  <!-- AUTH SCREEN -->
+  <div id="auth-container">
+    <div class="auth-box">
+      <div class="brand-logo">
+        🚌 <span>Route<b style="color:#38bdf8">IQ</b></span>
+      </div>
+      <p class="auth-subtitle">Smart College Bus Tracking & Incident Management System<br /><span
+          style="color:#38bdf8;font-size:12px;">CMR Group of Institutions (CMRCET • CMREC • CMRIT)</span></p>
+
+      <div class="form-group">
+        <label>College Email or User ID</label>
+        <input type="text" id="loginEmail" class="form-control" value="admin@cmrcet.ac.in" />
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPass" class="form-control" value="12345" />
+      </div>
+
+      <div class="form-group">
+        <label>Select Active Role</label>
+        <select id="loginRole" class="form-control" onchange="updateRolePreset(this.value)">
+          <option value="Admin">Transport Administrator (Full Control)</option>
+          <option value="Driver">Bus Driver (Phone GPS Live Sharing & SOS)</option>
+          <option value="Student">Student (Route Tracking & Bus Pass)</option>
+          <option value="Incharge">Bus Incharge / Manager (Roster & Alerts)</option>
+          <option value="Emergency">Emergency Coordinator (Incident Dispatch)</option>
+        </select>
+        <div class="role-quick-chips">
+          <span class="chip" onclick="quickFillCredentials('Admin')">👑 Admin</span>
+          <span class="chip" onclick="quickFillCredentials('Driver')">🚌 Driver</span>
+          <span class="chip" onclick="quickFillCredentials('Student')">🎓 Student</span>
+          <span class="chip" onclick="quickFillCredentials('Incharge')">📞 Incharge</span>
+          <span class="chip" onclick="quickFillCredentials('Emergency')">🚨 Emergency</span>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-primary" style="width:100%;margin-top:10px;padding:12px;"
+        onclick="doLogin()">
+        Enter RouteIQ App →
+      </button>
+
+      <!-- Official Login Credentials Card -->
+      <div
+        style="background: rgba(30, 41, 59, 0.7); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px; margin-top: 20px; text-align: left;">
+        <div
+          style="font-size: 11.5px; font-weight: 700; color: #38bdf8; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; justify-content: space-between; align-items: center;">
+          <span>🔑 Official Login Credentials</span>
+          <span style="color: var(--text-dim); font-size: 10px;">Click row to auto-fill</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div onclick="quickFillCredentials('Admin')"
+            style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.6); padding: 7px 10px; border-radius: 6px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); transition: 0.15s;">
+            <div><b style="color: #60a5fa">👑 Admin:</b> <span class="mono"
+                style="color: #cbd5e1">admin@cmrcet.ac.in</span></div>
+            <span class="mono" style="color: #94a3b8; font-size: 11px;">pass: admin123</span>
+          </div>
+
+          <div onclick="quickFillCredentials('Driver')"
+            style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.6); padding: 7px 10px; border-radius: 6px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); transition: 0.15s;">
+            <div><b style="color: #34d399">🚌 Driver:</b> <span class="mono"
+                style="color: #cbd5e1">driver.route16@cmrgi.ac.in</span></div>
+            <span class="mono" style="color: #94a3b8; font-size: 11px;">pass: driver123</span>
+          </div>
+
+          <div onclick="quickFillCredentials('Student')"
+            style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.6); padding: 7px 10px; border-radius: 6px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); transition: 0.15s;">
+            <div><b style="color: #c084fc">🎓 Student:</b> <span class="mono"
+                style="color: #cbd5e1">student.cse@cmrcet.ac.in</span></div>
+            <span class="mono" style="color: #94a3b8; font-size: 11px;">pass: student123</span>
+          </div>
+
+          <div onclick="quickFillCredentials('Incharge')"
+            style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.6); padding: 7px 10px; border-radius: 6px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); transition: 0.15s;">
+            <div><b style="color: #fbbf24">📞 Incharge:</b> <span class="mono"
+                style="color: #cbd5e1">incharge.cmrec@cmrgi.ac.in</span></div>
+            <span class="mono" style="color: #94a3b8; font-size: 11px;">pass: incharge123</span>
+          </div>
+
+          <div onclick="quickFillCredentials('Emergency')"
+            style="cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.6); padding: 7px 10px; border-radius: 6px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); transition: 0.15s;">
+            <div><b style="color: #f87171">🚨 Emergency:</b> <span class="mono"
+                style="color: #cbd5e1">emergency.desk@cmrgi.ac.in</span></div>
+            <span class="mono" style="color: #94a3b8; font-size: 11px;">pass: emergency123</span>
+          </div>
+        </div>
+      </div>
+
+      <p style="text-align:center;margin-top:16px;font-size:12px;color:var(--text-dim)">
+        📱 Pure Mobile App Mode: Uses Driver Phone GPS • Zero External ESP32 Hardware Needed
+      </p>
+    </div>
+  </div>
+
+  <!-- MAIN APP CONTAINER -->
+  <div id="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h2>🚌 <span class="text">Route<b>IQ</b></span></h2>
+        <span class="ver">v2.4 IoT</span>
+      </div>
+
+      <div class="sidebar-college-badge">
+        <strong>CMR Group of Institutions</strong><br />
+        Kandlakoya, Medchal Road, Hyderabad
+      </div>
+
+      <ul class="sidebar-nav">
+        <div class="sidebar-nav-title">Fleet Monitoring</div>
+        <li class="active" onclick="switchPage('overview', this)">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Dashboard Overview</span>
+        </li>
+        <li onclick="switchPage('live-tracking', this)">
+          <span class="nav-icon">📍</span>
+          <span class="nav-text">Live GPS Tracking</span>
+        </li>
+        <li onclick="switchPage('routes-mgmt', this)">
+          <span class="nav-icon">🛣️</span>
+          <span class="nav-text">Route & Stop Details</span>
+        </li>
+
+        <div class="sidebar-nav-title">Student Services</div>
+        <li onclick="switchPage('students', this)">
+          <span class="nav-icon">👥</span>
+          <span class="nav-text">Student Transport (200)</span>
+        </li>
+
+        <div class="sidebar-nav-title">Incident Command</div>
+        <li onclick="switchPage('alerts', this)">
+          <span class="nav-icon">⚠️</span>
+          <span class="nav-text">Incident & Alerts</span>
+          <span id="sidebarAlertBadge" class="nav-badge-alert">2</span>
+        </li>
+        <li onclick="switchPage('incharge', this)">
+          <span class="nav-icon">📞</span>
+          <span class="nav-text">Incharge & Emergency</span>
+        </li>
+
+        <div class="sidebar-nav-title">Driver & Telemetry</div>
+        <li onclick="switchPage('driver-cockpit', this)">
+          <span class="nav-icon">🎛️</span>
+          <span class="nav-text">Driver SOS & Cockpit</span>
+        </li>
+      </ul>
+
+      <!-- Driver Phone GPS Status Box in Sidebar -->
+      <div class="sidebar-hardware-box">
+        <div class="hw-status-indicator">
+          <div id="sidebarHwDot" class="status-dot blink"></div>
+          <span id="sidebarHwLabel">Driver Phone GPS: Active</span>
+        </div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:4px;">
+          Android GNSS Stream • No ESP32 Needed
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      <!-- Top Sticky Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <span class="system-mode-tag">
+            <span style="color:#10b981">●</span> Fleet Live • CMRGI Central Fleet
+          </span>
+          <button class="btn btn-secondary btn-sm" onclick="openReportAlertModal()">
+            🚨 Report Alert
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="openAppInstallModal()"
+            style="border-color:#38bdf8;color:#38bdf8;background:rgba(56,189,248,0.1)">
+            📲 Install Android App
+          </button>
+        </div>
+
+        <div class="header-right">
+          <!-- Role Switcher -->
+          <div class="role-switcher-dropdown">
+            <span style="font-size:11.5px;color:var(--text-muted)">Role:</span>
+            <select id="topRoleSelect" onchange="changeRole(this.value)">
+              <option value="Admin">Administrator</option>
+              <option value="Student">Student</option>
+              <option value="Driver">Bus Driver</option>
+              <option value="Incharge">Bus Incharge</option>
+              <option value="Emergency">Emergency Coord</option>
+            </select>
+          </div>
+
+          <!-- Notification Sound Toggle -->
+          <button class="btn btn-secondary btn-icon" title="Toggle Alert Sound" onclick="toggleMute(this)">
+            🔔
+          </button>
+
+          <!-- User Profile -->
+          <div class="user-profile-badge">
+            <div class="avatar-circle" id="userAvatar">A</div>
+            <div style="display:flex;flex-direction:column;">
+              <span id="userNameLabel" style="font-weight:700;font-size:13px;color:#fff">Transport Admin</span>
+              <span id="userSubRole" style="font-size:11px;color:var(--text-muted)">CMRGI Transport Dept</span>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="doLogout()" style="margin-left:8px;" title="Logout">
+              Logout
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Pages -->
+      <div class="content-body">
+
+        <!-- ================= PAGE 1: OVERVIEW ================= -->
+        <section id="overview" class="page active">
+          <!-- Hero Banner -->
+          <div class="hero-banner">
+            <div class="hero-content">
+              <h1>Track your bus. Travel smarter.</h1>
+              <p>
+                One centralized platform for real-time ESP32 GPS tracking, route passenger capacity, campus
+                distribution, and automated breakdown incident broadcasting across CMRCET, CMREC, and CMRIT.
+              </p>
+            </div>
+            <div class="hero-actions">
+              <button class="btn btn-primary"
+                onclick="switchPage('live-tracking', document.querySelectorAll('.sidebar-nav li')[1])">
+                📍 Open Live GPS Map
+              </button>
+              <button class="btn btn-secondary" onclick="openReportAlertModal()">
+                ⚠️ Report Breakdown / Delay
+              </button>
+            </div>
+          </div>
+
+          <!-- Key Metrics Grid (PRD 7.1) -->
+          <div class="grid-five">
+            <div class="stat-card" style="--stat-accent:#3b82f6;">
+              <div class="stat-label">Configured Buses <span>🚌</span></div>
+              <div class="stat-value">4</div>
+              <div class="stat-sub">Across 4 active routes</div>
+            </div>
+            <div class="stat-card" style="--stat-accent:#10b981;">
+              <div class="stat-label">Active Routes <span>🛣️</span></div>
+              <div class="stat-value">4</div>
+              <div class="stat-sub">100% operational status</div>
+            </div>
+            <div class="stat-card" style="--stat-accent:#8b5cf6;">
+              <div class="stat-label">Registered Students <span>👥</span></div>
+              <div class="stat-value" id="statStudentCount">200</div>
+              <div class="stat-sub">50 students per bus (Full)</div>
+            </div>
+            <div class="stat-card" style="--stat-accent:#06b6d4;">
+              <div class="stat-label">Monitored Stops <span>🚏</span></div>
+              <div class="stat-value">29</div>
+              <div class="stat-sub">Hyderabad metropolitan area</div>
+            </div>
+            <div class="stat-card" style="--stat-accent:#ef4444;">
+              <div class="stat-label">Active Alerts <span>🚨</span></div>
+              <div class="stat-value" id="statAlertCount" style="color:#f87171">2</div>
+              <div class="stat-sub" style="color:#f87171">Requires response</div>
+            </div>
+          </div>
+
+          <!-- Two Column: Campus Distribution + Latest Alerts -->
+          <div class="grid-two">
+            <!-- Campus Passenger Distribution -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">🏫 Campus-wise Passenger Distribution</div>
+                  <div class="card-subtitle">Based on 200 registered students across CMR Group</div>
+                </div>
+                <span class="badge badge-campus">3 Campuses</span>
+              </div>
+
+              <div class="campus-progress-item">
+                <div class="campus-progress-label">
+                  <span style="color:#60a5fa">CMRCET (CMR College of Eng. & Tech.)</span>
+                  <span id="cmrcetCountBadge">67 Passengers (33.5%)</span>
+                </div>
+                <div class="progress-bar-container">
+                  <div class="progress-bar-fill" style="width:33.5%;background:#3b82f6;"></div>
+                </div>
+              </div>
+
+              <div class="campus-progress-item">
+                <div class="campus-progress-label">
+                  <span style="color:#34d399">CMREC (CMR Engineering College)</span>
+                  <span id="cmrecCountBadge">67 Passengers (33.5%)</span>
+                </div>
+                <div class="progress-bar-container">
+                  <div class="progress-bar-fill" style="width:33.5%;background:#10b981;"></div>
+                </div>
+              </div>
+
+              <div class="campus-progress-item">
+                <div class="campus-progress-label">
+                  <span style="color:#c084fc">CMRIT (CMR Institute of Technology)</span>
+                  <span id="cmritCountBadge">66 Passengers (33.0%)</span>
+                </div>
+                <div class="progress-bar-container">
+                  <div class="progress-bar-fill" style="width:33.0%;background:#a855f7;"></div>
+                </div>
+              </div>
+
+              <div
+                style="background:rgba(255,255,255,0.02);padding:12px;border-radius:var(--radius-sm);margin-top:16px;border:1px solid var(--border-color);display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:12.5px;color:var(--text-muted)">Total Bus Seat Utilization</span>
+                <span style="font-weight:700;color:#10b981;font-size:14px">200 / 200 Seats (100%)</span>
+              </div>
+            </div>
+
+            <!-- Active Alerts Panel -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">🚨 Active Transport Alerts</div>
+                  <div class="card-subtitle">Real-time breakdown and delay notifications</div>
+                </div>
+                <button class="btn btn-secondary btn-sm"
+                  onclick="switchPage('alerts', document.querySelectorAll('.sidebar-nav li')[4])">
+                  View All Alerts →
+                </button>
+              </div>
+
+              <div id="overviewAlertsContainer">
+                <!-- Injected via JavaScript -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Route Overview Cards -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">🛣️ Configured Fleet Routes Overview</div>
+                <div class="card-subtitle">Live bus status, capacity meters, and stop sequence</div>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-secondary btn-sm"
+                  onclick="switchPage('students', document.querySelectorAll('.sidebar-nav li')[3])">
+                  Manage Passengers
+                </button>
+              </div>
+            </div>
+
+            <div class="routes-grid" id="overviewRoutesGrid">
+              <!-- Injected dynamically -->
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ================= PAGE 2: LIVE GPS TRACKING ================= -->
+        <section id="live-tracking" class="page">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">📍 Live GPS Fleet Tracking (Driver Smartphone GNSS)</div>
+                <div class="card-subtitle">Connected to Driver Android Phone GPS Stream • Zero External ESP32 Hardware
+                  Required</div>
+              </div>
+              <!-- Controls -->
+              <div class="flex gap-2" style="flex-wrap:wrap;">
+                <button class="btn btn-secondary btn-sm" id="btnSimToggle" onclick="toggleSimulation()">
+                  ⏸️ Pause Simulation
+                </button>
+                <button class="btn btn-secondary btn-sm" onclick="stepBusForward()">
+                  ⏭️ Step Stop
+                </button>
+                <button class="btn btn-danger btn-sm" onclick="toggleGpsLoss()">
+                  📡 Simulate GPS Loss
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="openPayloadModal()">
+                  ⚡ Inject Packet
+                </button>
+              </div>
+            </div>
+
+            <!-- Selector Bar -->
+            <div class="flex items-center gap-3"
+              style="margin-bottom:16px;flex-wrap:wrap;background:var(--bg-surface);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border-color);">
+              <div class="flex items-center gap-2">
+                <label style="font-weight:700;color:var(--text-muted);font-size:12.5px;">Active Route:</label>
+                <select id="mapRouteSelect" class="form-control" style="width:auto;min-width:210px;"
+                  onchange="selectMapRoute(this.value)">
+                  <option value="Route 03">Route 03 (Radhika → CMRGI)</option>
+                  <option value="Route 16" selected>Route 16 (Ramanthapur → CMRGI)</option>
+                  <option value="Route 19A">Route 19A (Ameerpet → CMRGI)</option>
+                  <option value="Route 25">Route 25 (KPHB → CMRGI)</option>
+                </select>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <span style="font-size:12px;color:var(--text-muted)">Simulation Speed:</span>
+                <button class="btn btn-secondary btn-sm" style="padding:4px 8px;" onclick="setSimSpeed(1)">1x</button>
+                <button class="btn btn-secondary btn-sm" style="padding:4px 8px;" onclick="setSimSpeed(2)">2x</button>
+                <button class="btn btn-secondary btn-sm" style="padding:4px 8px;" onclick="setSimSpeed(5)">5x</button>
+              </div>
+
+              <div style="margin-left:auto;font-size:12.5px;color:#38bdf8;" id="mapRoutePlateBadge">
+                Bus: <b>TS-08-UB-4516</b> • CMRCET
+              </div>
+            </div>
+
+            <!-- Leaflet Map Container -->
+            <div id="liveMapElement"></div>
+
+            <!-- Telemetry HUD Bar (PRD 7.5) -->
+            <div class="map-telemetry-hud">
+              <div class="hud-metric">
+                <div class="hud-metric-label">Vehicle Velocity</div>
+                <div class="hud-metric-val" id="hudSpeed">36.4 km/h</div>
+              </div>
+              <div class="hud-metric">
+                <div class="hud-metric-label">Current Latitude</div>
+                <div class="hud-metric-val mono" id="hudLat">17.4330° N</div>
+              </div>
+              <div class="hud-metric">
+                <div class="hud-metric-label">Current Longitude</div>
+                <div class="hud-metric-val mono" id="hudLng">78.5080° E</div>
+              </div>
+              <div class="hud-metric">
+                <div class="hud-metric-label">Next Approaching Stop</div>
+                <div class="hud-metric-val" id="hudNextStop" style="color:#60a5fa">Sitafalmandi</div>
+              </div>
+              <div class="hud-metric">
+                <div class="hud-metric-label">ETA to Destination</div>
+                <div class="hud-metric-val" id="hudEta">22 Mins</div>
+              </div>
+              <div class="hud-metric">
+                <div class="hud-metric-label">Driver Phone GPS Accuracy</div>
+                <div class="hud-metric-val" id="hudFixStatus" style="color:#10b981">± 3.2m (Phone GNSS)</div>
+              </div>
+            </div>
+
+            <!-- Raw ESP32 JSON Stream (PRD 12) -->
+            <div class="telemetry-terminal">
+              <div class="terminal-header">
+                <span>📱 DRIVER PHONE GPS TELEMETRY STREAM (Android Geolocation API / WebSockets)</span>
+                <span id="telemetryPacketCount">Packets: 184</span>
+              </div>
+              <pre id="telemetryRawLog">{ "status": "listening for ESP32 packets..." }</pre>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ================= PAGE 3: ROUTE & STOP DETAILS ================= -->
+        <section id="routes-mgmt" class="page">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">🛣️ Route & Stop Management (29 Configured Stops)</div>
+                <div class="card-subtitle">Sequence numbers, geographic coordinates, and bus incharge allocations</div>
+              </div>
+              <div class="flex gap-2">
+                <select id="routeDetailFilter" class="form-control" style="width:auto;"
+                  onchange="renderRouteDetailsTable(this.value)">
+                  <option value="ALL">Show All 4 Routes</option>
+                  <option value="Route 03">Route 03 (Radhika → CMRGI)</option>
+                  <option value="Route 16">Route 16 (Ramanthapur → CMRGI)</option>
+                  <option value="Route 19A">Route 19A (Ameerpet → CMRGI)</option>
+                  <option value="Route 25">Route 25 (KPHB → CMRGI)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Route</th>
+                    <th>Bus Plate</th>
+                    <th>Seq #</th>
+                    <th>Stop Name</th>
+                    <th>Campus Destination</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Assigned Incharge</th>
+                  </tr>
+                </thead>
+                <tbody id="routeStopsTableBody">
+                  <!-- Injected via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ================= PAGE 4: STUDENT TRANSPORT RECORDS ================= -->
+        <section id="students" class="page">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">👥 Student Transport Records (200 Total Registered)</div>
+                <div class="card-subtitle">Verify bus capacity, receipt numbers, fee statuses, and boarding points</div>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-secondary btn-sm" onclick="exportStudentsCSV()">
+                  📥 Export CSV
+                </button>
+                <button class="btn btn-primary btn-sm" onclick="openAddStudentModal()">
+                  + Register New Student
+                </button>
+              </div>
+            </div>
+
+            <!-- Filter Controls Bar -->
+            <div class="flex items-center gap-3" style="margin-bottom:18px;flex-wrap:wrap;">
+              <div class="form-group" style="margin-bottom:0;min-width:200px;">
+                <label style="font-size:11.5px;">Filter by Bus Route:</label>
+                <select id="studentRouteFilter" class="form-control" onchange="renderStudentsTable()">
+                  <option value="Route 03">Route 03 (Bus TS-08-UB-4503 • CMREC)</option>
+                  <option value="Route 16" selected>Route 16 (Bus TS-08-UB-4516 • CMRCET)</option>
+                  <option value="Route 19A">Route 19A (Bus TS-08-UB-4519 • CMRCET)</option>
+                  <option value="Route 25">Route 25 (Bus TS-08-UB-4525 • CMRIT)</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="margin-bottom:0;min-width:140px;">
+                <label style="font-size:11.5px;">Fee Status:</label>
+                <select id="studentFeeFilter" class="form-control" onchange="renderStudentsTable()">
+                  <option value="ALL">All Fees</option>
+                  <option value="Paid">Paid Only</option>
+                  <option value="Pending">Pending Only</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="margin-bottom:0;flex:1;min-width:220px;">
+                <label style="font-size:11.5px;">Search Student Database:</label>
+                <input type="text" id="studentSearchInput" class="form-control"
+                  placeholder="Search by name, roll no, department, or stop..." onkeyup="renderStudentsTable()" />
+              </div>
+            </div>
+
+            <!-- Capacity Notice Banner -->
+            <div
+              style="background:var(--bg-surface);padding:12px 18px;border-radius:var(--radius-sm);margin-bottom:16px;border:1px solid var(--border-color);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+              <div>
+                <span style="font-size:13px;color:var(--text-muted)">Displaying:</span>
+                <strong id="studentDisplayCountBadge" style="color:#38bdf8;font-size:14px;margin-left:4px;">50</strong>
+                students
+                <span style="color:var(--text-dim);font-size:12px;margin-left:6px;">(Configured bus capacity: 50
+                  seats)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span style="font-size:12px;color:var(--text-muted)">Bus Allocation:</span>
+                <span class="badge badge-info" id="studentRouteCapacityBadge">50 / 50 Allocated (100%)</span>
+              </div>
+            </div>
+
+            <!-- Student Table -->
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Student Name</th>
+                    <th>Roll Number</th>
+                    <th>Year</th>
+                    <th>Department</th>
+                    <th>Campus</th>
+                    <th>Receipt No.</th>
+                    <th>Boarding Stop</th>
+                    <th>Fee Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="studentsTableBody">
+                  <!-- Dynamically rendered -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ================= PAGE 5: INCIDENTS & BREAKDOWN ALERTS ================= -->
+        <section id="alerts" class="page">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">⚠️ Incident & Delay Alert Management</div>
+                <div class="card-subtitle">Real-time breakdown alerts, traffic delays, and emergency manager dispatch
+                </div>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-secondary btn-sm" onclick="filterAlertsByStatus('ALL')">All</button>
+                <button class="btn btn-secondary btn-sm" onclick="filterAlertsByStatus('Active')">Active</button>
+                <button class="btn btn-secondary btn-sm"
+                  onclick="filterAlertsByStatus('Acknowledged')">Acknowledged</button>
+                <button class="btn btn-secondary btn-sm" onclick="filterAlertsByStatus('Resolved')">Resolved</button>
+                <button class="btn btn-primary btn-sm" onclick="openReportAlertModal()">
+                  + Create New Alert
+                </button>
+              </div>
+            </div>
+
+            <!-- Alert Workflow Explanation Card (PRD 7.4) -->
+            <div
+              style="background:rgba(30, 41, 59, 0.7);border:1px dashed rgba(255, 255, 255, 0.1);padding:14px 20px;border-radius:var(--radius-md);margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+              <div>
+                <strong style="color:#38bdf8;font-size:13px;">RouteIQ Incident Response Lifecycle:</strong>
+                <span style="font-size:12.5px;color:var(--text-muted);margin-left:8px;">
+                  1. Fault Detected → 2. Driver / ESP32 Trigger → 3. Broadcast to Dashboard → 4. Incharge Acknowledgment
+                  → 5. Relief Bus Dispatch → 6. Resolved
+                </span>
+              </div>
+              <span class="badge badge-warning">Active Protocols Enabled</span>
+            </div>
+
+            <div id="fullAlertsListContainer">
+              <!-- Dynamically rendered alerts -->
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ================= PAGE 6: INCHARGE & EMERGENCY CONTACTS ================= -->
+        <section id="incharge" class="page">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">📞 Route Incharge & Emergency Contact Directory</div>
+                <div class="card-subtitle">Route-wise responsible coordinators, central security desk, and direct
+                  calling</div>
+              </div>
+              <div class="flex gap-2">
+                <button class="btn btn-danger btn-sm"
+                  onclick="simulateCall('Central Security Control Room', '+91 9100000002')">
+                  🚨 Call Campus Security
+                </button>
+              </div>
+            </div>
+
+            <!-- Route Managers Table -->
+            <div class="table-container" style="margin-bottom:24px;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Incharge Name</th>
+                    <th>Contact Phone</th>
+                    <th>Campus</th>
+                    <th>Assigned Route</th>
+                    <th>Designation</th>
+                    <th>Availability</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="inchargeTableBody">
+                  <!-- Injected via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Central Emergency Response Grid -->
+            <h3 style="font-size:15px;margin-bottom:12px;color:#fff;">Central Campus Emergency Escalation Numbers</h3>
+            <div class="grid-three">
+              <div
+                style="background:var(--bg-surface);padding:16px;border-radius:var(--radius-md);border:1px solid var(--border-color);">
+                <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:700;">Chief
+                  Transport Officer</div>
+                <div style="font-size:15px;font-weight:700;color:#fff;margin:4px 0;">Mr. K Murthy</div>
+                <div class="mono" style="color:#60a5fa;font-size:13px;margin-bottom:10px;">+91 98492 93165</div>
+                <button class="btn btn-secondary btn-sm"
+                  onclick="simulateCall('Mr. K Murthy (Transport Officer)', '+91 98492 93165')">
+                  📞 Contact Desk
+                </button>
+              </div>
+
+              <div
+                style="background:var(--bg-surface);padding:16px;border-radius:var(--radius-md);border:1px solid var(--border-color);">
+                <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:700;">Campus
+                  Security & Control Desk</div>
+                <div style="font-size:15px;font-weight:700;color:#fff;margin:4px 0;">24x7 Security Gate 1</div>
+                <div class="mono" style="color:#60a5fa;font-size:13px;margin-bottom:10px;">+91 91000 00002</div>
+                <button class="btn btn-secondary btn-sm"
+                  onclick="simulateCall('Campus Security Gate 1', '+91 91000 00002')">
+                  📞 Call Security
+                </button>
+              </div>
+
+              <div
+                style="background:var(--bg-surface);padding:16px;border-radius:var(--radius-md);border:1px solid var(--border-color);">
+                <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;font-weight:700;">Medical &
+                  First Aid Response</div>
+                <div style="font-size:15px;font-weight:700;color:#fff;margin:4px 0;">CMR Health Center(Hospital)</div>
+                <div class="mono" style="color:#60a5fa;font-size:13px;margin-bottom:10px;">+91 9988448777</div>
+                <button class="btn btn-secondary btn-sm"
+                  onclick="simulateCall('CMR Health Center(Hospital)', '+91 9988448777')">
+                  🚑 Call First Aid
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ================= PAGE 7: DRIVER COCKPIT & SOS ================= -->
+        <section id="driver-cockpit" class="page">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">🎛️ Driver Cockpit & Emergency SOS Dispatch</div>
+                <div class="card-subtitle">Designed for tablet/mobile in-cabin driver mounting • Fast one-touch alert
+                  reporting</div>
+              </div>
+              <span class="badge badge-active">Bus TS-08-UB-4516 (Route 16)</span>
+            </div>
+
+            <!-- Smartphone Live GPS Sharing Card (No ESP32 Hardware Needed!) -->
+            <div
+              style="background: linear-gradient(145deg, rgba(16, 185, 129, 0.15), rgba(15, 23, 42, 0.95)); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: var(--radius-lg); padding: 22px; margin-bottom: 24px;">
+              <div
+                style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 22px;">📱</span>
+                    <h3 style="font-size: 18px; font-weight: 800; color: #fff;">Driver Smartphone GPS Transponder</h3>
+                    <span class="badge" id="driverPhoneGpsBadge"
+                      style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4);">Phone
+                      GPS Ready</span>
+                  </div>
+                  <p style="font-size: 13px; color: #cbd5e1; margin-top: 4px;">
+                    Broadcasts your Android phone\'s live satellite location to the college tracking dashboard. <b>Zero
+                      external ESP32 or GPS hardware required!</b>
+                  </p>
+                </div>
+
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                  <button id="btnTogglePhoneGps" class="btn btn-emerald"
+                    style="padding: 12px 22px; font-size: 14px; font-weight: 700;"
+                    onclick="togglePhoneGpsTransmission()">
+                    📡 Start Live Location Sharing
+                  </button>
+                  <button class="btn btn-secondary btn-sm" onclick="stepBusForward()">
+                    ⏭️ Step Next Stop
+                  </button>
+                </div>
+              </div>
+
+              <!-- Phone Sensor Metrics Grid -->
+              <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; background: rgba(0, 0, 0, 0.35); padding: 14px; border-radius: var(--radius-sm); border: 1px solid rgba(255, 255, 255, 0.06);">
+                <div>
+                  <div style="font-size: 11px; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">
+                    Phone GNSS Precision</div>
+                  <div id="phoneGpsAccuracy" class="mono"
+                    style="font-size: 15px; font-weight: 700; color: #34d399; margin-top: 2px;">± 3.2 meters</div>
+                </div>
+                <div>
+                  <div style="font-size: 11px; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">
+                    Live Speedometer</div>
+                  <div id="phoneSpeedometer" class="mono"
+                    style="font-size: 15px; font-weight: 700; color: #38bdf8; margin-top: 2px;">38.2 km/h</div>
+                </div>
+                <div>
+                  <div style="font-size: 11px; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">
+                    Current Coordinates</div>
+                  <div id="phoneCoords" class="mono"
+                    style="font-size: 13px; font-weight: 700; color: #fcd34d; margin-top: 3px;">17.4330° N, 78.5080° E
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size: 11px; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">
+                    Android Battery</div>
+                  <div id="phoneBattery" class="mono"
+                    style="font-size: 15px; font-weight: 700; color: #a855f7; margin-top: 2px;">92% (Normal)</div>
+                </div>
+                <div>
+                  <div style="font-size: 11px; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">
+                    Cellular / GNSS Link</div>
+                  <div class="mono" style="font-size: 15px; font-weight: 700; color: #10b981; margin-top: 2px;">5G /
+                    Active</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Driver Actions Grid -->
+            <div class="grid-two" style="margin-bottom:20px;">
+              <div
+                style="background:rgba(239, 68, 68, 0.1);border:1px solid rgba(239, 68, 68, 0.3);padding:24px;border-radius:var(--radius-lg);text-align:center;">
+                <h3 style="color:#f87171;font-size:20px;margin-bottom:8px;">🚨 EMERGENCY BREAKDOWN BUTTON</h3>
+                <p style="font-size:13px;color:#cbd5e1;margin-bottom:18px;">
+                  Instantly transmits vehicle breakdown alert, stops telemetry, tags GPS location near Kompally/Medchal,
+                  and alerts the college transport coordinator.
+                </p>
+                <button class="btn btn-danger" style="padding:16px 28px;font-size:16px;width:100%;max-width:320px;"
+                  onclick="triggerDriverSOS()">
+                  🔴 TRIGGER BREAKDOWN SOS
+                </button>
+              </div>
+
+              <div
+                style="background:rgba(245, 158, 11, 0.1);border:1px solid rgba(245, 158, 11, 0.3);padding:24px;border-radius:var(--radius-lg);text-align:center;">
+                <h3 style="color:#fbbf24;font-size:20px;margin-bottom:8px;">⏳ REPORT TRAFFIC DELAY (10 MINS)</h3>
+                <p style="font-size:13px;color:#cbd5e1;margin-bottom:18px;">
+                  Broadcasts expected delay to all 50 registered students and incharge on Route 16 without interrupting
+                  route monitoring.
+                </p>
+                <button class="btn btn-amber" style="padding:16px 28px;font-size:16px;width:100%;max-width:320px;"
+                  onclick="triggerDriverDelay()">
+                  🟠 REPORT 10-MIN DELAY
+                </button>
+              </div>
+            </div>
+
+            <!-- Route Stop Checklist for Driver -->
+            <h4 style="font-size:14px;color:#fff;margin-bottom:12px;">Route 16 Stop Arrival Checklist</h4>
+            <div id="driverStopsChecklist"
+              style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;">
+              <!-- Injected dynamically -->
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- Modal 1: Report Incident Modal -->
+  <div id="reportAlertModal" class="modal-overlay">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeModal('reportAlertModal')">✕</button>
+      <h3 style="font-size:18px;font-weight:800;color:#fff;margin-bottom:4px;">🚨 Report Transport Incident / Alert</h3>
+      <p style="font-size:12.5px;color:var(--text-muted);margin-bottom:20px;">
+        Broadcast a breakdown, traffic delay, or emergency notice to administrators and students.
+      </p>
+
+      <form id="createAlertForm" onsubmit="handleCreateAlert(event)">
+        <div class="form-group">
+          <label>Affected Bus Route</label>
+          <select id="modalAlertRoute" class="form-control" required>
+            <option value="Route 03">Route 03 (Bus TS-08-UB-4503 • CMREC)</option>
+            <option value="Route 16">Route 16 (Bus TS-08-UB-4516 • CMRCET)</option>
+            <option value="Route 19A">Route 19A (Bus TS-08-UB-4519 • CMRCET)</option>
+            <option value="Route 25">Route 25 (Bus TS-08-UB-4525 • CMRIT)</option>
+            <option value="Route 12">Route 12 (Special Bus • CMRGI)</option>
+            <option value="Route 07">Route 07 (Express • CMRGI)</option>
+          </select>
+        </div>
+
+        <div class="grid-two" style="margin-bottom:0;">
+          <div class="form-group">
+            <label>Alert Type</label>
+            <select id="modalAlertType" class="form-control" onchange="adjustDelayInput(this.value)" required>
+              <option value="Breakdown">Breakdown</option>
+              <option value="Delay">Traffic Delay</option>
+              <option value="Mechanical">Mechanical Issue</option>
+              <option value="Overcrowding">Overcrowding Notice</option>
+              <option value="Route Deviation">Route Deviation</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Severity Level</label>
+            <select id="modalAlertSeverity" class="form-control" required>
+              <option value="Critical">Critical (Breakdown / Halting)</option>
+              <option value="Warning" selected>Warning (Delays / Traffic)</option>
+              <option value="Info">Info (General Notice)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group" id="delayDurationGroup">
+          <label>Estimated Delay (e.g., 10 minutes, 25 minutes)</label>
+          <input type="text" id="modalAlertDelay" class="form-control" placeholder="e.g. 15 minutes"
+            value="10 minutes" />
+        </div>
+
+        <div class="form-group">
+          <label>Location / Nearest Landmark</label>
+          <input type="text" id="modalAlertLocation" class="form-control"
+            placeholder="e.g. Near Kompally Junction / Stop 4" value="Near Kompally Junction" required />
+        </div>
+
+        <div class="form-group">
+          <label>Incident Details / Notes</label>
+          <textarea id="modalAlertNotes" class="form-control" rows="3"
+            placeholder="Describe the mechanical or traffic issue..."
+            required>Mechanical breakdown reported. Relief bus requested.</textarea>
+        </div>
+
+        <div class="flex gap-2" style="justify-content:flex-end;margin-top:20px;">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('reportAlertModal')">Cancel</button>
+          <button type="submit" class="btn btn-danger">Broadcast Alert Now 🚨</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- Modal 2: Add Student Modal -->
+  <div id="addStudentModal" class="modal-overlay">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeModal('addStudentModal')">✕</button>
+      <h3 style="font-size:18px;font-weight:800;color:#fff;margin-bottom:4px;">👥 Register Student for Transport</h3>
+      <p style="font-size:12.5px;color:var(--text-muted);margin-bottom:20px;">
+        Assign a student to a configured bus route and record transport-fee receipt.
+      </p>
+
+      <form id="addStudentForm" onsubmit="handleAddStudent(event)">
+        <div class="grid-two" style="margin-bottom:0;">
+          <div class="form-group">
+            <label>Student Full Name</label>
+            <input type="text" id="newStudentName" class="form-control" placeholder="e.g. Rohith Varma" required />
+          </div>
+
+          <div class="form-group">
+            <label>Roll Number (Unique)</label>
+            <input type="text" id="newStudentRoll" class="form-control" placeholder="e.g. 23811A0599" required />
+          </div>
+        </div>
+
+        <div class="grid-two" style="margin-bottom:0;">
+          <div class="form-group">
+            <label>College Campus</label>
+            <select id="newStudentCampus" class="form-control" required>
+              <option value="CMRCET">CMRCET</option>
+              <option value="CMREC">CMREC</option>
+              <option value="CMRIT">CMRIT</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Department & Year</label>
+            <select id="newStudentDept" class="form-control" required>
+              <option value="CSE">CSE</option>
+              <option value="AIML">AIML</option>
+              <option value="Data Science">Data Science</option>
+              <option value="ECE">ECE</option>
+              <option value="IT">IT</option>
+              <option value="EEE">EEE</option>
+              <option value="Mechanical">Mechanical</option>
+              <option value="Civil">Civil</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-two" style="margin-bottom:0;">
+          <div class="form-group">
+            <label>Academic Year</label>
+            <select id="newStudentYear" class="form-control" required>
+              <option value="1st">1st Year</option>
+              <option value="2nd">2nd Year</option>
+              <option value="3rd" selected>3rd Year</option>
+              <option value="4th">4th Year</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Assigned Bus Route</label>
+            <select id="newStudentRoute" class="form-control" onchange="updateNewStudentStops(this.value)" required>
+              <option value="Route 16">Route 16 (CMRCET)</option>
+              <option value="Route 03">Route 03 (CMREC)</option>
+              <option value="Route 19A">Route 19A (CMRCET)</option>
+              <option value="Route 25">Route 25 (CMRIT)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Boarding Stop</label>
+          <select id="newStudentStop" class="form-control" required>
+            <!-- Injected dynamically based on route -->
+          </select>
+        </div>
+
+        <div class="grid-two" style="margin-bottom:0;">
+          <div class="form-group">
+            <label>Transport Fee Status</label>
+            <select id="newStudentFee" class="form-control" required>
+              <option value="Paid">Paid (Receipt Provided)</option>
+              <option value="Pending">Pending</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Receipt Number (if paid)</label>
+            <input type="text" id="newStudentReceipt" class="form-control" placeholder="RCPT-16-999" />
+          </div>
+        </div>
+
+        <div class="flex gap-2" style="justify-content:flex-end;margin-top:20px;">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('addStudentModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Enroll Student Record</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- Modal 3: Digital Bus Pass Modal -->
+  <div id="busPassModal" class="modal-overlay">
+    <div class="modal-card" style="max-width:480px;background:transparent;box-shadow:none;border:none;padding:0;">
+      <div class="bus-pass-card">
+        <button class="modal-close-btn" style="color:#fff;" onclick="closeModal('busPassModal')">✕</button>
+        <div class="pass-header">
+          <div>
+            <div style="font-size:18px;font-weight:800;letter-spacing:-0.5px;">CMR GROUP OF INSTITUTIONS</div>
+            <div style="font-size:11px;color:#93c5fd;">OFFICIAL STUDENT BUS BOARDING PASS • 2026</div>
+          </div>
+          <span class="badge badge-paid" id="passFeeStatus">Paid</span>
+        </div>
+
+        <div style="display:flex;gap:18px;align-items:center;margin-bottom:18px;">
+          <div
+            style="width:72px;height:72px;border-radius:12px;background:#1e293b;border:2px solid #38bdf8;display:flex;align-items:center;justify-content:center;font-size:32px;">
+            🎓
+          </div>
+          <div>
+            <h2 id="passStudentName" style="font-size:18px;font-weight:800;color:#fff;">Rohith Sharma</h2>
+            <div id="passRollNo" class="mono" style="color:#67e8f9;font-size:13px;">22811A0512</div>
+            <div id="passDeptCampus" style="font-size:12px;color:#cbd5e1;margin-top:2px;">3rd Year • CSE • CMRCET</div>
+          </div>
+        </div>
+
+        <div style="background:rgba(0,0,0,0.3);padding:14px;border-radius:var(--radius-md);margin-bottom:16px;">
+          <div class="flex justify-between" style="margin-bottom:8px;">
+            <span style="color:var(--text-muted);font-size:12px;">Assigned Route:</span>
+            <strong id="passRouteNum" style="color:#fff;">Route 16</strong>
+          </div>
+          <div class="flex justify-between" style="margin-bottom:8px;">
+            <span style="color:var(--text-muted);font-size:12px;">Designated Boarding Stop:</span>
+            <strong id="passBoardingStop" style="color:#60a5fa;">Sitafalmandi</strong>
+          </div>
+          <div class="flex justify-between" style="margin-bottom:8px;">
+            <span style="color:var(--text-muted);font-size:12px;">Bus Vehicle Plate:</span>
+            <strong id="passBusPlate" class="mono" style="color:#fcd34d;">TS-08-UB-4516</strong>
+          </div>
+          <div class="flex justify-between">
+            <span style="color:var(--text-muted);font-size:12px;">Receipt / Voucher:</span>
+            <span id="passReceiptNo" class="mono" style="color:#34d399;font-size:12px;">RCPT-16-112</span>
+          </div>
+        </div>
+
+        <div
+          style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#94a3b8;border-top:1px dashed rgba(255,255,255,0.2);padding-top:12px;">
+          <span>Barcode / Verification: Valid for Academic Year</span>
+          <button class="btn btn-secondary btn-sm" onclick="window.print()">🖨️ Print Pass</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal 4: Direct Dialer Simulation Modal (PRD 7.6) -->
+  <div id="callModal" class="modal-overlay">
+    <div class="modal-card" style="max-width:380px;text-align:center;">
+      <button class="modal-close-btn" onclick="closeModal('callModal')">✕</button>
+      <div
+        style="width:60px;height:60px;border-radius:50%;background:rgba(16, 185, 129, 0.2);border:2px solid #10b981;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 16px;">
+        📞
+      </div>
+      <h3 id="callContactName" style="font-size:17px;font-weight:800;color:#fff;">ES Babu (CMREC Incharge)</h3>
+      <p id="callContactPhone" class="mono" style="font-size:15px;color:#34d399;margin:6px 0 16px;">+91 9030368361</p>
+      <p style="font-size:12.5px;color:var(--text-muted);margin-bottom:20px;">
+        Simulating prioritized cellular voice connection to assigned bus manager...
+      </p>
+
+      <div class="flex gap-2" style="justify-content:center;">
+        <button class="btn btn-secondary" onclick="closeModal('callModal')">End Call</button>
+        <button class="btn btn-emerald" onclick="simulateCallConnected()">Simulate Pick Up</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal 5: Custom ESP32 Payload Injection Modal (PRD 12) -->
+  <div id="payloadModal" class="modal-overlay">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeModal('payloadModal')">✕</button>
+      <h3 style="font-size:18px;font-weight:800;color:#fff;margin-bottom:4px;">⚡ Inject Custom ESP32 Telemetry JSON</h3>
+      <p style="font-size:12.5px;color:var(--text-muted);margin-bottom:16px;">
+        Test raw telemetry ingestion from ESP32 GPS hardware directly into the RouteIQ engine.
+      </p>
+
+      <div class="form-group">
+        <label>JSON Packet (Schema per PRD Section 12)</label>
+        <textarea id="payloadJsonInput" class="form-control mono" rows="8" style="font-size:12px;line-height:1.4;">
+{
+  "bus_id": "TS-08-UB-4516",
+  "route_id": "Route 16",
+  "latitude": 17.5401,
+  "longitude": 78.4902,
+  "speed_kmh": 42.5,
+  "timestamp": "2026-09-22T14:02:00+05:30",
+  "source": "esp32-gps",
+  "satellites": 9,
+  "battery_v": 12.6
+}</textarea>
+      </div>
+
+      <div class="flex gap-2" style="justify-content:flex-end;">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('payloadModal')">Close</button>
+        <button type="submit" class="btn btn-primary" onclick="injectCustomPayload()">Dispatch to Map Engine 🚀</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Modal 6: Android App / Play Store Download Modal -->
+  <div id="appInstallModal" class="modal-overlay">
+    <div class="modal-card" style="max-width:520px;">
+      <button class="modal-close-btn" onclick="closeModal('appInstallModal')">✕</button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+        <img src="icon.svg"
+          style="width:48px;height:48px;border-radius:12px;box-shadow:0 4px 12px rgba(56,189,248,0.4);" />
+        <div>
+          <h3 style="font-size:18px;font-weight:800;color:#fff;">RouteIQ Android Mobile App</h3>
+          <span class="badge badge-paid">Play Store & PWA Ready</span>
+        </div>
+      </div>
+
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:18px;line-height:1.5;">
+        RouteIQ operates as a progressive mobile application on any Android smartphone. Drivers, students, and
+        coordinators can install and use it directly without requiring external hardware.
+      </p>
+
+      <div
+        style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-sm);padding:14px;margin-bottom:16px;">
+        <h4 style="font-size:13px;color:#38bdf8;font-weight:700;margin-bottom:6px;">📲 Method 1: Instant Install on
+          Android (Chrome / Samsung Internet)</h4>
+        <ol style="margin-left:18px;font-size:12.5px;color:#cbd5e1;line-height:1.6;">
+          <li>Open this website in Google Chrome on your Android phone.</li>
+          <li>Tap the browser menu <b>(three dots ⋮ in the top right)</b>.</li>
+          <li>Tap <b>"Install app"</b> or <b>"Add to Home screen"</b>.</li>
+          <li>RouteIQ will install directly to your app drawer like a native Play Store app!</li>
+        </ol>
+        <button id="btnNativeInstallPrompt" class="btn btn-primary btn-sm" style="margin-top:10px;width:100%;"
+          onclick="triggerPwaInstall()">
+          📥 Install App to This Device
+        </button>
+      </div>
+
+      <div
+        style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-sm);padding:14px;margin-bottom:16px;">
+        <h4 style="font-size:13px;color:#10b981;font-weight:700;margin-bottom:6px;">🏪 Method 2: Package for Google Play
+          Store (APK / AAB)</h4>
+        <p style="font-size:12px;color:#cbd5e1;line-height:1.5;margin-bottom:8px;">
+          This app contains standard <code>manifest.json</code> and <code>sw.js</code> Service Worker. You can convert
+          it into a signed Google Play Store APK/AAB in 2 minutes:
+        </p>
+        <div
+          style="background:#090d16;padding:8px 12px;border-radius:6px;font-family:monospace;font-size:11.5px;color:#93c5fd;">
+          1. Visit: https://www.pwabuilder.com<br />
+          2. Enter URL & Download Android Package (.apk / .aab)<br />
+          3. Upload directly to Google Play Console!
+        </div>
+      </div>
+
+      <div class="flex gap-2" style="justify-content:flex-end;">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('appInstallModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastNotification">
+    <span id="toastIcon" style="font-size:18px;">🔔</span>
+    <span id="toastMessage" style="font-size:13px;font-weight:600;color:#fff;">Notification message</span>
+  </div>
+
+
+  <!-- Leaflet JS CDN -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <script>
+
+    /* =========================================================
+       PHONE GPS & PWA APP LOGIC (NO ESP32 HARDWARE NEEDED)
+       ========================================================= */
+
+    // Demo Credentials Quick-Fill
+    const demoCredentials = {
+      Admin: { email: "admin@cmrcet.ac.in", pass: "admin123" },
+      Driver: { email: "driver.route16@cmrgi.ac.in", pass: "driver123" },
+      Student: { email: "student.cse@cmrcet.ac.in", pass: "student123" },
+      Incharge: { email: "incharge.cmrec@cmrgi.ac.in", pass: "incharge123" },
+      Emergency: { email: "emergency.desk@cmrgi.ac.in", pass: "emergency123" }
+    };
+
+    function quickFillCredentials(role) {
+      const cred = demoCredentials[role] || demoCredentials.Admin;
+      document.getElementById('loginEmail').value = cred.email;
+      document.getElementById('loginPass').value = cred.pass;
+      document.getElementById('loginRole').value = role;
+      document.querySelectorAll('.role-quick-chips .chip').forEach(c => {
+        c.classList.toggle('active', c.textContent.includes(role));
+      });
+      showToast(`Selected credentials for: ${role}`, "🔑");
+    }
+
+    // Phone Live GPS Transmission using Android Geolocation API
+    let phoneGpsWatchId = null;
+    let isPhoneGpsActive = false;
+
+    function togglePhoneGpsTransmission() {
+      const btn = document.getElementById('btnTogglePhoneGps');
+      const badge = document.getElementById('driverPhoneGpsBadge');
+
+      if (!isPhoneGpsActive) {
+        if (!navigator.geolocation) {
+          alert("Geolocation API is not supported on this device/browser.");
+          return;
+        }
+
+        // Request live continuous GPS tracking with high accuracy
+        phoneGpsWatchId = navigator.geolocation.watchPosition(
+          (pos) => {
+            isPhoneGpsActive = true;
+            btn.textContent = "⏹️ Stop Phone GPS Sharing";
+            btn.className = "btn btn-danger";
+            badge.textContent = "● Live Phone Stream Active";
+            badge.style.color = "#34d399";
+
+            const lat = pos.coords.latitude;
+            const lng = pos.coords.longitude;
+            const speedKmh = pos.coords.speed ? Math.round(pos.coords.speed * 3.6 * 10) / 10 : 38.4;
+            const accuracy = Math.round(pos.coords.accuracy || 4);
+
+            document.getElementById('phoneGpsAccuracy').textContent = `± ${accuracy} meters`;
+            document.getElementById('phoneSpeedometer').textContent = `${speedKmh} km/h`;
+            document.getElementById('phoneCoords').textContent = `${lat.toFixed(4)}° N, ${lng.toFixed(4)}° E`;
+
+            // Move the bus marker on the dashboard map
+            if (busMarker) {
+              busMarker.setLatLng([lat, lng]);
+              updateHudAndTelemetry(lat, lng, speedKmh, "Live Phone GNSS Position");
+            }
+          },
+          (err) => {
+            console.warn("Phone GPS permission denied or indoor. Falling back to high-fidelity route simulation:", err.message);
+            isPhoneGpsActive = true;
+            btn.textContent = "⏹️ Stop Phone GPS Sharing";
+            btn.className = "btn btn-danger";
+            badge.textContent = "● Simulated Phone GNSS";
+            showToast("Phone GPS simulated along route path (outdoor GPS requires vehicle movement)", "📱");
+          },
+          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+        );
+
+        showToast("Driver phone live GPS beacon started!", "📡");
+      } else {
+        if (phoneGpsWatchId !== null) {
+          navigator.geolocation.clearWatch(phoneGpsWatchId);
+          phoneGpsWatchId = null;
+        }
+        isPhoneGpsActive = false;
+        btn.textContent = "📡 Start Live Location Sharing";
+        btn.className = "btn btn-emerald";
+        badge.textContent = "Phone GPS Ready";
+        showToast("Phone GPS sharing stopped.", "⏹️");
+      }
+    }
+
+    // PWA Install Prompt Handling
+    let deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      const installBtn = document.getElementById('btnNativeInstallPrompt');
+      if (installBtn) installBtn.style.display = 'block';
+    });
+
+    function openAppInstallModal() {
+      openModal('appInstallModal');
+    }
+
+    function triggerPwaInstall() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            showToast("RouteIQ app installed successfully!", "🎉");
+          }
+          deferredPrompt = null;
+        });
+      } else {
+        alert("To install on Android: In Google Chrome, tap the three dots (⋮) in the top-right corner, then tap 'Install app' or 'Add to Home screen'.");
+      }
+    }
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(err => {
+        console.log("Service Worker note:", err);
+      });
+    }
+
+    // Battery API for Driver Phone Readout
+    if (navigator.getBattery) {
+      navigator.getBattery().then(battery => {
+        const updateBattery = () => {
+          const batEl = document.getElementById('phoneBattery');
+          if (batEl) batEl.textContent = `${Math.round(battery.level * 100)}% (${battery.charging ? 'Charging' : 'Battery'})`;
+        };
+        updateBattery();
+        battery.addEventListener('levelchange', updateBattery);
+        battery.addEventListener('chargingchange', updateBattery);
+      }).catch(() => { });
+    }
+
+    /* =========================================================
+       1. ROUTEIQ DATA MODELS (PRD Sections 1, 7, 8, 17)
+       ========================================================= */
+
+    // Hyderabad CMRGI Campus Center (Kandlakoya, Medchal)
+    const CMRGI_CAMPUS_COORDS = [17.6044, 78.4862];
+
+    // 4 Configured Routes, Buses, Stops with Real Hyderabad Geo-coordinates (29 Stops Total)
+    const routesData = {
+      "Route 03": {
+        routeId: "Route 03",
+        busPlate: "TS-08-UB-4503",
+        campus: "CMRGI",
+        capacity: 50,
+        currentCount: 50,
+        status: "On Route",
+        inchargeName: "ES Babu",
+        inchargePhone: "+91 9030368361",
+        color: "#10b981",
+        stops: [
+          { name: "Radhika (ECIL)", lat: 17.4764, lng: 78.5583, seq: 1 },
+          { name: "Lal Bazar", lat: 17.4891, lng: 78.5284, seq: 2 },
+          { name: "Teacher's Colony", lat: 17.5020, lng: 78.5085, seq: 3 },
+          { name: "Kanajiguda", lat: 17.5140, lng: 78.4980, seq: 4 },
+          { name: "Green Fields", lat: 17.5310, lng: 78.4910, seq: 5 },
+          { name: "St. Andrews School", lat: 17.5450, lng: 78.4890, seq: 6 },
+          { name: "CMRGI Campus (Medchal)", lat: 17.6044, lng: 78.4862, seq: 7 }
+        ]
+      },
+      "Route 16": {
+        routeId: "Route 16",
+        busPlate: "TS-08-UB-4516",
+        campus: "CMRGI",
+        capacity: 50,
+        currentCount: 50,
+        status: "On Route",
+        inchargeName: "M. Naresh Kumar",
+        inchargePhone: "+91 9912135502",
+        color: "#3b82f6",
+        stops: [
+          { name: "Ramanthapur", lat: 17.3980, lng: 78.5370, seq: 1 },
+          { name: "Lalitha Nagar", lat: 17.4080, lng: 78.5280, seq: 2 },
+          { name: "Jamia Osmania", lat: 17.4170, lng: 78.5220, seq: 3 },
+          { name: "Arts College", lat: 17.4210, lng: 78.5170, seq: 4 },
+          { name: "Varasiguda", lat: 17.4290, lng: 78.5130, seq: 5 },
+          { name: "Namalagundu", lat: 17.4330, lng: 78.5080, seq: 6 },
+          { name: "Sitafalmandi", lat: 17.4390, lng: 78.5040, seq: 7 },
+          { name: "Chilakalaguda", lat: 17.4450, lng: 78.5010, seq: 8 },
+          { name: "Mother Teresa Statue", lat: 17.4600, lng: 78.4960, seq: 9 },
+          { name: "CMRGI Campus (Medchal)", lat: 17.6044, lng: 78.4862, seq: 10 }
+        ]
+      },
+      "Route 19A": {
+        routeId: "Route 19A",
+        busPlate: "TS-08-UB-4519",
+        campus: "CMRGI",
+        capacity: 50,
+        currentCount: 50,
+        status: "On Route",
+        inchargeName: "Laxman Reddy",
+        inchargePhone: "+91 8074434165",
+        color: "#8b5cf6",
+        stops: [
+          { name: "Sathyam Theatre (Ameerpet)", lat: 17.4370, lng: 78.4480, seq: 1 },
+          { name: "SR Nagar PS", lat: 17.4430, lng: 78.4440, seq: 2 },
+          { name: "Balkampet", lat: 17.4490, lng: 78.4510, seq: 3 },
+          { name: "Fathenagar", lat: 17.4640, lng: 78.4560, seq: 4 },
+          { name: "HAL (Balanagar)", lat: 17.4780, lng: 78.4610, seq: 5 },
+          { name: "CMRGI Campus (Medchal)", lat: 17.6044, lng: 78.4862, seq: 6 }
+        ]
+      },
+      "Route 25": {
+        routeId: "Route 25",
+        busPlate: "TS-08-UB-4525",
+        campus: "CMRGI",
+        capacity: 50,
+        currentCount: 50,
+        status: "On Route",
+        inchargeName: "Dr Bhaskar",
+        inchargePhone: "+91 9849292324",
+        color: "#06b6d4",
+        stops: [
+          { name: "Usha Mullapudi Arch (KPHB)", lat: 17.4930, lng: 78.3990, seq: 1 },
+          { name: "Patel Kunta Park", lat: 17.4980, lng: 78.4060, seq: 2 },
+          { name: "KL Bar & Restaurant", lat: 17.5040, lng: 78.4130, seq: 3 },
+          { name: "Alwyn Colony", lat: 17.5110, lng: 78.4210, seq: 4 },
+          { name: "Jagat Giri Gutta", lat: 17.5180, lng: 78.4350, seq: 5 },
+          { name: "CMRGI Campus (Medchal)", lat: 17.6044, lng: 78.4862, seq: 6 }
+        ]
+      }
+    };
+
+    // Initial Alert Data (PRD 7.4 & 10: Route 12 breakdown near Kompally & Route 07 delay)
+    let alertsData = [
+      {
+        id: "ALT-101",
+        routeId: "Route 12",
+        busPlate: "TS-08-UB-4512",
+        type: "Breakdown",
+        severity: "Critical",
+        status: "Active", // Active, Acknowledged, Resolved, Closed
+        location: "Near Kompally Junction (NH-44)",
+        description: "Mechanical transmission breakdown reported by driver. Bus safely pulled aside. Admin and incharge notified. Relief bus dispatched from Kandlakoya yard.",
+        delayDuration: "35 mins",
+        createdTime: "13:48 IST",
+        updatedTime: "13:52 IST",
+        acknowledgedBy: null
+      },
+      {
+        id: "ALT-102",
+        routeId: "Route 07",
+        busPlate: "TS-08-UB-4507",
+        type: "Delay",
+        severity: "Warning",
+        status: "Active",
+        location: "Bowenpally Checkpost / Stop 4",
+        description: "Heavy congestion due to flyover construction. Bus running approximately 10 minutes behind planned schedule.",
+        delayDuration: "10 mins",
+        createdTime: "13:55 IST",
+        updatedTime: "13:55 IST",
+        acknowledgedBy: null
+      }
+    ];
+
+    // Incharge Contacts
+    const inchargeContacts = [
+      { name: "ES Babu", phone: "+91 9030368361", campus: "CMRGI", route: "Route 03", role: "Bus Incharge & Asst. Prof", status: "On Duty" },
+      { name: "M. Naresh Kumar", phone: "+91 9912135502", campus: "CMRGI", route: "Route 16", role: "Bus Manager & Lab Coordinator", status: "On Duty" },
+      { name: "Laxman Reddy", phone: "+91 8074434165", campus: "CMRGI", route: "Route 19A", role: "Transport Coordinator", status: "On Duty" },
+      { name: "Dr Bhaskar", phone: "+91 9849292324", campus: "CMRGI", route: "Route 25", role: "Sr. Faculty & Route Head", status: "On Duty" }
+    ];
+
+    // Student Database Generator (200 Total Unique Students, 50 per Bus Route)
+    const firstNames = ["Rahul", "Ananya", "Arjun", "Harsha", "Sneha", "Kiran", "Divya", "Siddharth", "Pooja", "Varun", "Kavya", "Nikhil", "Meghana", "Rohan", "Bhavana", "Sai", "Pranathi", "Manish", "Deepika", "Karthik", "Sravani", "Aditya", "Keerthana", "Teja", "Mounika", "Abhinav", "Niharika", "Tarun", "Vaishnavi", "Vamshi", "Harini", "Chaitanya", "Akshitha", "Gautham", "Spandana", "Pradeep", "Aravind", "Swathi", "Vikas", "Sanjana", "Ganesh", "Pavani", "Shiva", "Pallavi", "Akhil", "Sindhu", "Rajesh", "Navya", "Mahesh", "Sowmya"];
+    const lastNames = ["Reddy", "Sharma", "Kumar", "Rao", "Verma", "Gupta", "Yadav", "Patel", "Singh", "Chowdary", "Naidu", "Joshi", "Mishra", "Kulkarni", "Deshmukh", "Nair", "Menon", "Pillai", "Iyer", "Bhat", "Hegde", "Shetty", "Goud", "Venkatesh", "Chary", "Raju", "Prasad", "Murthy", "Sastry", "Vangala", "Kancharla", "Boppana", "Thota", "Mothe", "Kommula", "Duggirala", "Bandari", "Golla", "Pothula", "Marri", "Katakam", "Allam", "Gaddam", "Dharavath", "Banoth", "Guguloth", "Jadhav", "Pawar", "Solanki", "Chauhan"];
+    const departments = ["CSE", "ECE", "IT", "AIML", "Data Science", "EEE", "Mechanical", "Civil"];
+    const yearsList = ["1st", "2nd", "3rd", "4th"];
+    const campusesList = ["CMRCET", "CMREC", "CMRIT"];
+
+    let studentsDatabase = {};
+
+    // Route-wise Campus Allotment configuration (Total 200: CMRCET 67, CMREC 67, CMRIT 66)
+    const routeCampusAllotments = {
+      "Route 03": { CMRCET: 17, CMREC: 17, CMRIT: 16 },
+      "Route 16": { CMRCET: 17, CMREC: 17, CMRIT: 16 },
+      "Route 19A": { CMRCET: 17, CMREC: 17, CMRIT: 16 },
+      "Route 25": { CMRCET: 16, CMREC: 16, CMRIT: 18 }
+    };
+
+    const campusMetadata = {
+      "CMRCET": { prefix: "22811A", receiptPrefix: "RCPT-CET" },
+      "CMREC": { prefix: "23812A", receiptPrefix: "RCPT-REC" },
+      "CMRIT": { prefix: "21813A", receiptPrefix: "RCPT-RIT" }
+    };
+
+    function getCampusBadge(campus) {
+      if (campus === 'CMRCET') {
+        return `<span class="badge" style="background:rgba(59,130,246,0.18);color:#93c5fd;border:1px solid rgba(59,130,246,0.4)">CMRCET</span>`;
+      } else if (campus === 'CMREC') {
+        return `<span class="badge" style="background:rgba(16,185,129,0.18);color:#6ee7b7;border:1px solid rgba(16,185,129,0.4)">CMREC</span>`;
+      } else if (campus === 'CMRIT') {
+        return `<span class="badge" style="background:rgba(168,85,247,0.18);color:#d8b4fe;border:1px solid rgba(168,85,247,0.4)">CMRIT</span>`;
+      }
+      return `<span class="badge badge-campus">${campus}</span>`;
+    }
+
+    function initStudentDatabase() {
+      // Clear old cached keys if present to ensure fresh allotment
+      localStorage.removeItem("routeiq_students");
+      localStorage.removeItem("routeiq_students_v2");
+      localStorage.removeItem("routeiq_students_v3");
+
+      const saved = localStorage.getItem("routeiq_students_v5");
+      if (saved) {
+        try {
+          studentsDatabase = JSON.parse(saved);
+          return;
+        } catch (e) { console.error("Error loading saved students:", e); }
+      }
+
+      let globalIdx = 0;
+      for (const [routeId, rData] of Object.entries(routesData)) {
+        studentsDatabase[routeId] = [];
+        const stops = rData.stops;
+        const allotment = routeCampusAllotments[routeId] || { CMRCET: 17, CMREC: 17, CMRIT: 16 };
+        let routeIdx = 0;
+
+        for (const [campusName, count] of Object.entries(allotment)) {
+          const meta = campusMetadata[campusName];
+          for (let c = 0; c < count; c++) {
+            globalIdx++;
+            routeIdx++;
+            const paid = (globalIdx % 7 !== 0); // ~85% paid
+            const name = `${firstNames[(globalIdx - 1) % firstNames.length]} ${lastNames[(globalIdx - 1) % lastNames.length]}`;
+            const roll = `${meta.prefix}${String(500 + globalIdx).padStart(4, '0')}`;
+            const dept = departments[(globalIdx - 1) % departments.length];
+            const year = yearsList[(globalIdx - 1) % yearsList.length];
+            const stop = stops[(routeIdx - 1) % (stops.length - 1)].name;
+            const receipt = paid ? `${meta.receiptPrefix}-${String(100 + routeIdx).padStart(3, '0')}` : "—";
+            const fee = paid ? "Paid" : "Pending";
+
+            studentsDatabase[routeId].push({
+              id: routeIdx,
+              name: name,
+              roll: roll,
+              year: year,
+              dept: dept,
+              campus: campusName,
+              destination: "CMRGI",
+              receipt: receipt,
+              stop: stop,
+              fee: fee
+            });
+          }
+        }
+      }
+      saveStudentsToStorage();
+    }
+
+    function saveStudentsToStorage() {
+      localStorage.setItem("routeiq_students_v5", JSON.stringify(studentsDatabase));
+    }
+
+
+    /* =========================================================
+       2. LEAFLET MAP & SIMULATED ESP32 GPS ENGINE
+       ========================================================= */
+
+    let leafletMap = null;
+    let busMarker = null;
+    let stopMarkers = [];
+    let routePolyline = null;
+    let activeMapRoute = "Route 16";
+    let isSimulating = true;
+    let simSpeedMultiplier = 1;
+    let simIndex = 0;
+    let simProgress = 0; // 0 to 1 between stops
+    let simInterval = null;
+    let isGpsSignalLost = false;
+    let packetCount = 184;
+
+    function initMap() {
+      if (leafletMap) return;
+
+      // Initialize map centered around Secunderabad - Medchal corridor
+      leafletMap = L.map('liveMapElement', {
+        zoomControl: true,
+        attributionControl: false
+      }).setView([17.4800, 78.5000], 12);
+
+      // OpenStreetMap high contrast / clean tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+      }).addTo(leafletMap);
+
+      renderSelectedRouteOnMap(activeMapRoute);
+      startSimulationLoop();
+    }
+
+    function renderSelectedRouteOnMap(routeId) {
+      activeMapRoute = routeId;
+      const rData = routesData[routeId];
+      if (!rData || !leafletMap) return;
+
+      // Clear existing markers & polyline
+      if (routePolyline) leafletMap.removeLayer(routePolyline);
+      stopMarkers.forEach(m => leafletMap.removeLayer(m));
+      stopMarkers = [];
+      if (busMarker) leafletMap.removeLayer(busMarker);
+
+      const latlngs = rData.stops.map(s => [s.lat, s.lng]);
+
+      // Draw Route Polyline
+      routePolyline = L.polyline(latlngs, {
+        color: rData.color,
+        weight: 6,
+        opacity: 0.85,
+        smoothFactor: 1
+      }).addTo(leafletMap);
+
+      // Add Stop Markers with custom sequence pins
+      rData.stops.forEach((stop, index) => {
+        const isCampus = index === rData.stops.length - 1;
+        const iconHtml = isCampus ? '🏫' : (index + 1);
+        const iconClass = isCampus ? 'campus-leaflet-icon' : 'stop-leaflet-icon';
+
+        const customIcon = L.divIcon({
+          className: iconClass,
+          html: iconHtml,
+          iconSize: isCampus ? [30, 30] : [22, 22],
+          iconAnchor: isCampus ? [15, 15] : [11, 11]
+        });
+
+        const marker = L.marker([stop.lat, stop.lng], { icon: customIcon }).addTo(leafletMap);
+        marker.bindPopup(`
+          <div style="font-size:13px;padding:4px;">
+            <b style="color:#0f172a;">Stop #${stop.seq}: ${stop.name}</b><br/>
+            <span style="font-size:11px;color:#475569;">Route: ${routeId} • Bus: ${rData.busPlate}</span><br/>
+            <span style="font-size:11px;color:#2563eb;">Lat: ${stop.lat}, Lng: ${stop.lng}</span>
+          </div>
+        `);
+        stopMarkers.push(marker);
+      });
+
+      // Add Bus Marker
+      const busIcon = L.divIcon({
+        className: 'bus-leaflet-icon',
+        html: '🚌',
+        iconSize: [36, 36],
+        iconAnchor: [18, 18]
+      });
+
+      simIndex = 0;
+      simProgress = 0;
+      const initialPos = latlngs[0];
+      busMarker = L.marker(initialPos, { icon: busIcon }).addTo(leafletMap);
+      busMarker.bindPopup(`<b>${routeId} • ${rData.busPlate}</b><br/>Capacity: ${rData.currentCount}/${rData.capacity}`);
+
+      // Fit map bounds
+      leafletMap.fitBounds(routePolyline.getBounds(), { padding: [40, 40] });
+
+      // Update HUD
+      document.getElementById('mapRoutePlateBadge').innerHTML = `Bus: <b>${rData.busPlate}</b> • ${rData.campus}`;
+      updateHudAndTelemetry(initialPos[0], initialPos[1], 35.0, rData.stops[1].name);
+    }
+
+    function startSimulationLoop() {
+      if (simInterval) clearInterval(simInterval);
+
+      simInterval = setInterval(() => {
+        if (!isSimulating || isGpsSignalLost) return;
+
+        const rData = routesData[activeMapRoute];
+        const stops = rData.stops;
+        if (!busMarker) return;
+
+        // Advance progress
+        simProgress += 0.08 * simSpeedMultiplier;
+
+        if (simProgress >= 1) {
+          simProgress = 0;
+          simIndex = (simIndex + 1) % (stops.length - 1);
+        }
+
+        const currStop = stops[simIndex];
+        const nextStop = stops[simIndex + 1];
+
+        // Linear interpolation
+        const currentLat = currStop.lat + (nextStop.lat - currStop.lat) * simProgress;
+        const currentLng = currStop.lng + (nextStop.lng - currStop.lng) * simProgress;
+
+        busMarker.setLatLng([currentLat, currentLng]);
+
+        const speed = Math.round((32 + Math.sin(Date.now() / 2000) * 8) * 10) / 10;
+        updateHudAndTelemetry(currentLat, currentLng, speed, nextStop.name);
+      }, 800);
+    }
+
+    function updateHudAndTelemetry(lat, lng, speed, nextStopName) {
+      if (isGpsSignalLost) {
+        document.getElementById('hudFixStatus').textContent = "OFFLINE (No Lock)";
+        document.getElementById('hudFixStatus').style.color = "#ef4444";
+        document.getElementById('hudSpeed').textContent = "0.0 km/h";
+        return;
+      }
+
+      document.getElementById('hudLat').textContent = lat.toFixed(4) + "° N";
+      document.getElementById('hudLng').textContent = lng.toFixed(4) + "° E";
+      document.getElementById('hudSpeed').textContent = speed + " km/h";
+      document.getElementById('hudNextStop').textContent = nextStopName;
+      document.getElementById('hudFixStatus').textContent = "3D Fix (9 Sats)";
+      document.getElementById('hudFixStatus').style.color = "#10b981";
+
+      packetCount++;
+      document.getElementById('telemetryPacketCount').textContent = `Packets: ${packetCount}`;
+
+      // Update Raw JSON Stream
+      const rData = routesData[activeMapRoute];
+      const packet = {
+        "bus_id": rData.busPlate,
+        "route_id": activeMapRoute,
+        "latitude": parseFloat(lat.toFixed(4)),
+        "longitude": parseFloat(lng.toFixed(4)),
+        "speed_kmh": speed,
+        "next_stop": nextStopName,
+        "timestamp": new Date().toISOString(),
+        "source": "esp32-gps",
+        "satellites": 9,
+        "battery_v": 12.4,
+        "rssi_dbm": -68
+      };
+
+      document.getElementById('telemetryRawLog').textContent = JSON.stringify(packet, null, 2);
+    }
+
+    function toggleSimulation() {
+      isSimulating = !isSimulating;
+      const btn = document.getElementById('btnSimToggle');
+      if (isSimulating) {
+        btn.textContent = "⏸️ Pause Simulation";
+        btn.classList.remove('btn-amber');
+        showToast("Simulation resumed", "▶️");
+      } else {
+        btn.textContent = "▶️ Play Simulation";
+        btn.classList.add('btn-amber');
+        showToast("Simulation paused", "⏸️");
+      }
+    }
+
+    function stepBusForward() {
+      const rData = routesData[activeMapRoute];
+      simIndex = (simIndex + 1) % (rData.stops.length - 1);
+      simProgress = 0;
+      const stop = rData.stops[simIndex];
+      busMarker.setLatLng([stop.lat, stop.lng]);
+      updateHudAndTelemetry(stop.lat, stop.lng, 38.0, rData.stops[simIndex + 1].name);
+      showToast(`Jumped to Stop: ${stop.name}`, "🚏");
+    }
+
+    function setSimSpeed(mult) {
+      simSpeedMultiplier = mult;
+      showToast(`Simulation Speed: ${mult}x`, "⚡");
+    }
+
+    function toggleGpsLoss() {
+      isGpsSignalLost = !isGpsSignalLost;
+      const banner = document.getElementById('gpsOfflineBanner');
+      const hwDot = document.getElementById('sidebarHwDot');
+      const hwLabel = document.getElementById('sidebarHwLabel');
+
+      if (isGpsSignalLost) {
+        banner.style.display = 'block';
+        hwDot.style.background = '#ef4444';
+        hwDot.style.boxShadow = '0 0 8px #ef4444';
+        hwLabel.textContent = 'ESP32: Signal Lost (Offline)';
+        hwLabel.style.color = '#f87171';
+        showToast("Simulating GPS disconnect! Last known location retained.", "⚠️");
+      } else {
+        banner.style.display = 'none';
+        hwDot.style.background = '#10b981';
+        hwDot.style.boxShadow = '0 0 8px #10b981';
+        hwLabel.textContent = 'ESP32: Online (4G/GPS)';
+        hwLabel.style.color = '#67e8f9';
+        showToast("ESP32 GPS 3D signal lock restored.", "✅");
+      }
+    }
+
+    function selectMapRoute(rId) {
+      renderSelectedRouteOnMap(rId);
+      showToast(`Loaded map for ${rId}`, "🗺️");
+    }
+
+    function openPayloadModal() {
+      const rData = routesData[activeMapRoute];
+      const payload = {
+        "bus_id": rData.busPlate,
+        "route_id": activeMapRoute,
+        "latitude": 17.5401,
+        "longitude": 78.4902,
+        "speed_kmh": 42.5,
+        "timestamp": new Date().toISOString(),
+        "source": "esp32-gps",
+        "satellites": 9,
+        "battery_v": 12.6
+      };
+      document.getElementById('payloadJsonInput').value = JSON.stringify(payload, null, 2);
+      openModal('payloadModal');
+    }
+
+    function injectCustomPayload() {
+      try {
+        const text = document.getElementById('payloadJsonInput').value;
+        const data = JSON.parse(text);
+
+        if (busMarker && data.latitude && data.longitude) {
+          busMarker.setLatLng([data.latitude, data.longitude]);
+          updateHudAndTelemetry(data.latitude, data.longitude, data.speed_kmh || 30.0, data.route_id || "Manual GPS");
+          closeModal('payloadModal');
+          playSuccessChime();
+          showToast(`ESP32 packet ingested! Moved bus to ${data.latitude}, ${data.longitude}`, "⚡");
+        }
+      } catch (e) {
+        alert("Invalid JSON payload: " + e.message);
+      }
+    }
+
+
+    /* =========================================================
+       3. ALERTS & INCIDENT REPORTING ENGINE (PRD 7.4 & 10)
+       ========================================================= */
+
+    let alertFilterStatus = "ALL";
+
+    function renderAlerts() {
+      // 1. Overview Alerts Container
+      const overviewContainer = document.getElementById('overviewAlertsContainer');
+      const activeAlerts = alertsData.filter(a => a.status === 'Active' || a.status === 'Acknowledged');
+
+      document.getElementById('statAlertCount').textContent = activeAlerts.length;
+      document.getElementById('sidebarAlertBadge').textContent = activeAlerts.length;
+
+      if (overviewContainer) {
+        if (activeAlerts.length === 0) {
+          overviewContainer.innerHTML = `
+            <div style="text-align:center;padding:24px;color:var(--text-muted);">
+              ✅ All routes operating normally. No active breakdowns or delays.
+            </div>
+          `;
+        } else {
+          overviewContainer.innerHTML = activeAlerts.slice(0, 3).map(a => renderAlertCardHtml(a, true)).join('');
+        }
+      }
+
+      // 2. Full Alerts Page Container
+      const fullContainer = document.getElementById('fullAlertsListContainer');
+      if (fullContainer) {
+        let filtered = alertsData;
+        if (alertFilterStatus !== 'ALL') {
+          filtered = alertsData.filter(a => a.status === alertFilterStatus);
+        }
+
+        if (filtered.length === 0) {
+          fullContainer.innerHTML = `
+            <div style="text-align:center;padding:36px;color:var(--text-muted);background:var(--bg-surface);border-radius:var(--radius-md);">
+              No alerts matching status: <b>${alertFilterStatus}</b>
+            </div>
+          `;
+        } else {
+          fullContainer.innerHTML = filtered.map(a => renderAlertCardHtml(a, false)).join('');
+        }
+      }
+    }
+
+    function renderAlertCardHtml(a, isCompact) {
+      const isCritical = a.severity === 'Critical';
+      const cardClass = isCritical ? 'alert-critical-card' : (a.severity === 'Warning' ? 'alert-warning-card' : 'alert-info-card');
+      const badgeClass = isCritical ? 'badge-critical' : (a.severity === 'Warning' ? 'badge-warning' : 'badge-info');
+      const statusBadge = a.status === 'Active' ? 'badge-critical' : (a.status === 'Acknowledged' ? 'badge-warning' : 'badge-resolved');
+
+      return `
+        <div class="alert-card-item ${cardClass}">
+          <div class="alert-card-top">
+            <div class="alert-title">
+              <span>${isCritical ? '🔴' : '🟠'}</span>
+              <b>${a.routeId} — ${a.type}</b>
+              <span class="badge ${badgeClass}">${a.severity}</span>
+              <span class="badge ${statusBadge}">${a.status}</span>
+            </div>
+            <span style="font-size:11.5px;color:var(--text-muted);">Reported: ${a.createdTime}</span>
+          </div>
+
+          <div class="alert-desc">${a.description}</div>
+
+          <div class="alert-meta-row">
+            <span>📍 <b>Location:</b> ${a.location}</span>
+            ${a.delayDuration ? `<span>⏱️ <b>Delay Est:</b> ${a.delayDuration}</span>` : ''}
+            <span>🚌 <b>Bus:</b> ${a.busPlate || 'Assigned Bus'}</span>
+            ${a.acknowledgedBy ? `<span style="color:#60a5fa">✓ Acknowledged by ${a.acknowledgedBy}</span>` : ''}
+          </div>
+
+          ${!isCompact ? `
+            <div class="alert-actions-row">
+              ${a.status === 'Active' ? `
+                <button class="btn btn-secondary btn-sm" onclick="acknowledgeAlert('${a.id}')">
+                  ✓ Acknowledge Incident
+                </button>
+                <button class="btn btn-amber btn-sm" onclick="dispatchReliefBus('${a.id}')">
+                  🚌 Dispatch Relief Bus
+                </button>
+              ` : ''}
+              ${a.status === 'Acknowledged' ? `
+                <button class="btn btn-emerald btn-sm" onclick="resolveAlert('${a.id}')">
+                  ✅ Mark Incident Resolved
+                </button>
+              ` : ''}
+              ${a.status === 'Resolved' ? `
+                <button class="btn btn-ghost btn-sm" onclick="closeAlert('${a.id}')">
+                  Archive / Close
+                </button>
+              ` : ''}
+            </div>
+          ` : `
+            <div class="alert-actions-row">
+              <button class="btn btn-secondary btn-sm" onclick="switchPage('alerts', document.querySelectorAll('.sidebar-nav li')[4])">
+                Manage Incident (${a.status}) →
+              </button>
+            </div>
+          `}
+        </div>
+      `;
+    }
+
+    function filterAlertsByStatus(status) {
+      alertFilterStatus = status;
+      renderAlerts();
+    }
+
+    function acknowledgeAlert(alertId) {
+      const alert = alertsData.find(a => a.id === alertId);
+      if (alert) {
+        alert.status = "Acknowledged";
+        alert.acknowledgedBy = "Transport Incharge (ES Babu)";
+        alert.updatedTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " IST";
+        playSuccessChime();
+        renderAlerts();
+        showToast(`Incident #${alertId} acknowledged. Emergency staff coordinating.`, "✓");
+      }
+    }
+
+    function dispatchReliefBus(alertId) {
+      const alert = alertsData.find(a => a.id === alertId);
+      if (alert) {
+        alert.description += " [UPDATE: Relief Bus TS-08-UB-4599 dispatched from Kandlakoya Bus Depo to pickup stranded passengers]";
+        alert.status = "Acknowledged";
+        renderAlerts();
+        showToast("Relief bus TS-08-UB-4599 dispatched!", "🚌");
+      }
+    }
+
+    function resolveAlert(alertId) {
+      const alert = alertsData.find(a => a.id === alertId);
+      if (alert) {
+        alert.status = "Resolved";
+        alert.updatedTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " IST";
+        playSuccessChime();
+        renderAlerts();
+        showToast(`Incident #${alertId} marked as Resolved!`, "✅");
+      }
+    }
+
+    function closeAlert(alertId) {
+      alertsData = alertsData.filter(a => a.id !== alertId);
+      renderAlerts();
+      showToast(`Incident #${alertId} closed and archived.`, "📁");
+    }
+
+    function openReportAlertModal() {
+      openModal('reportAlertModal');
+    }
+
+    function handleCreateAlert(e) {
+      e.preventDefault();
+      const route = document.getElementById('modalAlertRoute').value;
+      const type = document.getElementById('modalAlertType').value;
+      const severity = document.getElementById('modalAlertSeverity').value;
+      const delay = document.getElementById('modalAlertDelay').value;
+      const location = document.getElementById('modalAlertLocation').value;
+      const notes = document.getElementById('modalAlertNotes').value;
+
+      const rData = routesData[route] || { busPlate: "Fleet Spare" };
+
+      const newAlert = {
+        id: "ALT-" + Math.floor(100 + Math.random() * 900),
+        routeId: route,
+        busPlate: rData.busPlate,
+        type: type,
+        severity: severity,
+        status: "Active",
+        location: location,
+        description: notes,
+        delayDuration: delay,
+        createdTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " IST",
+        updatedTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " IST",
+        acknowledgedBy: null
+      };
+
+      alertsData.unshift(newAlert);
+      closeModal('reportAlertModal');
+      playAlertChime();
+      renderAlerts();
+      showToast(`Broadcasted new ${type} alert for ${route}!`, "🚨");
+    }
+
+    function triggerDriverSOS() {
+      const newAlert = {
+        id: "ALT-SOS",
+        routeId: "Route 16",
+        busPlate: "TS-08-UB-4516",
+        type: "Breakdown",
+        severity: "Critical",
+        status: "Active",
+        location: "Kompally Medchal Highway (17.5401° N, 78.4902° E)",
+        description: "EMERGENCY SOS: Driver reported sudden engine overheat and transmission lockout. Passengers safe on roadside.",
+        delayDuration: "40 mins",
+        createdTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " IST",
+        updatedTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " IST",
+        acknowledgedBy: null
+      };
+      alertsData.unshift(newAlert);
+      playAlertChime();
+      renderAlerts();
+      showToast("DRIVER SOS ACTIVATED! Central transport desk alerted.", "🚨");
+    }
+
+    function triggerDriverDelay() {
+      const newAlert = {
+        id: "ALT-DEL",
+        routeId: "Route 16",
+        busPlate: "TS-08-UB-4516",
+        type: "Delay",
+        severity: "Warning",
+        status: "Active",
+        location: "Sitafalmandi Junction",
+        description: "Heavy rail gate closure traffic. Running 10 minutes delayed.",
+        delayDuration: "10 mins",
+        createdTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " IST",
+        updatedTime: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " IST",
+        acknowledgedBy: null
+      };
+      alertsData.unshift(newAlert);
+      playAlertChime();
+      renderAlerts();
+      showToast("10-minute traffic delay reported.", "⏱️");
+    }
+
+
+    /* =========================================================
+       4. STUDENT TRANSPORT RECORDS ENGINE (PRD 7.3)
+       ========================================================= */
+
+    function renderStudentsTable() {
+      const route = document.getElementById('studentRouteFilter').value;
+      const campusFilter = document.getElementById('studentCampusFilter') ? document.getElementById('studentCampusFilter').value : 'ALL';
+      const feeFilter = document.getElementById('studentFeeFilter').value;
+      const query = document.getElementById('studentSearchInput').value.toLowerCase().trim();
+      const tbody = document.getElementById('studentsTableBody');
+
+      let list = studentsDatabase[route] || [];
+
+      // Update Campus Allotment Badges for the selected route
+      const allotment = routeCampusAllotments[route] || { CMRCET: 17, CMREC: 17, CMRIT: 16 };
+      const chipsEl = document.getElementById('routeCampusAllotmentChips');
+      if (chipsEl) {
+        chipsEl.innerHTML = `
+          <span style="font-size:11.5px;color:var(--text-muted);">Route Allotment:</span>
+          <span class="badge" style="background:rgba(59,130,246,0.18);color:#93c5fd;border:1px solid rgba(59,130,246,0.4)">CMRCET: ${allotment.CMRCET} Seats</span>
+          <span class="badge" style="background:rgba(16,185,129,0.18);color:#6ee7b7;border:1px solid rgba(16,185,129,0.4)">CMREC: ${allotment.CMREC} Seats</span>
+          <span class="badge" style="background:rgba(168,85,247,0.18);color:#d8b4fe;border:1px solid rgba(168,85,247,0.4)">CMRIT: ${allotment.CMRIT} Seats</span>
+        `;
+      }
+
+      // Campus filter
+      if (campusFilter !== 'ALL') {
+        list = list.filter(s => s.campus === campusFilter);
+      }
+
+      // Fee filter
+      if (feeFilter !== 'ALL') {
+        list = list.filter(s => s.fee === feeFilter);
+      }
+
+      // Query filter
+      if (query) {
+        list = list.filter(s =>
+          s.name.toLowerCase().includes(query) ||
+          s.roll.toLowerCase().includes(query) ||
+          s.dept.toLowerCase().includes(query) ||
+          s.stop.toLowerCase().includes(query) ||
+          s.campus.toLowerCase().includes(query) ||
+          s.receipt.toLowerCase().includes(query)
+        );
+      }
+
+      document.getElementById('studentDisplayCountBadge').textContent = list.length;
+      document.getElementById('studentRouteCapacityBadge').textContent = `${studentsDatabase[route] ? studentsDatabase[route].length : 50} / 50 Allocated (100%)`;
+
+      if (list.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="10" style="text-align:center;padding:24px;color:var(--text-muted);">
+              No student records matching current filters.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = list.map((s, idx) => `
+        <tr>
+          <td>${s.id || (idx + 1)}</td>
+          <td><b>${s.name}</b></td>
+          <td><span class="mono" style="color:#67e8f9">${s.roll}</span></td>
+          <td>${s.year}</td>
+          <td>${s.dept}</td>
+          <td>${getCampusBadge(s.campus)}</td>
+          <td><span class="mono" style="font-size:12px;">${s.receipt}</span></td>
+          <td>${s.stop}</td>
+          <td>
+            <span class="badge ${s.fee === 'Paid' ? 'badge-paid' : 'badge-pending'}">${s.fee}</span>
+          </td>
+          <td>
+            <button class="btn btn-secondary btn-sm" onclick="openStudentPass('${route}', '${s.roll}')">
+              🎫 Bus Pass
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openStudentPass(route, roll) {
+      const student = (studentsDatabase[route] || []).find(s => s.roll === roll);
+      if (!student) return;
+
+      const rData = routesData[route];
+      document.getElementById('passStudentName').textContent = student.name;
+      document.getElementById('passRollNo').textContent = student.roll;
+      document.getElementById('passDeptCampus').textContent = `${student.year} Year • ${student.dept} • Enrolled: ${student.campus} (Destination: CMRGI)`;
+      document.getElementById('passRouteNum').textContent = route;
+      document.getElementById('passBoardingStop').textContent = student.stop;
+      document.getElementById('passBusPlate').textContent = rData.busPlate;
+      document.getElementById('passReceiptNo').textContent = student.receipt;
+
+      const feeBadge = document.getElementById('passFeeStatus');
+      feeBadge.textContent = student.fee;
+      feeBadge.className = student.fee === 'Paid' ? 'badge badge-paid' : 'badge badge-pending';
+
+      openModal('busPassModal');
+    }
+
+    function openAddStudentModal() {
+      const r = document.getElementById('studentRouteFilter').value;
+      document.getElementById('newStudentRoute').value = r;
+      updateNewStudentStops(r);
+      openModal('addStudentModal');
+    }
+
+    function updateNewStudentStops(routeId) {
+      const rData = routesData[routeId];
+      const stopSelect = document.getElementById('newStudentStop');
+      stopSelect.innerHTML = rData.stops.slice(0, -1).map(s => `
+        <option value="${s.name}">${s.name}</option>
+      `).join('');
+    }
+
+    function handleAddStudent(e) {
+      e.preventDefault();
+      const route = document.getElementById('newStudentRoute').value;
+      const name = document.getElementById('newStudentName').value.trim();
+      const roll = document.getElementById('newStudentRoll').value.trim().toUpperCase();
+      const campus = document.getElementById('newStudentCampus').value;
+      const dept = document.getElementById('newStudentDept').value;
+      const year = document.getElementById('newStudentYear').value;
+      const stop = document.getElementById('newStudentStop').value;
+      const fee = document.getElementById('newStudentFee').value;
+      const receipt = document.getElementById('newStudentReceipt').value.trim() || (fee === 'Paid' ? `RCPT-NEW-${Math.floor(100 + Math.random() * 900)}` : "—");
+
+      // Validate capacity limit (max 50 per bus per PRD)
+      if (studentsDatabase[route].length >= 50) {
+        if (!confirm(`Warning: ${route} is already at its configured capacity of 50 students! Would you like to override and enroll as standing passenger?`)) {
+          return;
+        }
+      }
+
+      // Check duplicate roll number
+      for (const [rId, list] of Object.entries(studentsDatabase)) {
+        if (list.some(s => s.roll === roll)) {
+          alert(`Error: A student with Roll Number ${roll} is already registered on ${rId}! Duplicate roll numbers are not permitted.`);
+          return;
+        }
+      }
+
+      const newStudent = {
+        id: studentsDatabase[route].length + 1,
+        name: name,
+        roll: roll,
+        year: year,
+        dept: dept,
+        campus: campus,
+        receipt: receipt,
+        stop: stop,
+        fee: fee
+      };
+
+      studentsDatabase[route].push(newStudent);
+      saveStudentsToStorage();
+      closeModal('addStudentModal');
+      document.getElementById('addStudentForm').reset();
+      playSuccessChime();
+      renderStudentsTable();
+      updateCampusCounts();
+      showToast(`Enrolled student ${name} (${roll}) on ${route}!`, "✅");
+    }
+
+    function exportStudentsCSV() {
+      const route = document.getElementById('studentRouteFilter').value;
+      const list = studentsDatabase[route] || [];
+
+      let csv = "ID,Name,RollNumber,Year,Department,Campus,Receipt,BoardingPoint,FeeStatus\n";
+      list.forEach(s => {
+        csv += `"${s.id}","${s.name}","${s.roll}","${s.year}","${s.dept}","${s.campus}","${s.receipt}","${s.stop}","${s.fee}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `RouteIQ_${route.replace(' ', '_')}_Students.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast(`Exported ${list.length} student records to CSV!`, "📥");
+    }
+
+
+    /* =========================================================
+       5. ROUTE OVERVIEW & DIRECTORY RENDERING
+       ========================================================= */
+
+    function renderOverviewRouteCards() {
+      const container = document.getElementById('overviewRoutesGrid');
+      if (!container) return;
+
+      container.innerHTML = Object.entries(routesData).map(([rId, r]) => {
+        const count = studentsDatabase[rId] ? studentsDatabase[rId].length : 50;
+        const pct = Math.round((count / r.capacity) * 100);
+
+        return `
+          <div class="route-spec-card" onclick="selectAndTrackRoute('${rId}')">
+            <div class="flex justify-between items-center" style="margin-bottom:8px;">
+              <h4 style="font-size:16px;color:#fff;font-weight:700;">${rId}</h4>
+              <span class="badge badge-campus">${r.campus}</span>
+            </div>
+            <p style="color:var(--text-muted);font-size:12.5px;margin-bottom:4px;">
+              🚌 Bus: <b style="color:#fcd34d">${r.busPlate}</b>
+            </p>
+            <p style="color:var(--text-muted);font-size:12.5px;margin-bottom:10px;">
+              🚏 ${r.stops.length - 1} Boarding Points • Incharge: ${r.inchargeName}
+            </p>
+            <div class="flex justify-between" style="font-size:11.5px;color:var(--text-muted);margin-bottom:4px;">
+              <span>Capacity: ${count} / ${r.capacity}</span>
+              <span style="color:#38bdf8">${pct}% Full</span>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar-fill" style="width:${pct}%;background:${r.color};"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function selectAndTrackRoute(rId) {
+      document.getElementById('mapRouteSelect').value = rId;
+      document.getElementById('studentRouteFilter').value = rId;
+      renderStudentsTable();
+      switchPage('live-tracking', document.querySelectorAll('.sidebar-nav li')[1]);
+      selectMapRoute(rId);
+    }
+
+    function renderRouteDetailsTable(filterRoute) {
+      const tbody = document.getElementById('routeStopsTableBody');
+      let rows = [];
+
+      for (const [rId, r] of Object.entries(routesData)) {
+        if (filterRoute !== 'ALL' && rId !== filterRoute) continue;
+
+        r.stops.forEach(s => {
+          rows.push(`
+            <tr>
+              <td><b>${rId}</b></td>
+              <td><span class="mono" style="color:#fcd34d">${r.busPlate}</span></td>
+              <td>#${s.seq}</td>
+              <td>${s.name}</td>
+              <td><span class="badge badge-campus">CMRGI Campus</span></td>
+              <td><span class="mono" style="font-size:12px;">${s.lat.toFixed(4)}° N</span></td>
+              <td><span class="mono" style="font-size:12px;">${s.lng.toFixed(4)}° E</span></td>
+              <td>${r.inchargeName}</td>
+            </tr>
+          `);
+        });
+      }
+
+      tbody.innerHTML = rows.join('');
+    }
+
+    function renderInchargeDirectory() {
+      const tbody = document.getElementById('inchargeTableBody');
+      tbody.innerHTML = inchargeContacts.map(c => `
+        <tr>
+          <td><b>${c.name}</b></td>
+          <td><span class="mono" style="color:#34d399">${c.phone}</span></td>
+          <td><span class="badge badge-campus">${c.campus}</span></td>
+          <td><b>${c.route}</b></td>
+          <td>${c.role}</td>
+          <td><span class="badge badge-resolved">● ${c.status}</span></td>
+          <td>
+            <button class="btn btn-emerald btn-sm" onclick="simulateCall('${c.name} (${c.campus})', '${c.phone}')">
+              📞 Direct Call
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderDriverChecklist() {
+      const container = document.getElementById('driverStopsChecklist');
+      const rData = routesData["Route 16"];
+      container.innerHTML = rData.stops.map((s, idx) => `
+        <label style="display:flex;align-items:center;gap:10px;background:var(--bg-surface);padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border-color);cursor:pointer;">
+          <input type="checkbox" ${idx < 4 ? 'checked' : ''} style="width:16px;height:16px;" />
+          <div>
+            <div style="font-weight:700;color:#fff;font-size:13px;">${s.name}</div>
+            <div style="font-size:11px;color:var(--text-muted);">Stop #${s.seq}</div>
+          </div>
+        </label>
+      `).join('');
+    }
+
+    function updateCampusCounts() {
+      let cmrcet = 0, cmrec = 0, cmrit = 0;
+      for (const [rId, list] of Object.entries(studentsDatabase)) {
+        list.forEach(s => {
+          if (s.campus === 'CMRCET') cmrcet++;
+          else if (s.campus === 'CMREC') cmrec++;
+          else if (s.campus === 'CMRIT') cmrit++;
+        });
+      }
+      document.getElementById('cmrcetCountBadge').textContent = `${cmrcet} Passengers`;
+      document.getElementById('cmrecCountBadge').textContent = `${cmrec} Passengers`;
+      document.getElementById('cmritCountBadge').textContent = `${cmrit} Passengers`;
+      document.getElementById('statStudentCount').textContent = cmrcet + cmrec + cmrit;
+    }
+
+
+    /* =========================================================
+       6. ROLE SWITCHING & AUTHENTICATION (PRD Section 9)
+       ========================================================= */
+
+    let currentRole = "Admin";
+
+    function updateRolePreset(role) {
+      const email = document.getElementById('loginEmail');
+      if (role === 'Student') email.value = "student.cse@cmrcet.ac.in";
+      else if (role === 'Driver') email.value = "driver.route16@cmrgi.ac.in";
+      else if (role === 'Incharge') email.value = "incharge.cmrec@cmrgi.ac.in";
+      else if (role === 'Emergency') email.value = "emergency.desk@cmrgi.ac.in";
+      else email.value = "admin@cmrcet.ac.in";
+    }
+
+    function quickSelectRole(role) {
+      document.getElementById('loginRole').value = role;
+      updateRolePreset(role);
+      document.querySelectorAll('.role-quick-chips .chip').forEach(c => {
+        c.classList.toggle('active', c.textContent === role);
+      });
+    }
+
+    function doLogin() {
+      try {
+        const roleElem = document.getElementById('loginRole');
+        currentRole = roleElem ? roleElem.value : "Admin";
+        
+        const authContainer = document.getElementById('auth-container');
+        const appContainer = document.getElementById('app-container');
+        
+        if (authContainer) authContainer.style.display = 'none';
+        if (appContainer) appContainer.style.display = 'flex';
+
+        applyRolePermissions(currentRole);
+        
+        try {
+          initMap();
+        } catch (mapErr) {
+          console.warn("Map init error:", mapErr);
+        }
+
+        showToast(`Logged in as ${currentRole}`, "👋");
+      } catch (err) {
+        console.error("Error during doLogin:", err);
+        const authContainer = document.getElementById('auth-container');
+        const appContainer = document.getElementById('app-container');
+        if (authContainer) authContainer.style.display = 'none';
+        if (appContainer) appContainer.style.display = 'flex';
+      }
+    }
+
+    function doLogout() {
+      document.getElementById('app-container').style.display = 'none';
+      document.getElementById('auth-container').style.display = 'flex';
+    }
+
+    function changeRole(newRole) {
+      currentRole = newRole;
+      applyRolePermissions(newRole);
+      showToast(`Switched active view to: ${newRole}`, "🔄");
+    }
+
+    function applyRolePermissions(role) {
+      document.getElementById('topRoleSelect').value = role;
+      document.getElementById('userNameLabel').textContent = `${role} User`;
+      document.getElementById('userAvatar').textContent = role.charAt(0);
+
+      const subRoleLabel = document.getElementById('userSubRole');
+      if (role === 'Admin') subRoleLabel.textContent = "Transport Fleet Superadmin";
+      else if (role === 'Student') subRoleLabel.textContent = "CMRCET • 3rd Year CSE";
+      else if (role === 'Driver') subRoleLabel.textContent = "Route 16 Vehicle Pilot";
+      else if (role === 'Incharge') subRoleLabel.textContent = "Route 03 Faculty Manager";
+      else if (role === 'Emergency') subRoleLabel.textContent = "Central Incident Coordinator";
+
+      // Contextual routing based on role
+      if (role === 'Driver') {
+        switchPage('driver-cockpit', document.querySelectorAll('.sidebar-nav li')[5]);
+      } else if (role === 'Emergency') {
+        switchPage('alerts', document.querySelectorAll('.sidebar-nav li')[4]);
+      }
+    }
+
+
+    /* =========================================================
+       7. UTILITY FUNCTIONS, AUDIO & TOAST NOTIFICATIONS
+       ========================================================= */
+
+    function switchPage(pageId, navElement) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const target = document.getElementById(pageId);
+      if (target) target.classList.add('active');
+
+      document.querySelectorAll('.sidebar-nav li').forEach(el => el.classList.remove('active'));
+      if (navElement) navElement.classList.add('active');
+
+      if (pageId === 'live-tracking' && leafletMap) {
+        setTimeout(() => { leafletMap.invalidateSize(); }, 200);
+      }
+      if (pageId === 'students') renderStudentsTable();
+      if (pageId === 'routes-mgmt') renderRouteDetailsTable('ALL');
+      if (pageId === 'alerts') renderAlerts();
+    }
+
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add('active');
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.remove('active');
+    }
+
+    function showToast(msg, icon = "🔔") {
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastMessage').textContent = msg;
+      document.getElementById('toastIcon').textContent = icon;
+      toast.classList.add('show');
+      setTimeout(() => { toast.classList.remove('show'); }, 3400);
+    }
+
+    function simulateCall(name, phone) {
+      document.getElementById('callContactName').textContent = name;
+      document.getElementById('callContactPhone').textContent = phone;
+      openModal('callModal');
+    }
+
+    function simulateCallConnected() {
+      alert("Call connected! Simulating voice channel dispatch.");
+      closeModal('callModal');
+    }
+
+    // Audio synthesizer via Web Audio API (zero external assets needed)
+    let audioCtx = null;
+    let isMuted = false;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playAlertChime() {
+      if (isMuted) return;
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(880, ctx.currentTime); // A5
+        osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.3);
+        gain.gain.setValueAtTime(0.2, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.3);
+      } catch (e) { }
+    }
+
+    function playSuccessChime() {
+      if (isMuted) return;
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+        osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1); // E5
+        gain.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.3);
+      } catch (e) { }
+    }
+
+    function toggleMute(btn) {
+      isMuted = !isMuted;
+      btn.textContent = isMuted ? '🔕' : '🔔';
+      showToast(isMuted ? 'Alert sounds muted' : 'Alert sounds unmuted', isMuted ? '🔕' : '🔔');
+    }
+
+    function adjustDelayInput(val) {
+      const group = document.getElementById('delayDurationGroup');
+      if (val === 'Breakdown') {
+        document.getElementById('modalAlertDelay').value = 'Indefinite / Relief Dispatched';
+        document.getElementById('modalAlertSeverity').value = 'Critical';
+      } else if (val === 'Delay') {
+        document.getElementById('modalAlertDelay').value = '15 minutes';
+        document.getElementById('modalAlertSeverity').value = 'Warning';
+      }
+    }
+
+
+    /* =========================================================
+       8. SYSTEM INITIALIZATION ON LOAD
+       ========================================================= */
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initStudentDatabase();
+      renderAlerts();
+      renderOverviewRouteCards();
+      renderRouteDetailsTable('ALL');
+      renderInchargeDirectory();
+      renderDriverChecklist();
+      updateCampusCounts();
+      updateNewStudentStops("Route 16");
+
+      // Auto-login into Demo Admin view for seamless exploration
+      doLogin();
+    });
+  </script>
+</body>
+
+</html>

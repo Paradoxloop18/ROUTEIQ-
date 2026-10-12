@@ -1,0 +1,18 @@
+{
+  "name": "routeiq",
+  "version": "1.0.0",
+  "description": "RouteIQ — Smart College Bus Tracking & Management System",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "routeiq",
+    "gps-tracking",
+    "fleet-management"
+  ],
+  "author": "",
+  "license": "ISC"
+}
