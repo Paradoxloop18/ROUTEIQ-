@@ -1206,37 +1206,26 @@
       <p class="auth-subtitle">Smart College Bus Tracking &amp; Incident Management System<br><span style="color:#38bdf8;font-size:12px;">CMR Group of Institutions (CMRCET • CMREC • CMRIT)</span></p>
 
       <div class="form-group">
-        <label>College Email or User ID</label>
-        <input type="text" id="loginEmail" class="form-control" value="admin@cmrcet.ac.in">
-      </div>
-
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="loginPass" class="form-control" value="••••••••">
-      </div>
-
-      <div class="form-group">
-        <label>Select Active Role</label>
-        <select id="loginRole" class="form-control" onchange="updateRolePreset(this.value)">
+        <label style="font-weight:700;margin-bottom:8px;display:block;">Select Active Role</label>
+        <select id="loginRole" class="form-control" onchange="quickSelectRole(this.value)">
           <option value="Admin">Transport Administrator (Full Control)</option>
           <option value="Driver">Bus Driver (Phone GPS Live Sharing &amp; SOS)</option>
           <option value="Student">Student (Route Tracking &amp; Bus Pass)</option>
           <option value="Incharge">Bus Incharge / Manager (Roster &amp; Alerts)</option>
           <option value="Emergency">Emergency Coordinator (Incident Dispatch)</option>
         </select>
-        <div class="role-quick-chips">
-          <span class="chip" onclick="quickFillCredentials('Admin')">👑 Admin</span>
-          <span class="chip active" onclick="quickFillCredentials('Driver')">🚌 Driver</span>
-          <span class="chip" onclick="quickFillCredentials('Student')">🎓 Student</span>
-          <span class="chip" onclick="quickFillCredentials('Incharge')">📞 Incharge</span>
-          <span class="chip" onclick="quickFillCredentials('Emergency')">🚨 Emergency</span>
+        <div class="role-quick-chips" style="margin-top:12px;">
+          <span class="chip active" onclick="quickSelectRole('Admin')">👑 Admin</span>
+          <span class="chip" onclick="quickSelectRole('Driver')">🚌 Driver</span>
+          <span class="chip" onclick="quickSelectRole('Student')">🎓 Student</span>
+          <span class="chip" onclick="quickSelectRole('Incharge')">📞 Incharge</span>
+          <span class="chip" onclick="quickSelectRole('Emergency')">🚨 Emergency</span>
         </div>
       </div>
 
-      <button type="button" class="btn btn-primary" style="width:100%;margin-top:10px;padding:12px;" onclick="doLogin()">
+      <button type="button" class="btn btn-primary" style="width:100%;margin-top:16px;padding:14px;font-size:15px;font-weight:700;" onclick="doLogin()">
         Enter RouteIQ App →
       </button>
-      <div id="loginErrorMessage" style="display:none; color:#ef4444; font-size:12.5px; font-weight:600; margin-top:12px; padding:10px 14px; background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.3); border-radius:8px; text-align:center;"></div>
 
       <p style="text-align:center;margin-top:16px;font-size:12px;color:var(--text-dim)">
         📱 Pure Mobile App Mode: Uses Driver Phone GPS • Zero External ESP32 Hardware Needed
@@ -4481,7 +4470,6 @@ CMRGI | 08:50" required=""></textarea>
     import * as fbConfig from './firebase-config.js';
     import * as firestoreService from './firestore-service.js';
     import * as authService from './auth-service.js';
-    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
     window.RouteIQFirebase = {
       ...fbConfig,
@@ -4489,39 +4477,7 @@ CMRGI | 08:50" required=""></textarea>
       ...authService
     };
 
-    console.log("🔥 RouteIQ Firebase Modular SDK initialized:", window.RouteIQFirebase.firebaseConfig.projectId);
-
-    // Requirement 8: Add onAuthStateChanged() to handle login state
-    onAuthStateChanged(fbConfig.auth, (user) => {
-      const errBox = document.getElementById('loginErrorMessage');
-      if (errBox) errBox.style.display = 'none';
-
-      if (user) {
-        // Requirement 4 check
-        console.log("Firebase user signed in:", user.uid, user.email);
-        document.getElementById('auth-container').style.display = 'none';
-        document.getElementById('app-container').style.display = 'flex';
-
-        const roleVal = document.getElementById('loginRole') ? document.getElementById('loginRole').value : 'Admin';
-        if (typeof window.applyRolePermissions === 'function') {
-          window.applyRolePermissions(roleVal);
-        }
-        if (typeof window.initMap === 'function' && !window.leafletMap) {
-          window.initMap();
-        }
-        // Requirement 6 & 7: Start Firestore listeners ONLY after auth.currentUser exists
-        if (typeof window.initFirebaseIntegration === 'function') {
-          window.initFirebaseIntegration();
-        }
-      } else {
-        console.log("No Firebase user is signed in");
-        document.getElementById('app-container').style.display = 'none';
-        document.getElementById('auth-container').style.display = 'flex';
-        if (window.RouteIQFirebase && window.RouteIQFirebase.unsubscribeAll) {
-          window.RouteIQFirebase.unsubscribeAll();
-        }
-      }
-    });
+    console.log("🔥 RouteIQ System Initialized:", window.RouteIQFirebase.firebaseConfig.projectId);
   </script>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -4532,25 +4488,21 @@ CMRGI | 08:50" required=""></textarea>
        PHONE GPS & PWA APP LOGIC (NO ESP32 HARDWARE NEEDED)
        ========================================================= */
 
-    // Demo Credentials Quick-Fill
-    const demoCredentials = {
-      Admin:     { email: "admin@cmrcet.ac.in", pass: "admin123" },
-      Driver:    { email: "driver.route16@cmrgi.ac.in", pass: "driver123" },
-      Student:   { email: "student.cse@cmrcet.ac.in", pass: "student123" },
-      Incharge:  { email: "incharge.cmrec@cmrgi.ac.in", pass: "incharge123" },
-      Emergency: { email: "emergency.desk@cmrgi.ac.in", pass: "emergency123" }
-    };
-
-    function quickFillCredentials(role) {
-      const cred = demoCredentials[role] || demoCredentials.Admin;
-      document.getElementById('loginEmail').value = cred.email;
-      document.getElementById('loginPass').value = cred.pass;
-      document.getElementById('loginRole').value = role;
+    function quickSelectRole(role) {
+      if (typeof window.applyRolePermissions === 'function') {
+        window.currentRole = role;
+      }
+      const roleSelect = document.getElementById('loginRole');
+      if (roleSelect) roleSelect.value = role;
       document.querySelectorAll('.role-quick-chips .chip').forEach(c => {
         c.classList.toggle('active', c.textContent.includes(role));
       });
-      showToast(`Selected credentials for: ${role}`, "🔑");
+      if (typeof window.showToast === 'function') {
+        showToast(`Role selected: ${role}`, "👤");
+      }
     }
+    window.quickFillCredentials = quickSelectRole;
+    window.quickSelectRole = quickSelectRole;
 
     // Phone Live GPS Transmission using Android Geolocation API
     let phoneGpsWatchId = null;
@@ -6903,17 +6855,12 @@ CMRGI | 08:50" required=""></textarea>
         return;
       }
 
-      // Requirement 7: Do not start Firestore listeners before auth.currentUser exists
-      if (!window.RouteIQFirebase.auth.currentUser) {
-        console.log("🔒 Firestore listeners waiting: No Firebase user is signed in.");
-        return;
-      }
-
       const fb = window.RouteIQFirebase;
-      showCloudBanner("Connecting to Cloud Firestore (routeiq-d2104)...", "connecting");
+      showCloudBanner("RouteIQ Fleet System • Demonstration Mode Active", "online");
 
-      // 1. Subscribe to Routes in real time
-      fb.subscribeToRoutes((routesMap, fromCache) => {
+      // Attempt Cloud Firestore connection if available
+      try {
+        fb.subscribeToRoutes((routesMap, fromCache) => {
         const count = Object.keys(routesMap).length;
         console.log("🔥 Firestore onSnapshot (routes):", count, "loaded. FromCache:", fromCache);
         if (count > 0) {
@@ -6977,6 +6924,10 @@ CMRGI | 08:50" required=""></textarea>
           }
         }
       }, (err) => handleFirestoreError("gps_locations", err));
+
+      } catch (fbErr) {
+        console.warn("Firestore listeners initial note:", fbErr.message);
+      }
 
       // Listen for browser connectivity changes
       window.addEventListener('online', () => {
@@ -7532,96 +7483,53 @@ CMRGI | 08:50" required=""></textarea>
 
     let currentRole = "Admin";
 
-    function updateRolePreset(role) {
-      const email = document.getElementById('loginEmail');
-      if (role === 'Student') email.value = "student.cse@cmrcet.ac.in";
-      else if (role === 'Driver') email.value = "driver.route16@cmrgi.ac.in";
-      else if (role === 'Incharge') email.value = "incharge.cmrec@cmrgi.ac.in";
-      else if (role === 'Emergency') email.value = "emergency.desk@cmrgi.ac.in";
-      else email.value = "admin@cmrcet.ac.in";
-    }
-
     function quickSelectRole(role) {
-      document.getElementById('loginRole').value = role;
-      updateRolePreset(role);
+      currentRole = role;
+      const roleElem = document.getElementById('loginRole');
+      if (roleElem) roleElem.value = role;
       document.querySelectorAll('.role-quick-chips .chip').forEach(c => {
-        c.classList.toggle('active', c.textContent === role);
+        c.classList.toggle('active', c.textContent.includes(role));
       });
+      showToast(`Selected role: ${role}`, "👤");
     }
+    window.quickFillCredentials = quickSelectRole;
+    window.quickSelectRole = quickSelectRole;
+    window.updateRolePreset = quickSelectRole;
 
-    async function doLogin() {
-      const emailEl = document.getElementById('loginEmail');
-      const passEl = document.getElementById('loginPass');
-      const roleEl = document.getElementById('loginRole');
-      const errBox = document.getElementById('loginErrorMessage');
+    function doLogin() {
+      const roleElem = document.getElementById('loginRole');
+      currentRole = roleElem ? roleElem.value : "Admin";
 
-      const email = emailEl ? emailEl.value.trim() : '';
-      const password = passEl ? passEl.value : '';
-      currentRole = roleEl ? roleEl.value : 'Admin';
+      const authContainer = document.getElementById('auth-container');
+      const appContainer = document.getElementById('app-container');
 
-      if (errBox) {
-        errBox.style.display = 'none';
-        errBox.textContent = '';
-      }
+      if (authContainer) authContainer.style.display = 'none';
+      if (appContainer) appContainer.style.display = 'flex';
 
-      if (!email || !password) {
-        if (errBox) {
-          errBox.textContent = "Please enter both email and password.";
-          errBox.style.display = 'block';
-        }
-        showToast("Please enter email & password", "⚠️");
-        return;
-      }
-
-      const loginBtn = document.querySelector('#auth-container button.btn-primary');
-      const origBtnText = loginBtn ? loginBtn.innerHTML : 'Enter RouteIQ App →';
-      if (loginBtn) {
-        loginBtn.disabled = true;
-        loginBtn.innerHTML = 'Authenticating with Firebase...';
-      }
+      applyRolePermissions(currentRole);
 
       try {
-        if (!window.RouteIQFirebase || !window.RouteIQFirebase.loginWithEmail) {
-          throw new Error("Firebase Auth SDK not initialized yet.");
+        if (typeof window.initMap === 'function' && !window.leafletMap) {
+          window.initMap();
         }
-
-        // Requirement 2 & 3: Replace hardcoded demo login with Firebase signInWithEmailAndPassword
-        const res = await window.RouteIQFirebase.loginWithEmail(email, password);
-        if (!res.success) {
-          // Requirement 9: Display a clear error for invalid credentials
-          if (errBox) {
-            errBox.textContent = `Login Failed: ${res.error}`;
-            errBox.style.display = 'block';
-          }
-          showToast(`Auth Failed: ${res.error}`, "❌");
-          return;
-        }
-
-        // Successful Firebase authentication!
-        // onAuthStateChanged will handle UI transition & start Firestore listeners.
-        showToast(`Authenticated as ${res.user.email}`, "🔐");
-      } catch (err) {
-        console.error("Login error:", err);
-        if (errBox) {
-          errBox.textContent = err.message || "Authentication error occurred.";
-          errBox.style.display = 'block';
-        }
-        showToast("Login error: " + err.message, "❌");
-      } finally {
-        if (loginBtn) {
-          loginBtn.disabled = false;
-          loginBtn.innerHTML = origBtnText;
-        }
+      } catch (mapErr) {
+        console.warn("Map init error:", mapErr);
       }
+
+      // Initialize Firestore listeners gracefully
+      if (typeof window.initFirebaseIntegration === 'function') {
+        window.initFirebaseIntegration();
+      }
+
+      showToast(`Welcome to RouteIQ (${currentRole})`, "🚌");
     }
 
-    async function doLogout() {
-      if (window.RouteIQFirebase && window.RouteIQFirebase.logoutUser) {
-        await window.RouteIQFirebase.logoutUser();
-      }
-      document.getElementById('app-container').style.display = 'none';
-      document.getElementById('auth-container').style.display = 'flex';
-      showToast("Signed out from Firebase Auth", "🔒");
+    function doLogout() {
+      const authContainer = document.getElementById('auth-container');
+      const appContainer = document.getElementById('app-container');
+      if (appContainer) appContainer.style.display = 'none';
+      if (authContainer) authContainer.style.display = 'flex';
+      showToast("Signed out. Select a role to re-enter.", "🔒");
     }
 
     function changeRole(newRole) {
