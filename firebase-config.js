@@ -6,12 +6,13 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-aut
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyDovLKo3djdRbs963vqKdbj-geRWyzMTrg",
+  apiKey: "AIzaSyCS_IGQ5Pfv8EAqP2DdiF-3QCNiNxfASSA",
   authDomain: "routeiq-d2104.firebaseapp.com",
   projectId: "routeiq-d2104",
   storageBucket: "routeiq-d2104.firebasestorage.app",
-  messagingSenderId: "703506618799",
-  appId: "1:703506618799:web:b78d31c1ae570d3b5c375a"
+  messagingSenderId: "1022489934137",
+  appId: "1:1022489934137:web:9a748879b565b17c7b90e8",
+  measurementId: "G-Y6C6L02L71"
 };
 
 // Initialize Firebase App
