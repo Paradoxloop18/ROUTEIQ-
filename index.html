@@ -5104,7 +5104,7 @@ CMRGI | 08:50" required=""></textarea>
       });
 
       if (role === 'Driver') {
-        switchPage('driver-telemetry', document.querySelectorAll('.sidebar-nav li')[6]);
+        switchPage('driver-cockpit', document.querySelectorAll('.sidebar-nav li')[6] || document.querySelectorAll('.sidebar-nav li')[5]);
       } else if (role === 'Emergency') {
         switchPage('alerts', document.querySelectorAll('.sidebar-nav li')[5]);
       }
@@ -5163,275 +5163,10 @@ CMRGI | 08:50" required=""></textarea>
     }
     window.promptDeleteStudent = promptDeleteStudent;
 
-    // Render Route Details Table with Edit/Delete Stops (Requirement 4)
-    function renderRouteDetailsTable(filterRoute) {
-      const tbody = document.getElementById('routeStopsTableBody');
-      if (!tbody) return;
-      let rows = [];
-      const hasEditAccess = canEditFleet();
-
-      for (const [rId, r] of Object.entries(routesData)) {
-        if (filterRoute && filterRoute !== 'ALL' && rId !== filterRoute) continue;
-
-        r.stops.forEach((s, stopIdx) => {
-          rows.push(`
-            <tr>
-              <td><b>${rId}</b></td>
-              <td><span class="mono" style="color:#fcd34d">${r.busPlate}</span></td>
-              <td>#${s.seq || (stopIdx + 1)}</td>
-              <td><span class="mono badge badge-neutral" style="color:#38bdf8;font-weight:700;">BP-${s.bp || (stopIdx + 1)}</span></td>
-              <td><b>${s.name}</b></td>
-              <td><span class="badge badge-campus">${s.name.includes('CMRGI') ? 'Destination Campus' : 'Boarding Stop'}</span></td>
-              <td><span class="mono" style="color:#38bdf8;font-weight:700;">${calculateDynamicStopTime(s.time, 0)}</span></td>
-              <td><span class="mono" style="font-size:12px;">${(s.lat || 17.5).toFixed(4)}° N</span></td>
-              <td><span class="mono" style="font-size:12px;">${(s.lng || 78.5).toFixed(4)}° E</span></td>
-              <td>${r.inchargeName}</td>
-              <td>
-                <div class="flex gap-1 items-center">
-                  <button class="btn btn-secondary btn-sm stop-edit-btn ${hasEditAccess ? '' : 'hidden'}" onclick="openEditStopModal('${rId}', ${stopIdx})" title="Edit Stop Details">
-                    ✏️ Edit
-                  </button>
-                  <button class="btn btn-danger-subtle btn-sm stop-delete-btn ${hasEditAccess ? '' : 'hidden'}" onclick="deleteStop('${rId}', ${stopIdx})" title="Delete Stop">
-                    🗑️
-                  </button>
-                </div>
-              </td>
-            </tr>
-          `);
-        });
-      }
-
-      tbody.innerHTML = rows.join('');
-    }
-
-    // Stop Editing Handlers (Requirement 4)
-    function openEditStopModal(routeId, stopIdx) {
-      if (!checkFleetEditPermission()) return;
-      const r = routesData[routeId];
-      if (!r || !r.stops[stopIdx]) return;
-
-      const stop = r.stops[stopIdx];
-      document.getElementById('editStopRouteId').value = routeId;
-      document.getElementById('editStopIndex').value = stopIdx;
-      document.getElementById('editStopRouteDisplay').value = `${routeId} (${r.busPlate})`;
-      document.getElementById('editStopBp').value = stop.bp || (stopIdx + 1);
-      document.getElementById('editStopName').value = stop.name;
-      document.getElementById('editStopTime').value = stop.time || '07:30 AM';
-      document.getElementById('editStopLat').value = stop.lat;
-      document.getElementById('editStopLng').value = stop.lng;
-
-      openModal('editStopModal');
-    }
-
-    function handleModalEditStop(event) {
-      event.preventDefault();
-      if (!checkFleetEditPermission()) return;
-
-      const routeId = document.getElementById('editStopRouteId').value;
-      const stopIdx = parseInt(document.getElementById('editStopIndex').value, 10);
-      const r = routesData[routeId];
-      if (!r || !r.stops[stopIdx]) return;
-
-      const newBp = document.getElementById('editStopBp').value.trim();
-      const newName = document.getElementById('editStopName').value.trim();
-      const newTime = document.getElementById('editStopTime').value.trim();
-      const newLat = parseFloat(document.getElementById('editStopLat').value);
-      const newLng = parseFloat(document.getElementById('editStopLng').value);
-
-      r.stops[stopIdx].bp = newBp;
-      r.stops[stopIdx].name = newName;
-      r.stops[stopIdx].time = newTime;
-      r.stops[stopIdx].lat = newLat;
-      r.stops[stopIdx].lng = newLng;
-
-      if (routeStops[routeId] && routeStops[routeId][stopIdx]) {
-        routeStops[routeId][stopIdx].bp = newBp;
-        routeStops[routeId][stopIdx].name = newName;
-        routeStops[routeId][stopIdx].time = newTime;
-      }
-
-      stopCoordsRegistry[newName] = { lat: newLat, lng: newLng };
-
-      closeModal('editStopModal');
-      renderRouteDetailsTable(document.getElementById('routeDetailFilter').value);
-      if (activeMapRoute === routeId && leafletMap) {
-        renderSelectedRouteOnMap(routeId);
-      }
-      persistFleetState(`Updated stop "${newName}" on ${routeId}`);
-    }
-
-    function deleteStop(routeId, stopIdx) {
-      if (!checkFleetEditPermission()) return;
-      const r = routesData[routeId];
-      if (!r || !r.stops[stopIdx]) return;
-
-      const stopName = r.stops[stopIdx].name;
-      if (r.stops.length <= 2) {
-        alert("A route must have at least 2 stops (origin and destination). Cannot delete.");
-        return;
-      }
-
-      if (!confirm(`Are you sure you want to delete stop "${stopName}" from ${routeId}?`)) return;
-
-      r.stops.splice(stopIdx, 1);
-      r.stops.forEach((s, idx) => { s.seq = idx + 1; });
-
-      if (routeStops[routeId]) {
-        routeStops[routeId].splice(stopIdx, 1);
-      }
-
-      updateDashboardStats();
-      renderRouteDetailsTable(document.getElementById('routeDetailFilter').value);
-      if (activeMapRoute === routeId && leafletMap) {
-        renderSelectedRouteOnMap(routeId);
-      }
-      persistFleetState(`Deleted stop "${stopName}" from ${routeId}`);
-    }
-
-    // Add Stop to Route Handlers (Requirement 4)
-    function openAddStopModal() {
-      if (!checkFleetEditPermission()) return;
-      populateAllRouteDropdowns();
-      const curFilter = document.getElementById('routeDetailFilter').value;
-      if (curFilter !== 'ALL' && document.getElementById('modalAddStopRoute')) {
-        document.getElementById('modalAddStopRoute').value = curFilter;
-      }
-      openModal('addStopModal');
-    }
-
-    function handleModalAddStop(event) {
-      event.preventDefault();
-      if (!checkFleetEditPermission()) return;
-
-      const routeId = document.getElementById('modalAddStopRoute').value;
-      const bp = document.getElementById('modalAddStopBp').value.trim();
-      const name = document.getElementById('modalAddStopName').value.trim();
-      const time = document.getElementById('modalAddStopTime').value.trim();
-      const lat = parseFloat(document.getElementById('modalAddStopLat').value);
-      const lng = parseFloat(document.getElementById('modalAddStopLng').value);
-
-      const r = routesData[routeId];
-      if (!r) return;
-
-      // Insert before destination campus if last stop is CMRGI
-      const newStop = {
-        bp: bp || (r.stops.length + 1).toString(),
-        name: name,
-        time: time,
-        seq: r.stops.length,
-        lat: lat,
-        lng: lng
-      };
-
-      if (r.stops.length > 0 && r.stops[r.stops.length - 1].name.includes('CMRGI')) {
-        r.stops.splice(r.stops.length - 1, 0, newStop);
-        if (routeStops[routeId]) {
-          routeStops[routeId].splice(routeStops[routeId].length - 1, 0, { bp: newStop.bp, name: name, time: time });
-        }
-      } else {
-        r.stops.push(newStop);
-        if (routeStops[routeId]) {
-          routeStops[routeId].push({ bp: newStop.bp, name: name, time: time });
-        }
-      }
-
-      // Re-index sequences
-      r.stops.forEach((s, idx) => { s.seq = idx + 1; });
-      stopCoordsRegistry[name] = { lat, lng };
-
-      closeModal('addStopModal');
-      document.getElementById('modalAddStopForm').reset();
-      updateDashboardStats();
-      renderRouteDetailsTable(document.getElementById('routeDetailFilter').value);
-      if (activeMapRoute === routeId && leafletMap) {
-        renderSelectedRouteOnMap(routeId);
-      }
-      persistFleetState(`Added new stop "${name}" to ${routeId}`);
-    }
-
     // Add Bus Route Modal Handlers (Requirement 3: Corner button opening clean modal)
     function openAddRouteModal() {
       if (!checkFleetEditPermission()) return;
       openModal('addRouteModal');
-    }
-
-    function handleModalAddRoute(event) {
-      event.preventDefault();
-      if (!checkFleetEditPermission()) return;
-
-      const routeNumber = document.getElementById('modalRouteNumber').value.trim();
-      const routeName = document.getElementById('modalRouteName').value.trim();
-      const busNumber = document.getElementById('modalBusNumber').value.trim();
-      const campus = document.getElementById('modalRouteCampus').value;
-      const inchargeName = document.getElementById('modalInchargeName').value.trim();
-      const inchargePhone = document.getElementById('modalInchargePhone').value.trim();
-      const rawStops = document.getElementById('modalRouteStops').value.trim();
-      const capacity = parseInt(document.getElementById('modalBusCapacity').value, 10) || 50;
-      const color = document.getElementById('modalRouteColor').value || '#f59e0b';
-
-      if (routesData[routeNumber]) {
-        alert(`Route "${routeNumber}" already exists! Please choose another ID.`);
-        return;
-      }
-
-      const parsedStops = rawStops.split('\n')
-        .map(l => l.trim())
-        .filter(Boolean)
-        .map((line, idx) => {
-          const parts = line.split('|').map(p => p.trim());
-          const stopName = parts[0] || `Stop ${idx + 1}`;
-          const stopTime = parts[1] || '07:30 AM';
-          const stopLat = parts[2] ? parseFloat(parts[2]) : (17.4000 + (idx * 0.02));
-          const stopLng = parts[3] ? parseFloat(parts[3]) : (78.4500 + (idx * 0.005));
-
-          stopCoordsRegistry[stopName] = { lat: stopLat, lng: stopLng };
-
-          return {
-            bp: `${routeNumber.replace(/\D/g, '') || '9'}${String(idx + 1).padStart(2, '0')}`,
-            name: stopName,
-            time: stopTime,
-            seq: idx + 1,
-            lat: stopLat,
-            lng: stopLng
-          };
-        });
-
-      if (parsedStops.length === 0) {
-        alert("Please enter at least one boarding stop.");
-        return;
-      }
-
-      routeStops[routeNumber] = parsedStops.map(s => ({ bp: s.bp, name: s.name, time: s.time }));
-      routeBusNumbers[routeNumber] = busNumber;
-      routeCampuses[routeNumber] = campus;
-      routeIncharges[routeNumber] = { name: inchargeName, phone: inchargePhone };
-      routePassengers[routeNumber] = 0;
-      routeColors[routeNumber] = color;
-
-      routesData[routeNumber] = {
-        routeId: routeNumber,
-        busPlate: busNumber,
-        campus: campus,
-        capacity: capacity,
-        currentCount: 0,
-        status: "Active",
-        inchargeName: inchargeName,
-        inchargePhone: inchargePhone,
-        color: color,
-        stops: parsedStops
-      };
-
-      studentsDatabase[routeNumber] = [];
-
-      closeModal('addRouteModal');
-      document.getElementById('modalAddRouteForm').reset();
-
-      populateAllRouteDropdowns();
-      updateDashboardStats();
-      renderRouteDetailsTable('ALL');
-      renderStudentsTable();
-
-      persistFleetState(`Successfully added new ${routeNumber} (${busNumber})`);
     }
 
     // Server State Persistence API Handlers
@@ -6473,18 +6208,6 @@ CMRGI | 08:50" required=""></textarea>
       renderAlerts();
     }
 
-    function acknowledgeAlert(alertId) {
-      const alert = alertsData.find(a => a.id === alertId);
-      if (alert) {
-        alert.status = "Acknowledged";
-        alert.acknowledgedBy = "Transport Incharge (ES Babu)";
-        alert.updatedTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " IST";
-        playSuccessChime();
-        renderAlerts();
-        showToast(`Incident #${alertId} acknowledged. Emergency staff coordinating.`, "✓");
-      }
-    }
-
     function dispatchReliefBus(alertId) {
       const alert = alertsData.find(a => a.id === alertId);
       if (alert) {
@@ -6493,24 +6216,6 @@ CMRGI | 08:50" required=""></textarea>
         renderAlerts();
         showToast("Relief bus TS-08-UB-4599 dispatched!", "🚌");
       }
-    }
-
-    function resolveAlert(alertId) {
-      const alert = alertsData.find(a => a.id === alertId);
-      if (alert) {
-        alert.status = "Resolved";
-        alert.updatedTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + " IST";
-        playSuccessChime();
-        renderAlerts();
-        updateLiveJourneyAndSchedule();
-        showToast(`Incident #${alertId} marked as Resolved!`, "✅");
-      }
-    }
-
-    function closeAlert(alertId) {
-      alertsData = alertsData.filter(a => a.id !== alertId);
-      renderAlerts();
-      showToast(`Incident #${alertId} closed and archived.`, "📁");
     }
 
     function openReportAlertModal() {
@@ -7400,35 +7105,6 @@ CMRGI | 08:50" required=""></textarea>
       selectMapRoute(rId);
     }
 
-    function renderRouteDetailsTable(filterRoute) {
-      const tbody = document.getElementById('routeStopsTableBody');
-      if (!tbody) return;
-      let rows = [];
-
-      for (const [rId, r] of Object.entries(routesData)) {
-        if (filterRoute && filterRoute !== 'ALL' && rId !== filterRoute) continue;
-
-        r.stops.forEach(s => {
-          rows.push(`
-            <tr>
-              <td><b>${rId}</b></td>
-              <td><span class="mono" style="color:#fcd34d">${r.busPlate}</span></td>
-              <td>#${s.seq}</td>
-              <td><span class="mono badge badge-neutral" style="color:#38bdf8;font-weight:700;">BP-${s.bp || s.seq}</span></td>
-              <td><b>${s.name}</b></td>
-              <td><span class="badge badge-campus">${s.name.includes('CMRGI') ? 'Destination Campus' : 'Boarding Stop'}</span></td>
-              <td><span class="mono" style="color:#38bdf8;font-weight:700;">${calculateDynamicStopTime(s.time, 0)}</span></td>
-              <td><span class="mono" style="font-size:12px;">${(s.lat || 17.5).toFixed(4)}° N</span></td>
-              <td><span class="mono" style="font-size:12px;">${(s.lng || 78.5).toFixed(4)}° E</span></td>
-              <td>${r.inchargeName}</td>
-            </tr>
-          `);
-        });
-      }
-
-      tbody.innerHTML = rows.join('');
-    }
-
     function renderInchargeDirectory() {
       const tbody = document.getElementById('inchargeTableBody');
       tbody.innerHTML = inchargeContacts.map(c => `
@@ -7448,8 +7124,6 @@ CMRGI | 08:50" required=""></textarea>
       `).join('');
     }
 
-    function renderDriverChecklist() {
-      const container = document.getElementById('driverStopsChecklist');
     let currentDriverRoute = "Route 16";
     const driverRouteChecklistProgress = {};
 
@@ -7708,26 +7382,6 @@ CMRGI | 08:50" required=""></textarea>
       currentRole = newRole;
       applyRolePermissions(newRole);
       showToast(`Switched active view to: ${newRole}`, "🔄");
-    }
-
-    function applyRolePermissions(role) {
-      document.getElementById('topRoleSelect').value = role;
-      document.getElementById('userNameLabel').textContent = `${role} User`;
-      document.getElementById('userAvatar').textContent = role.charAt(0);
-
-      const subRoleLabel = document.getElementById('userSubRole');
-      if (role === 'Admin') subRoleLabel.textContent = "Transport Fleet Superadmin";
-      else if (role === 'Student') subRoleLabel.textContent = "CMRCET • 3rd Year CSE";
-      else if (role === 'Driver') subRoleLabel.textContent = "Route 16 Vehicle Pilot";
-      else if (role === 'Incharge') subRoleLabel.textContent = "Route 03 Faculty Manager";
-      else if (role === 'Emergency') subRoleLabel.textContent = "Central Incident Coordinator";
-
-      // Contextual routing based on role
-      if (role === 'Driver') {
-        switchPage('driver-cockpit', document.querySelectorAll('.sidebar-nav li')[5]);
-      } else if (role === 'Emergency') {
-        switchPage('alerts', document.querySelectorAll('.sidebar-nav li')[4]);
-      }
     }
 
 
