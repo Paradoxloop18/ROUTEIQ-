@@ -19,12 +19,20 @@ const SERVICE_ACCOUNT_FILE = path.join(__dirname, 'routeiq-d2104-8599cf6363fd.js
 try {
   if (getApps().length === 0) {
     if (fs.existsSync(SERVICE_ACCOUNT_FILE)) {
+      // Local development: use service account JSON file
       const sa = JSON.parse(fs.readFileSync(SERVICE_ACCOUNT_FILE, 'utf8'));
       adminApp = initializeApp({ credential: cert(sa) });
       console.log('✅ Firebase Admin SDK initialized with local service account for RouteIQ');
+    } else if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
+      // Vercel/Production: use environment variable with JSON string
+      const sa = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
+      adminApp = initializeApp({ credential: cert(sa) });
+      console.log('✅ Firebase Admin SDK initialized with FIREBASE_SERVICE_ACCOUNT_JSON env var');
     } else if (process.env.GOOGLE_APPLICATION_CREDENTIALS) {
       adminApp = initializeApp();
       console.log('✅ Firebase Admin SDK initialized with GOOGLE_APPLICATION_CREDENTIALS');
+    } else {
+      console.warn('⚠️ No Firebase credentials found. Telemetry API will be disabled.');
     }
   } else {
     adminApp = getApp();
