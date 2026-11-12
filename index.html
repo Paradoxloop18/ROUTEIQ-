@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=JetBrains+Mono:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 
   <!-- Android PWA & Mobile App Meta Tags -->
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#090d16">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -4745,7 +4745,7 @@ CMRGI | 08:50" required=""></textarea>
        1. ROUTEIQ CORE DATA OBJECTS (5 ROUTES: 03, 13, 16, 19A, 25)
        ========================================================= */
 
-    const routeStops = {
+    let routeStops = {
       "Route 03": [
         { bp: "301", name: "Radhika", time: "7:30" },
         { bp: "302", name: "Lal Bazar (Petrol Bunk)", time: "7:40" },
@@ -4963,7 +4963,7 @@ CMRGI | 08:50" required=""></textarea>
       "Route 25": "#06b6d4"
     };
 
-    const routesData = {};
+    let routesData = {};
 
     function buildRoutesData() {
       Object.keys(routeStops).forEach(rId => {
@@ -8565,7 +8565,9 @@ CMRGI | 08:50" required=""></textarea>
       updateLiveJourneyAndSchedule();
 
       // Listen for Real Firebase Authentication State
+      let authWaitElapsedMs = 0;
       const authSubscriptionInterval = setInterval(() => {
+        authWaitElapsedMs += 100;
         if (window.RouteIQFirebase && typeof window.RouteIQFirebase.subscribeToAuthChanges === 'function') {
           clearInterval(authSubscriptionInterval);
           window.RouteIQFirebase.subscribeToAuthChanges((sessionUser) => {
@@ -8605,6 +8607,10 @@ CMRGI | 08:50" required=""></textarea>
             initFirebaseIntegration();
             showToast(`Signed in as ${sessionUser.displayName || sessionUser.email} (${authorizedRole})`, "🔒");
           });
+        } else if (authWaitElapsedMs >= 9000) {
+          clearInterval(authSubscriptionInterval);
+          console.warn("🔒 Institutional session verification timed out. Redirecting to login.html...");
+          window.location.replace('login.html');
         }
       }, 100);
     });

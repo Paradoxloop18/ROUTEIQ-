@@ -9,7 +9,16 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PORT = process.env.PORT || 3000;
-const FLEET_DATA_PATH = path.join(__dirname, 'fleet_data.json');
+
+function getFleetDataPath() {
+  const p1 = path.join(__dirname, 'fleet_data.json');
+  if (fs.existsSync(p1)) return p1;
+  const p2 = path.join(process.cwd(), 'fleet_data.json');
+  if (fs.existsSync(p2)) return p2;
+  return p1;
+}
+
+const FLEET_DATA_PATH = getFleetDataPath();
 
 // Firebase Admin Initialization for Server-Side Hardware Telemetry (routeiq-d2104)
 let adminDb = null;
@@ -384,25 +393,45 @@ const server = http.createServer((req, res) => {
     pathname = '/signup.html';
   }
 
-  // Security: Block access to service account private keys, rules, and hidden files
+  // Security: Block access to service account private keys, rules, .env, and hidden files
   const filename = path.basename(pathname).toLowerCase();
   if (
     filename.startsWith('.') ||
     filename.includes('routeiq-d2104-') ||
     filename.endsWith('.rules') ||
     filename === 'firebase.json' ||
-    filename === '.firebaserc'
+    filename === '.firebaserc' ||
+    filename === 'package.json' ||
+    filename === 'package-lock.json' ||
+    filename.includes('serviceaccount') ||
+    filename.endsWith('.key') ||
+    filename.endsWith('.pem') ||
+    filename.endsWith('.ps1')
   ) {
-    res.writeHead(403, { 'Content-Type': 'text/plain' });
+    res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
     res.end('403 Forbidden: Protected server resource');
     return;
   }
 
-  let filePath = path.join(__dirname, pathname);
+  // Sanitize path to prevent directory traversal
+  const sanitizedPath = path.normalize(pathname).replace(/^(\.\.[\/\\])+/, '');
 
-  // Directory traversal protection
-  if (!filePath.startsWith(__dirname)) {
-    res.writeHead(403, { 'Content-Type': 'text/plain' });
+  // Resolve file: check __dirname first, then fallback to process.cwd() (standard for Vercel functions)
+  let resolvedBase = __dirname;
+  let filePath = path.join(__dirname, sanitizedPath);
+
+  if (!fs.existsSync(filePath)) {
+    const cwdCandidate = path.join(process.cwd(), sanitizedPath);
+    if (fs.existsSync(cwdCandidate)) {
+      filePath = cwdCandidate;
+      resolvedBase = process.cwd();
+    }
+  }
+
+  // Directory traversal check against the resolved base directory
+  const relativeFromBase = path.relative(resolvedBase, filePath);
+  if (relativeFromBase.startsWith('..') || path.isAbsolute(relativeFromBase)) {
+    res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
     res.end('403 Forbidden');
     return;
   }
@@ -428,14 +457,18 @@ const server = http.createServer((req, res) => {
           </html>
         `);
       } else {
-        res.writeHead(500, { 'Content-Type': 'text/plain' });
+        res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
         res.end(`500 Server Error: ${err.code}`);
       }
       return;
     }
 
     const ext = path.extname(filePath).toLowerCase();
-    const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+    let contentType = MIME_TYPES[ext] || 'application/octet-stream';
+
+    if (filename === 'manifest.json' || ext === '.webmanifest') {
+      contentType = 'application/manifest+json; charset=utf-8';
+    }
 
     if (filename === 'sw.js') {
       res.setHeader('Service-Worker-Allowed', '/');
@@ -455,3 +488,5 @@ server.listen(PORT, () => {
   console.log(`⚡ API: http://localhost:${PORT}/api/fleet-data`);
   console.log(`========================================\n`);
 });
+
+export default server;
