@@ -104,7 +104,7 @@ const MIME_TYPES = {
   '.ttf': 'font/ttf'
 };
 
-const server = http.createServer((req, res) => {
+const handler = (req, res) => {
   // CORS headers for local development
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -478,15 +478,19 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': contentType });
     res.end(content);
   });
-});
+};
 
-server.listen(PORT, () => {
-  console.log(`\n========================================`);
-  console.log(`🚀 RouteIQ Dev Server is running!`);
-  console.log(`📡 URL: http://localhost:${PORT}`);
-  console.log(`📁 Serving directory: ${__dirname}`);
-  console.log(`⚡ API: http://localhost:${PORT}/api/fleet-data`);
-  console.log(`========================================\n`);
-});
+export default handler;
 
-export default server;
+// For local development only, create and listen on an HTTP server
+if (!process.env.VERCEL) {
+  const server = http.createServer(handler);
+  server.listen(PORT, () => {
+    console.log(`\n========================================`);
+    console.log(`🚀 RouteIQ Dev Server is running!`);
+    console.log(`📡 URL: http://localhost:${PORT}`);
+    console.log(`📁 Serving directory: ${__dirname}`);
+    console.log(`⚡ API: http://localhost:${PORT}/api/fleet-data`);
+    console.log(`========================================\n`);
+  });
+}
