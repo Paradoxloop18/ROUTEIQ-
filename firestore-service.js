@@ -12,7 +12,9 @@ import {
   deleteDoc,
   onSnapshot,
   query,
+  where,
   orderBy,
+  writeBatch,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -77,7 +79,7 @@ export function subscribeToRoutes(onUpdate, onError) {
 }
 
 /**
- * Subscribe to students collection in real-time
+ * Subscribe to students collection in real-time with field normalization & ordering
  */
 export function subscribeToStudents(onUpdate, onError) {
   const unsub = onSnapshot(studentsCol, (snapshot) => {
@@ -86,11 +88,46 @@ export function subscribeToStudents(onUpdate, onError) {
       const s = docSnap.data();
       const rId = s.routeId || s.route || "Route 03";
       if (!studentsByRoute[rId]) studentsByRoute[rId] = [];
+
+      // Normalize fields between CSV-import schema and UI schema
+      const roll = String(s.roll || docSnap.id).trim();
+      const name = s.name || "Student";
+      const year = s.year || "1st";
+      const dept = s.dept || s.department || "General";
+      const campus = s.campus || "CMRCET";
+      const receipt = s.receipt || "-";
+      const stop = s.stop || s.boardingPoint || "Main Gate";
+      const fee = s.fee || s.feeStatus || (s.receipt && s.receipt !== '-' ? "Paid" : "Pending");
+      const numId = s.id !== undefined && s.id !== null ? (parseInt(s.id, 10) || null) : null;
+
       studentsByRoute[rId].push({
         ...s,
-        id: docSnap.id
+        id: numId !== null ? numId : studentsByRoute[rId].length + 1,
+        roll,
+        name,
+        year,
+        dept,
+        department: dept,
+        campus,
+        receipt,
+        stop,
+        boardingPoint: stop,
+        fee,
+        feeStatus: fee,
+        routeId: rId,
+        docId: docSnap.id
       });
     });
+
+    // Sort students within each route sequentially by id or roll
+    Object.keys(studentsByRoute).forEach(rId => {
+      studentsByRoute[rId].sort((a, b) => {
+        const idA = typeof a.id === 'number' ? a.id : parseInt(a.id, 10) || 999;
+        const idB = typeof b.id === 'number' ? b.id : parseInt(b.id, 10) || 999;
+        return idA - idB;
+      });
+    });
+
     if (onUpdate) onUpdate(studentsByRoute, snapshot.metadata.fromCache);
   }, (error) => {
     console.error("Firestore onSnapshot error (students):", error);
@@ -141,12 +178,18 @@ export function subscribeToIncharges(onUpdate, onError) {
 
 /**
  * Subscribe to live GPS locations stream in real-time
+ * Indexed by both docId, routeId, and busPlate for seamless mapping
  */
 export function subscribeToGpsLocations(onUpdate, onError) {
   const unsub = onSnapshot(gpsCol, (snapshot) => {
     const locationsMap = {};
     snapshot.forEach(docSnap => {
-      locationsMap[docSnap.id] = docSnap.data();
+      const data = docSnap.data();
+      locationsMap[docSnap.id] = data;
+      if (data.routeId) locationsMap[data.routeId] = data;
+      if (data.busPlate) locationsMap[data.busPlate] = data;
+      if (data.busId) locationsMap[data.busId] = data;
+      if (data.bus_id) locationsMap[data.bus_id] = data;
     });
     if (onUpdate) onUpdate(locationsMap, snapshot.metadata.fromCache);
   }, (error) => {
@@ -287,7 +330,7 @@ export async function deleteStop(routeId, stopIdx) {
 }
 
 /* =========================================================
-   3. STUDENTS CRUD OPERATIONS
+   3. STUDENTS CRUD & SAFE ATOMIC DELETION / RENUMBERING
    ========================================================= */
 
 /**
@@ -310,17 +353,72 @@ export async function saveStudent(studentData) {
 }
 
 /**
- * Delete student
+ * Safely delete a student from Firestore without renumbering or altering other students' real IDs.
+ * Uses stable student document IDs (roll number) and updates the route capacity count.
  */
-export async function deleteStudent(studentId) {
+export async function deleteStudentSafely(routeId, rollNumber) {
   try {
-    const docRef = doc(db, "students", String(studentId));
-    await deleteDoc(docRef);
-    return { success: true };
+    if (!rollNumber) throw new Error("Student roll number is required.");
+
+    const cleanRoll = String(rollNumber).trim();
+    let targetDocRef = null;
+
+    // Check direct doc existence by rollNumber
+    const directRef = doc(db, "students", cleanRoll);
+    const directSnap = await getDoc(directRef);
+    if (directSnap.exists()) {
+      targetDocRef = directRef;
+    } else {
+      // Find matching document by roll or id field
+      const q = query(studentsCol, where("roll", "==", cleanRoll));
+      const qSnap = await getDocs(q);
+      if (!qSnap.empty) {
+        targetDocRef = qSnap.docs[0].ref;
+      }
+    }
+
+    if (!targetDocRef) {
+      throw new Error(`Student ${cleanRoll} not found in database.`);
+    }
+
+    // Atomically delete student document and update route count if applicable
+    const batch = writeBatch(db);
+    batch.delete(targetDocRef);
+
+    if (routeId) {
+      try {
+        const routeRef = doc(db, "routes", routeId);
+        const rSnap = await getDoc(routeRef);
+        if (rSnap.exists()) {
+          const cur = rSnap.data().currentCount || 0;
+          batch.update(routeRef, {
+            currentCount: Math.max(0, cur - 1),
+            updatedAt: serverTimestamp()
+          });
+        }
+      } catch (e) {
+        console.warn("Route count decrement note:", e);
+      }
+    }
+
+    await batch.commit();
+    console.log(`✅ Safely deleted student ${cleanRoll} from database without altering other students' real IDs.`);
+
+    return {
+      success: true,
+      deletedRoll: cleanRoll
+    };
   } catch (err) {
-    console.error("Error deleting student from Firestore:", err);
+    console.error("Error in deleteStudentSafely:", err);
     return { success: false, error: err.message };
   }
+}
+
+/**
+ * Standard delete student wrapper
+ */
+export async function deleteStudent(studentId, routeId) {
+  return deleteStudentSafely(routeId, studentId);
 }
 
 /* =========================================================
@@ -401,20 +499,41 @@ export async function deleteAlert(alertId) {
 }
 
 /* =========================================================
-   5. LIVE GPS LOCATIONS
+   5. LIVE GPS LOCATIONS (Real Telemetry Stream)
    ========================================================= */
 
 /**
- * Store live GPS telemetry packet
+ * Store live real GPS telemetry packet in Cloud Firestore
  */
 export async function saveGpsLocation(routeId, gpsPacket) {
   try {
-    const docRef = doc(db, "gps_locations", routeId);
-    await setDoc(docRef, {
+    if (!routeId) throw new Error("Route ID is required for GPS packet");
+
+    const payload = {
       ...gpsPacket,
       routeId,
+      latitude: Number(gpsPacket.latitude),
+      longitude: Number(gpsPacket.longitude),
+      speed: Number(gpsPacket.speed || gpsPacket.speed_kmh || 0),
+      speed_kmh: Number(gpsPacket.speed_kmh || gpsPacket.speed || 0),
+      accuracy: Number(gpsPacket.accuracy || 0),
+      source: gpsPacket.source || "driver-phone-gps",
+      updatedAt: serverTimestamp(),
       timestamp: serverTimestamp()
-    }, { merge: true });
+    };
+
+    // Save under routeId document
+    const routeDocRef = doc(db, "gps_locations", routeId);
+    await setDoc(routeDocRef, payload, { merge: true });
+
+    // Also write under busPlate document if available for multi-key lookups
+    const busId = gpsPacket.busPlate || gpsPacket.busId || gpsPacket.bus_id;
+    if (busId && busId !== routeId) {
+      const busDocRef = doc(db, "gps_locations", busId);
+      await setDoc(busDocRef, payload, { merge: true });
+    }
+
+    console.log(`📡 Real GPS Telemetry pushed to Firestore for ${routeId}: (${payload.latitude}, ${payload.longitude})`);
     return { success: true };
   } catch (err) {
     console.warn("Could not write GPS location to Firestore:", err);

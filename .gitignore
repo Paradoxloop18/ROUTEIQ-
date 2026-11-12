@@ -2,15 +2,30 @@
 node_modules/
 package-lock.json
 
-# Environment files
+# Environment & Secrets
 .env
 .env.local
+*.json.key
+routeiq-d2104-*.json
+*.pem
+*.key
+serviceAccount*.json
+firmware/**/config.h
+config.h
+
 
 # OS / Editor files
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
+.kilo/
 
-# Saved browser web page asset folders
+# Firebase debug logs
+firebase-debug.log
+
+# Saved browser web page asset folders & archives
 *_files/
+*.zip
+*.mp4
+*.pptx

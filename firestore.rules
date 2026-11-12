@@ -1,23 +1,105 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /routes/{routeId} {
-      allow read, write: if true;
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
     }
-    match /students/{studentId} {
-      allow read, write: if true;
+
+    function hasUserDoc() {
+      return exists(/databases/$(database)/documents/users/$(request.auth.uid));
     }
-    match /gps_locations/{locationId} {
-      allow read, write: if true;
+
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
     }
-    match /alerts/{alertId} {
-      allow read, write: if true;
+
+    function getUserRole() {
+      return request.auth.token.role != null
+        ? request.auth.token.role.lower()
+        : (hasUserDoc() ? getUserData().role.lower() : 'pending');
     }
-    match /incharges/{inchargeId} {
-      allow read, write: if true;
+
+    function isApproved() {
+      return isAuthenticated() && getUserRole() != 'pending' && getUserRole() != '';
     }
+
+    function isAdmin() {
+      return isAuthenticated() && (getUserRole() == 'admin' || getUserRole() == 'administrator');
+    }
+
+    function isIncharge() {
+      return isAuthenticated() && (isAdmin() || getUserRole() == 'incharge');
+    }
+
+    function isDriver() {
+      return isAuthenticated() && (isAdmin() || getUserRole() == 'driver');
+    }
+
+    function isEmergency() {
+      return isAuthenticated() && (isAdmin() || getUserRole() == 'emergency');
+    }
+
+    // 1. Users collection
+    // Public creation allowed ONLY for role 'student', 'staff', or 'pending'
+    // Users CANNOT elevate their role to privileged roles ('admin', 'driver', 'incharge', 'emergency')
+    // Role update can only be performed by an Administrator
     match /users/{userId} {
-      allow read, write: if true;
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      allow create: if isAuthenticated() && request.auth.uid == userId && (
+        ('role' in request.resource.data && request.resource.data.role.lower() in ['student', 'staff', 'pending']) ||
+        ('roleLower' in request.resource.data && request.resource.data.roleLower.lower() in ['student', 'staff', 'pending'])
+      );
+      allow update: if isAdmin() || (
+        isAuthenticated() && request.auth.uid == userId &&
+        !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'roleLower', 'status', 'approvedBy', 'approvedAt'])
+      );
+      allow delete: if isAdmin();
+    }
+
+    // 2. Routes & Stops
+    // Read: All authenticated students, staff, drivers, and fleet crew. Write: Admin and Incharge only.
+    match /routes/{routeId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isAdmin() || isIncharge();
+    }
+
+    // 3. Students Transport Records
+    // Strict protection: Read for authenticated users. Changes/Deletions strictly restricted to Admin & Incharge.
+    match /students/{studentId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isAdmin() || isIncharge();
+    }
+
+    // 4. Live GPS Locations
+    // Read: All authenticated users. Write: Driver or Admin only. Delete: Admin only.
+    // Backend server uses Firebase Admin SDK (which bypasses security rules) to record hardware telemetry.
+    match /gps_locations/{locationId} {
+      allow read: if isAuthenticated();
+      allow create, update: if isDriver() || isAdmin();
+      allow delete: if isAdmin();
+
+      match /history/{historyId} {
+        allow read: if isAuthenticated();
+        allow create, update: if isDriver() || isAdmin();
+        allow delete: if isAdmin();
+      }
+    }
+
+    // 5. Fleet Incident Alerts
+    // Read: All authenticated users. Create: Authenticated users. Update/Resolve: Emergency, Incharge, Admin.
+    match /alerts/{alertId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update: if isEmergency() || isIncharge() || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // 6. Incharge Directory
+    match /incharges/{inchargeId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isAdmin();
     }
   }
 }

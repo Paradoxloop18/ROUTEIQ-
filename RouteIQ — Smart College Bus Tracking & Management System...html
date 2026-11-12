@@ -1194,102 +1194,18 @@
     ⚠️ DRIVER SMARTPHONE GPS OFFLINE — Displaying last known phone coordinates (Lat: 17.5401° N, Long: 78.4902° E) • Timestamp: 14:02:18 IST
   </div>
 
-  <!-- AUTH SCREEN -->
-  <div id="auth-container" style="display: none;">
-    <div class="auth-box" style="max-width: 480px;">
-      <div class="brand-logo" style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:18px;">
-        <img src="cmr_logo.png" alt="CMR Bus Tracker" style="width:104px;height:104px;border-radius:50%;object-fit:cover;border:3.5px solid #f59e0b;box-shadow:0 0 30px rgba(245,158,11,0.5);">
-        <div style="font-size:22px;font-weight:800;letter-spacing:-0.5px;text-align:center;">
-          CMR <b style="color:#f59e0b">BUS TRACKER</b>
-        </div>
-      </div>
-      <p class="auth-subtitle" style="margin-bottom: 20px;">Smart College Bus Tracking &amp; Incident Management System<br><span style="color:#38bdf8;font-size:12px;">CMR Group of Institutions (CMRCET • CMREC • CMRIT)</span></p>
-
-      <!-- Institutional Email or User ID -->
-      <div class="form-group" style="margin-bottom: 14px;">
-        <label style="font-weight:700;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;color:#f1f5f9;">
-          <span>Institutional Email or User ID</span>
-          <span style="font-size:11px;font-weight:500;color:#38bdf8;">CMR Portal</span>
-        </label>
-        <div style="position:relative;">
-          <input type="text" id="loginEmail" class="form-control" value="admin@cmrcet.ac.in" placeholder="Enter college email or user ID" style="padding-left:38px;height:42px;font-size:14px;background:rgba(15,23,42,0.85);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#fff;width:100%;">
-          <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:15px;opacity:0.8;">📧</span>
-        </div>
-      </div>
-
-      <!-- Password Field with Toggle -->
-      <div class="form-group" style="margin-bottom: 14px;">
-        <label style="font-weight:700;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;color:#f1f5f9;">
-          <span>Password</span>
-          <a href="javascript:void(0)" onclick="quickFillCredentials(document.getElementById('loginRole').value)" style="font-size:11px;color:#f59e0b;text-decoration:none;">Auto-fill default</a>
-        </label>
-        <div style="position:relative;">
-          <input type="password" id="loginPass" class="form-control" value="admin123" placeholder="Enter password" style="padding-left:38px;padding-right:42px;height:42px;font-size:14px;background:rgba(15,23,42,0.85);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#fff;width:100%;">
-          <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:15px;opacity:0.8;">🔒</span>
-          <button type="button" id="loginPassToggleBtn" onclick="toggleLoginPasswordVisibility()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:16px;padding:4px;" title="Show/Hide Password">👁️</button>
-        </div>
-      </div>
-
-      <!-- Role Selection -->
-      <div class="form-group" style="margin-bottom: 14px;">
-        <label style="font-weight:700;margin-bottom:6px;display:block;color:#f1f5f9;">Select Active Role</label>
-        <select id="loginRole" class="form-control" onchange="quickFillCredentials(this.value)" style="height:42px;background:rgba(15,23,42,0.85);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#fff;">
-          <option value="Admin">Transport Administrator (Full Control)</option>
-          <option value="Driver">Bus Driver (Phone GPS Live Sharing &amp; SOS)</option>
-          <option value="Student">Student (Route Tracking &amp; Bus Pass)</option>
-          <option value="Incharge">Bus Incharge / Manager (Roster &amp; Alerts)</option>
-          <option value="Emergency">Emergency Coordinator (Incident Dispatch)</option>
-        </select>
-        <div class="role-quick-chips" style="margin-top:10px;">
-          <span class="chip active" onclick="quickFillCredentials('Admin')">👑 Admin</span>
-          <span class="chip" onclick="quickFillCredentials('Driver')">🚌 Driver</span>
-          <span class="chip" onclick="quickFillCredentials('Student')">🎓 Student</span>
-          <span class="chip" onclick="quickFillCredentials('Incharge')">📞 Incharge</span>
-          <span class="chip" onclick="quickFillCredentials('Emergency')">🚨 Emergency</span>
-        </div>
-      </div>
-
-      <!-- Quick Demo Credentials Display Box -->
-      <div style="background:rgba(30,41,59,0.55);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px;margin-bottom:16px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-          <span style="font-size:11.5px;font-weight:700;color:#94a3b8;display:flex;align-items:center;gap:5px;">
-            🔑 Demo Login Credentials (Click to load):
-          </span>
-          <span style="font-size:10.5px;color:#38bdf8;background:rgba(56,189,248,0.12);padding:2px 7px;border-radius:4px;font-weight:600;">1-Click</span>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;">
-          <div onclick="quickFillCredentials('Admin')" style="cursor:pointer;padding:6px 8px;background:rgba(255,255,255,0.03);border:1px solid rgba(245,158,11,0.25);border-radius:6px;transition:all 0.2s;" title="Click to fill Admin credentials">
-            <b style="color:#f59e0b;">👑 Admin:</b> <span style="color:#cbd5e1;">admin123</span>
-          </div>
-          <div onclick="quickFillCredentials('Driver')" style="cursor:pointer;padding:6px 8px;background:rgba(255,255,255,0.03);border:1px solid rgba(56,189,248,0.25);border-radius:6px;transition:all 0.2s;" title="Click to fill Driver credentials">
-            <b style="color:#38bdf8;">🚌 Driver:</b> <span style="color:#cbd5e1;">driver123</span>
-          </div>
-          <div onclick="quickFillCredentials('Student')" style="cursor:pointer;padding:6px 8px;background:rgba(255,255,255,0.03);border:1px solid rgba(168,85,247,0.25);border-radius:6px;transition:all 0.2s;" title="Click to fill Student credentials">
-            <b style="color:#a855f7;">🎓 Student:</b> <span style="color:#cbd5e1;">student123</span>
-          </div>
-          <div onclick="quickFillCredentials('Incharge')" style="cursor:pointer;padding:6px 8px;background:rgba(255,255,255,0.03);border:1px solid rgba(236,72,153,0.25);border-radius:6px;transition:all 0.2s;" title="Click to fill Incharge credentials">
-            <b style="color:#ec4899;">📞 Incharge:</b> <span style="color:#cbd5e1;">incharge123</span>
-          </div>
-        </div>
-        <div style="margin-top:6px;text-align:center;">
-          <span onclick="quickFillCredentials('Emergency')" style="cursor:pointer;font-size:11px;color:#f87171;text-decoration:underline;">
-            🚨 Emergency Desk: emergency.desk@cmrgi.ac.in / emergency123
-          </span>
-        </div>
-      </div>
-
-      <button type="button" class="btn btn-primary" style="width:100%;padding:14px;font-size:15px;font-weight:700;" onclick="doLogin()">
-        Enter RouteIQ App →
-      </button>
-
-      <p style="text-align:center;margin-top:14px;font-size:12px;color:var(--text-dim)">
-        📱 Pure Mobile App Mode: Uses Driver Phone GPS • Zero External ESP32 Hardware Needed
-      </p>
+  <!-- SESSION VERIFICATION OVERLAY (Auto-redirects to login.html if unauthenticated) -->
+  <div id="auth-loading-overlay" style="display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #080c14; z-index: 99999; align-items: center; justify-content: center; flex-direction: column; gap: 16px;">
+    <img src="cmr_logo.png" alt="CMR RouteIQ" style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid #f59e0b; box-shadow: 0 0 32px rgba(245, 158, 11, 0.45); object-fit: cover;" onerror="this.onerror=null; this.src='bus_logo.png';">
+    <div style="font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.5px;">CMR Route<span style="color: #f59e0b;">IQ</span></div>
+    <div style="display: flex; align-items: center; gap: 10px; font-size: 13px; color: #94a3b8;">
+      <span style="display: inline-block; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.25); border-top-color: #38bdf8; border-radius: 50%; animation: spin 0.8s linear infinite;"></span>
+      <span>Authenticating institutional session...</span>
     </div>
   </div>
 
   <!-- MAIN APP CONTAINER -->
-  <div id="app-container" style="display: flex;">
+  <div id="app-container" style="display: none;">
     <!-- Sidebar Navigation -->
     <aside class="sidebar">
       <div class="sidebar-brand" style="display:flex;align-items:center;gap:12px;padding:16px 14px;">
@@ -1342,6 +1258,12 @@
           <span class="nav-icon">🎛️</span>
           <span class="nav-text">Driver SOS &amp; Cockpit</span>
         </li>
+
+        <div class="sidebar-nav-title manager-only-item">Security &amp; Administration</div>
+        <li onclick="switchPage('user-mgmt', this)" class="manager-only-btn" id="navItemUserMgmt">
+          <span class="nav-icon">🛡️</span>
+          <span class="nav-text">User Roles &amp; Approvals</span>
+        </li>
       </ul>
 
       <!-- Driver Phone GPS Status Box in Sidebar -->
@@ -1383,13 +1305,19 @@
         </div>
 
         <div class="header-right">
-          <!-- Role Switcher -->
-          <div class="role-switcher-dropdown">
-            <span style="font-size:11.5px;color:var(--text-muted)">Role:</span>
-            <select id="topRoleSelect" onchange="changeRole(this.value)">
+          <!-- Verified Role Pill (Role selected in UI cannot grant privileges) -->
+          <div id="userRoleBadgePill" style="display:flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.3);border-radius:20px;font-size:12px;font-weight:700;color:#38bdf8;">
+            <span style="color:#10b981;font-size:10px;">●</span>
+            <span id="userRoleBadgeText">Student</span>
+          </div>
+
+          <!-- Admin-Only Perspective Preview (Non-admins cannot view or access this) -->
+          <div id="adminPerspectiveDropdown" style="display:none;align-items:center;gap:6px;font-size:11.5px;color:var(--text-muted);">
+            <span style="font-weight:600;">Preview View:</span>
+            <select id="topRoleSelect" onchange="changeRolePerspective(this.value)" style="background:rgba(15,23,42,0.9);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:4px;padding:3px 6px;font-size:11.5px;">
               <option value="Admin">Administrator</option>
-              <option value="Student">Student</option>
               <option value="Driver">Bus Driver</option>
+              <option value="Student">Student</option>
               <option value="Incharge">Bus Incharge</option>
               <option value="Emergency">Emergency Coord</option>
             </select>
@@ -1402,13 +1330,13 @@
 
           <!-- User Profile -->
           <div class="user-profile-badge">
-            <div class="avatar-circle" id="userAvatar">D</div>
+            <div class="avatar-circle" id="userAvatar">U</div>
             <div style="display:flex;flex-direction:column;">
-              <span id="userNameLabel" style="font-weight:700;font-size:13px;color:#fff">Driver User</span>
-              <span id="userSubRole" style="font-size:11px;color:var(--text-muted)">Route 16 Vehicle Pilot</span>
+              <span id="userNameLabel" style="font-weight:700;font-size:13px;color:#fff">Loading user...</span>
+              <span id="userSubRole" style="font-size:11px;color:var(--text-muted)">Institutional Account</span>
             </div>
-            <button class="btn btn-ghost btn-sm" onclick="doLogout()" style="margin-left:8px;" title="Logout">
-              Logout
+            <button class="btn btn-ghost btn-sm" onclick="doLogout()" style="margin-left:8px;color:#f87171;font-weight:600;" title="Sign out securely">
+              Sign Out
             </button>
           </div>
         </div>
@@ -3922,6 +3850,73 @@
           </div>
         </section>
 
+        <!-- Section: User Roles & Access Administration -->
+        <section id="user-mgmt" class="page">
+          <div class="page-header" style="margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+            <div>
+              <h2 style="font-size:22px;font-weight:800;color:#fff;display:flex;align-items:center;gap:10px;">
+                <span>🛡️</span> User Roles &amp; Administrator Approvals
+              </h2>
+              <p style="font-size:12.5px;color:var(--text-muted);margin-top:4px;">
+                Review registered institutional accounts, verify email confirmation status, and assign RBAC roles (<code style="color:#f59e0b">Admin</code>, <code style="color:#38bdf8">Driver</code>, <code style="color:#a855f7">Student</code>, <code style="color:#ec4899">Incharge</code>, <code style="color:#f87171">Emergency</code>).
+              </p>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button class="btn btn-secondary btn-sm" onclick="renderUserManagementTable()">
+                🔄 Refresh Accounts
+              </button>
+            </div>
+          </div>
+
+          <!-- User Stats Cards -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px;">
+            <div class="stat-card" style="background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:16px;">
+              <div style="font-size:11px;color:var(--text-muted);font-weight:700;text-transform:uppercase;">Total Registered</div>
+              <div id="statTotalUsers" style="font-size:24px;font-weight:800;color:#fff;margin-top:4px;">0</div>
+              <div style="font-size:11px;color:#38bdf8;margin-top:2px;">In Firebase Auth &amp; Firestore</div>
+            </div>
+            <div class="stat-card" style="background:var(--bg-card);border:1px solid rgba(245,158,11,0.3);border-radius:var(--radius-md);padding:16px;">
+              <div style="font-size:11px;color:#f59e0b;font-weight:700;text-transform:uppercase;">Pending Approval</div>
+              <div id="statPendingUsers" style="font-size:24px;font-weight:800;color:#f59e0b;margin-top:4px;">0</div>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Awaiting role assignment</div>
+            </div>
+            <div class="stat-card" style="background:var(--bg-card);border:1px solid rgba(16,185,129,0.3);border-radius:var(--radius-md);padding:16px;">
+              <div style="font-size:11px;color:#10b981;font-weight:700;text-transform:uppercase;">Approved Active Staff</div>
+              <div id="statActiveUsers" style="font-size:24px;font-weight:800;color:#10b981;margin-top:4px;">0</div>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Granted transport access</div>
+            </div>
+          </div>
+
+          <!-- Users Table Card -->
+          <div class="card" style="background:var(--bg-card);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:20px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+              <div style="font-size:15px;font-weight:700;color:#fff;">Institutional User Registry</div>
+              <div style="font-size:11.5px;color:var(--text-muted);">
+                🛡️ Changes require Admin credentials and are written to Firestore <code style="color:#38bdf8">users/{uid}</code>
+              </div>
+            </div>
+            <div class="table-responsive" style="overflow-x:auto;">
+              <table class="data-table" style="width:100%;border-collapse:collapse;font-size:12.5px;">
+                <thead>
+                  <tr style="border-bottom:1px solid var(--border-color);text-align:left;color:var(--text-muted);">
+                    <th style="padding:10px 12px;">User / Email</th>
+                    <th style="padding:10px 12px;">UID</th>
+                    <th style="padding:10px 12px;">Registered</th>
+                    <th style="padding:10px 12px;">Current Role</th>
+                    <th style="padding:10px 12px;">Status</th>
+                    <th style="padding:10px 12px;text-align:right;">Approve / Change Role</th>
+                  </tr>
+                </thead>
+                <tbody id="userMgmtTableBody">
+                  <tr>
+                    <td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted);">Loading registered users from Firebase...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
       </div>
     </div>
   </div>
@@ -4509,22 +4504,6 @@ CMRGI | 08:50" required=""></textarea>
        PHONE GPS & PWA APP LOGIC (NO ESP32 HARDWARE NEEDED)
        ========================================================= */
 
-    function quickSelectRole(role) {
-      if (typeof window.applyRolePermissions === 'function') {
-        window.currentRole = role;
-      }
-      const roleSelect = document.getElementById('loginRole');
-      if (roleSelect) roleSelect.value = role;
-      document.querySelectorAll('.role-quick-chips .chip').forEach(c => {
-        c.classList.toggle('active', c.textContent.includes(role));
-      });
-      if (typeof window.showToast === 'function') {
-        showToast(`Role selected: ${role}`, "👤");
-      }
-    }
-    window.quickFillCredentials = quickSelectRole;
-    window.quickSelectRole = quickSelectRole;
-
     // Phone Live GPS Transmission using Android Geolocation API
     let phoneGpsWatchId = null;
     let isPhoneGpsActive = false;
@@ -4545,7 +4524,7 @@ CMRGI | 08:50" required=""></textarea>
             isPhoneGpsActive = true;
             btn.textContent = "⏹️ Stop Phone GPS Sharing";
             btn.className = "btn btn-danger";
-            badge.textContent = "● Live Phone Stream Active";
+            badge.textContent = "● Live Phone Stream Active (Firestore Synced)";
             badge.style.color = "#34d399";
 
             const lat = pos.coords.latitude;
@@ -4557,24 +4536,49 @@ CMRGI | 08:50" required=""></textarea>
             document.getElementById('phoneSpeedometer').textContent = `${speedKmh} km/h`;
             document.getElementById('phoneCoords').textContent = `${lat.toFixed(4)}° N, ${lng.toFixed(4)}° E`;
 
-            // Move the bus marker on the dashboard map
+            // Push REAL GPS telemetry packet directly to Cloud Firestore
+            const rId = currentDriverRoute || "Route 16";
+            const rData = routesData[rId] || {};
+            const gpsPacket = {
+              busPlate: rData.busPlate || "TS-08-UB-4516",
+              busId: rData.busPlate || "TS-08-UB-4516",
+              routeId: rId,
+              latitude: parseFloat(lat.toFixed(6)),
+              longitude: parseFloat(lng.toFixed(6)),
+              speed_kmh: speedKmh,
+              speed: speedKmh,
+              accuracy: accuracy,
+              heading: pos.coords.heading || 0,
+              altitude: pos.coords.altitude || 0,
+              source: "driver-phone-gps",
+              battery: 94,
+              timestamp_ist: getLiveISTString()
+            };
+
+            if (window.RouteIQFirebase && typeof window.RouteIQFirebase.saveGpsLocation === 'function') {
+              window.RouteIQFirebase.saveGpsLocation(rId, gpsPacket);
+            }
+
+            // Move the bus marker on the dashboard map to real GPS position
             if (busMarker) {
               busMarker.setLatLng([lat, lng]);
               updateHudAndTelemetry(lat, lng, speedKmh, "Live Phone GNSS Position");
             }
           },
           (err) => {
-            console.warn("Phone GPS permission denied or indoor. Falling back to high-fidelity route simulation:", err.message);
-            isPhoneGpsActive = true;
-            btn.textContent = "⏹️ Stop Phone GPS Sharing";
-            btn.className = "btn btn-danger";
-            badge.textContent = "● Simulated Phone GNSS";
-            showToast("Phone GPS simulated along route path (outdoor GPS requires vehicle movement)", "📱");
+            console.warn("Phone GPS permission denied or indoor:", err.message);
+            isPhoneGpsActive = false;
+            btn.textContent = "📡 Start Live Location Sharing";
+            btn.className = "btn btn-emerald";
+            badge.textContent = "● Location Permission Required";
+            badge.style.color = "#f87171";
+            showToast("GPS location denied or unavailable. Please enable device location in your browser.", "⚠️");
+            alert("Geolocation Notice: " + err.message + "\n\nPlease ensure browser location permissions are enabled for authentic GPS streaming.");
           },
           { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
         );
 
-        showToast("Driver phone live GPS beacon started!", "📡");
+        showToast("Driver phone live GPS broadcast started!", "📡");
       } else {
         if (phoneGpsWatchId !== null) {
           navigator.geolocation.clearWatch(phoneGpsWatchId);
@@ -4584,6 +4588,7 @@ CMRGI | 08:50" required=""></textarea>
         btn.textContent = "📡 Start Live Location Sharing";
         btn.className = "btn btn-emerald";
         badge.textContent = "Phone GPS Ready";
+        badge.style.color = "#94a3b8";
         showToast("Phone GPS sharing stopped.", "⏹️");
       }
     }
@@ -4617,9 +4622,17 @@ CMRGI | 08:50" required=""></textarea>
 
     // Register Service Worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(err => {
-        console.log("Service Worker note:", err);
-      });
+      if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          for (const reg of registrations) {
+            reg.unregister().catch(() => {});
+          }
+        }).catch(() => {});
+      } else {
+        navigator.serviceWorker.register('sw.js').catch(err => {
+          console.log("Service Worker note:", err);
+        });
+      }
     }
 
     // Battery API for Driver Phone Readout
@@ -4904,14 +4917,42 @@ CMRGI | 08:50" required=""></textarea>
        ROUTEIQ FLEET ENGINE & PERSISTENCE (V2.4 ENHANCED)
        ========================================================= */
 
+    let authenticatedUser = null;
+    let authorizedRole = "Student";
+    let currentRole = "Student";
+
+    function getAuthorizedRole() {
+      return (authenticatedUser && authenticatedUser.role) ? authenticatedUser.role : (authorizedRole || "Student");
+    }
+
+    function isAdmin() {
+      const r = String(getAuthorizedRole()).toLowerCase();
+      return r === 'admin';
+    }
+
+    function isIncharge() {
+      const r = String(getAuthorizedRole()).toLowerCase();
+      return r === 'incharge' || r === 'admin';
+    }
+
+    function isDriver() {
+      const r = String(getAuthorizedRole()).toLowerCase();
+      return r === 'driver' || r === 'admin';
+    }
+
+    function isEmergency() {
+      const r = String(getAuthorizedRole()).toLowerCase();
+      return r === 'emergency' || r === 'admin';
+    }
+
     function canEditFleet() {
-      return currentRole === 'Admin' || currentRole === 'Incharge';
+      return isAdmin() || isIncharge();
     }
 
     function checkFleetEditPermission() {
       if (!canEditFleet()) {
         showToast("Access Denied: Only Administrator and Bus Manager/Incharge can modify fleet details.", "🔒");
-        alert("Access Denied: You are logged in as " + currentRole + ". Only Administrator and Bus Manager/Incharge have permission to add, edit, or delete buses, stops, or student transport records.");
+        alert("Access Denied: You are authorized as " + getAuthorizedRole() + ". Only Administrator and Bus Manager/Incharge have permission to add, edit, or delete buses, stops, or student transport records.");
         return false;
       }
       return true;
@@ -5074,18 +5115,60 @@ CMRGI | 08:50" required=""></textarea>
       renderOverviewRouteCards();
     }
 
-    // Role Permissions Applicator
-    function applyRolePermissions(role) {
-      document.getElementById('topRoleSelect').value = role;
-      document.getElementById('userNameLabel').textContent = role === 'Incharge' ? 'Bus Manager / Incharge' : (role === 'Admin' ? 'Administrator' : `${role} User`);
-      document.getElementById('userAvatar').textContent = role.charAt(0);
-      
-      const subRoleLabel = document.getElementById('userSubRole');
-      if (role === 'Admin') subRoleLabel.textContent = "Transport Fleet Superadmin";
-      else if (role === 'Student') subRoleLabel.textContent = "CMRCET • Student Account";
-      else if (role === 'Driver') subRoleLabel.textContent = "Bus Pilot & Safety Crew";
-      else if (role === 'Incharge') subRoleLabel.textContent = "Bus Fleet Manager & Route Head";
-      else if (role === 'Emergency') subRoleLabel.textContent = "Central Incident Coordinator";
+    // Authoritative Role Permissions Applicator
+    function applyRolePermissions(displayRole) {
+      const authRole = getAuthorizedRole();
+      const role = displayRole || authRole;
+      currentRole = role;
+
+      // Update Verified Role Badge
+      const badgeText = document.getElementById('userRoleBadgeText');
+      const badgePill = document.getElementById('userRoleBadgePill');
+      const roleColors = {
+        Admin: '#f59e0b',
+        Driver: '#38bdf8',
+        Student: '#a855f7',
+        Staff: '#38bdf8',
+        Incharge: '#ec4899',
+        Emergency: '#ef4444'
+      };
+      const col = roleColors[authRole] || '#38bdf8';
+      if (badgeText) badgeText.textContent = `${authRole}`;
+      if (badgePill) {
+        badgePill.style.borderColor = col;
+        badgePill.style.color = col;
+      }
+
+      // Admin Perspective Preview (Only visible if real user is Admin)
+      const adminPerspective = document.getElementById('adminPerspectiveDropdown');
+      const topRoleSelect = document.getElementById('topRoleSelect');
+      if (adminPerspective) {
+        adminPerspective.style.display = isAdmin() ? 'inline-flex' : 'none';
+        if (topRoleSelect && isAdmin()) topRoleSelect.value = role;
+      }
+
+      // User profile labels
+      const userNameEl = document.getElementById('userNameLabel');
+      const userSubRoleEl = document.getElementById('userSubRole');
+      const userAvatarEl = document.getElementById('userAvatar');
+
+      if (userNameEl) {
+        userNameEl.textContent = (authenticatedUser && (authenticatedUser.displayName || authenticatedUser.email))
+          ? (authenticatedUser.displayName || authenticatedUser.email.split('@')[0])
+          : `${role} User`;
+      }
+      if (userSubRoleEl) {
+        if (role === 'Admin') userSubRoleEl.textContent = "Transport Fleet Superadmin";
+        else if (role === 'Student') userSubRoleEl.textContent = "CMRCET • Student Account";
+        else if (role === 'Staff') userSubRoleEl.textContent = "CMRGI • Faculty & Staff";
+        else if (role === 'Driver') userSubRoleEl.textContent = "Bus Pilot & Safety Crew";
+        else if (role === 'Incharge') userSubRoleEl.textContent = "Bus Fleet Manager & Route Head";
+        else if (role === 'Emergency') userSubRoleEl.textContent = "Central Incident Coordinator";
+      }
+      if (userAvatarEl && authenticatedUser) {
+        const initial = (authenticatedUser.displayName || authenticatedUser.email || role).charAt(0).toUpperCase();
+        userAvatarEl.textContent = initial;
+      }
 
       const hasEditAccess = canEditFleet();
 
@@ -5093,6 +5176,13 @@ CMRGI | 08:50" required=""></textarea>
       document.querySelectorAll('.manager-only-btn').forEach(btn => {
         btn.classList.toggle('hidden', !hasEditAccess);
       });
+      document.querySelectorAll('.manager-only-item').forEach(el => {
+        el.classList.toggle('hidden', !isAdmin());
+      });
+      const navUserMgmt = document.getElementById('navItemUserMgmt');
+      if (navUserMgmt) {
+        navUserMgmt.classList.toggle('hidden', !isAdmin());
+      }
       document.querySelectorAll('.student-delete-btn').forEach(btn => {
         btn.classList.toggle('hidden', !hasEditAccess);
       });
@@ -5103,49 +5193,80 @@ CMRGI | 08:50" required=""></textarea>
         btn.classList.toggle('hidden', !hasEditAccess);
       });
 
+      // Role-specific primary landing dashboards
       if (role === 'Driver') {
-        switchPage('driver-cockpit', document.querySelectorAll('.sidebar-nav li')[6] || document.querySelectorAll('.sidebar-nav li')[5]);
+        const driverNav = document.querySelector('.sidebar-nav li[onclick*="driver-cockpit"]');
+        switchPage('driver-cockpit', driverNav);
       } else if (role === 'Emergency') {
-        switchPage('alerts', document.querySelectorAll('.sidebar-nav li')[5]);
+        const alertNav = document.querySelector('.sidebar-nav li[onclick*="alerts"]');
+        switchPage('alerts', alertNav);
+      } else if (role === 'Incharge') {
+        const routeNav = document.querySelector('.sidebar-nav li[onclick*="routes-mgmt"]');
+        switchPage('routes-mgmt', routeNav);
+      } else {
+        const overviewNav = document.querySelector('.sidebar-nav li[onclick*="overview"]');
+        switchPage('overview', overviewNav);
       }
     }
+    window.applyRolePermissions = applyRolePermissions;
 
-    // Student Deletion Engine (Requirement 2)
-    function deleteStudentRecord(routeId, rollNumber) {
+    function changeRolePerspective(newPerspective) {
+      if (!isAdmin()) {
+        showToast("Access Denied: Perspective preview is restricted to Administrators.", "🔒");
+        return;
+      }
+      applyRolePermissions(newPerspective);
+      showToast(`Admin Perspective Preview: ${newPerspective}`, "🔄");
+    }
+    window.changeRolePerspective = changeRolePerspective;
+
+    // Safe Student Deletion & Renumbering Engine (Requirement 3)
+    async function deleteStudentRecord(routeId, rollNumber) {
       if (!canEditFleet()) {
         showToast("Access Denied: Only Administrator and Incharge can delete records.", "🔒");
-        alert("Access Denied: You are logged in as " + currentRole + ". Only Administrator and Bus Manager/Incharge have permission to delete student transport records.");
+        alert("Access Denied: You are authorized as " + getAuthorizedRole() + ". Only Administrator and Bus Manager/Incharge have permission to delete student transport records.");
         return;
       }
 
       const list = studentsDatabase[routeId] || [];
-      const student = list.find(s => s.roll === rollNumber);
+      const student = list.find(s => s.roll === rollNumber || String(s.id) === String(rollNumber));
       if (!student) {
         showToast("Student not found in database.", "⚠️");
         return;
       }
 
-      const confirmed = confirm(`Are you sure you want to delete student "${student.name}" (Roll: ${student.roll}) from ${routeId} transport list?\n\nThis action will release their seat allotment and remove their bus pass.`);
+      const confirmed = confirm(`Are you sure you want to delete student "${student.name}" (Roll: ${student.roll}) from ${routeId}?\n\nThis will safely release their seat allotment and automatically renumber remaining students sequentially (1 to ${list.length - 1}).`);
       if (!confirmed) return;
 
-      studentsDatabase[routeId] = list.filter(s => s.roll !== rollNumber);
+      showToast(`Deleting student ${student.name} and renumbering...`, "⏳");
+
+      // 1. Safe Atomic Cloud Firestore Deletion & Renumbering
+      try {
+        if (window.RouteIQFirebase && typeof window.RouteIQFirebase.deleteStudentSafely === 'function') {
+          const res = await window.RouteIQFirebase.deleteStudentSafely(routeId, student.roll);
+          if (!res.success) {
+            console.warn("Firestore safe deletion warning:", res.error);
+          }
+        }
+      } catch (err) {
+        console.warn("Firestore delete student error:", err);
+      }
+
+      // 2. Safe local array filtering & strict 1-based sequential renumbering
+      studentsDatabase[routeId] = list.filter(s => s.roll !== student.roll);
+      studentsDatabase[routeId].forEach((s, idx) => {
+        s.id = idx + 1; // Strict 1-based sequential numbering: 1, 2, 3...
+      });
+
       if (routesData[routeId]) {
         routesData[routeId].currentCount = studentsDatabase[routeId].length;
       }
 
-      // Sync deletion with Cloud Firestore if initialized
-      try {
-        if (window.RouteIQFirebase && typeof window.RouteIQFirebase.deleteStudent === 'function') {
-          window.RouteIQFirebase.deleteStudent(rollNumber);
-        }
-      } catch (err) {
-        console.warn("Firestore delete student notice:", err);
-      }
-
       updateDashboardStats();
+      updateStudentSummary();
       renderStudentsTable();
-      persistFleetState(`Deleted student ${student.name} from ${routeId}`);
-      showToast(`Student ${student.name} (${student.roll}) removed successfully!`, "🗑️");
+      persistFleetState(`Deleted student ${student.name} and renumbered ${routeId}`);
+      showToast(`Student ${student.name} removed safely. ${studentsDatabase[routeId].length} students renumbered!`, "🗑️");
     }
     window.deleteStudentRecord = deleteStudentRecord;
     window.deleteStudent = deleteStudentRecord;
@@ -5204,6 +5325,7 @@ CMRGI | 08:50" required=""></textarea>
     }
 
     async function loadFleetDataFromServer() {
+      let dataLoaded = false;
       try {
         const res = await fetch('/api/fleet-data');
         if (res.ok) {
@@ -5216,14 +5338,36 @@ CMRGI | 08:50" required=""></textarea>
               Object.assign(stopCoordsRegistry, data.stopCoordsRegistry);
             }
             console.log("Loaded synced fleet state from server database.");
-          } else {
-            // First time initialization: persist default data with Route 13
-            console.log("No data on server yet, saving default fleet state...");
-            persistFleetState();
+            dataLoaded = true;
           }
         }
       } catch (err) {
-        console.warn("Server fetch failed, checking localStorage fallback:", err);
+        console.warn("Backend /api/fleet-data not available (static host environment).");
+      }
+
+      // Static hosting fallback (for GitHub Pages: paradoxloop18.github.io/ROUTEIQ-/)
+      if (!dataLoaded) {
+        try {
+          const staticRes = await fetch('./fleet_data.json');
+          if (staticRes.ok) {
+            const data = await staticRes.json();
+            if (data && data.routesData && Object.keys(data.routesData).length > 0) {
+              routesData = data.routesData;
+              if (data.studentsDatabase) studentsDatabase = data.studentsDatabase;
+              if (data.routeStops) routeStops = data.routeStops;
+              if (data.stopCoordsRegistry) {
+                Object.assign(stopCoordsRegistry, data.stopCoordsRegistry);
+              }
+              console.log("Loaded static fleet data for GitHub Pages.");
+              dataLoaded = true;
+            }
+          }
+        } catch (staticErr) {
+          console.warn("Static fleet_data.json fetch notice:", staticErr);
+        }
+      }
+
+      if (!dataLoaded) {
         const local = localStorage.getItem("routeiq_fleet_v24");
         if (local) {
           try {
@@ -5829,7 +5973,7 @@ CMRGI | 08:50" required=""></textarea>
     let stopMarkers = [];
     let routePolyline = null;
     let activeMapRoute = "Route 16";
-    let isSimulating = true;
+    let isSimulating = false;
     let simSpeedMultiplier = 1;
     let simIndex = 0;
     let simProgress = 0; // 0 to 1 between stops
@@ -5852,7 +5996,7 @@ CMRGI | 08:50" required=""></textarea>
       }).addTo(leafletMap);
 
       renderSelectedRouteOnMap(activeMapRoute);
-      startSimulationLoop();
+      // Real GPS mode active: Listen for live telemetry from Firestore
     }
 
     function renderSelectedRouteOnMap(routeId) {
@@ -6620,13 +6764,34 @@ CMRGI | 08:50" required=""></textarea>
         }
       }, (err) => handleFirestoreError("incharges", err));
 
-      // 5. Subscribe to Live GPS Locations
+      // 5. Subscribe to Live GPS Locations (Real Telemetry Stream)
       fb.subscribeToGpsLocations((gpsMap, fromCache) => {
-        if (gpsMap && activeMapRoute && gpsMap[activeMapRoute]) {
-          const loc = gpsMap[activeMapRoute];
-          if (busMarker && loc.latitude && loc.longitude) {
-            busMarker.setLatLng([loc.latitude, loc.longitude]);
-            updateHudAndTelemetry(loc.latitude, loc.longitude, loc.speed_kmh || 35.0, loc.next_stop || "Next Stop");
+        window.latestGpsMap = gpsMap;
+        if (gpsMap && activeMapRoute) {
+          const rData = routesData[activeMapRoute] || {};
+          const loc = gpsMap[activeMapRoute] || (rData.busPlate && gpsMap[rData.busPlate]);
+          if (loc && loc.latitude && loc.longitude) {
+            // Real GPS received: halt any demo simulation
+            if (simInterval) {
+              clearInterval(simInterval);
+              simInterval = null;
+            }
+            isSimulating = false;
+
+            const lat = Number(loc.latitude);
+            const lng = Number(loc.longitude);
+            const spd = Number(loc.speed_kmh || loc.speed || 0);
+
+            if (busMarker) {
+              busMarker.setLatLng([lat, lng]);
+              busMarker.setPopupContent(`<b>${activeMapRoute} • ${loc.busPlate || loc.busId || rData.busPlate || ''}</b><br/>Real GPS: ${lat.toFixed(4)}° N, ${lng.toFixed(4)}° E<br/>Speed: ${spd} km/h`);
+            }
+            updateHudAndTelemetry(lat, lng, spd, loc.next_stop || "Active Route Corridor");
+            const hudFix = document.getElementById('hudFixStatus');
+            if (hudFix) {
+              hudFix.textContent = `🟢 Real GPS (${loc.source || 'Cloud Stream'})`;
+              hudFix.style.color = "#10b981";
+            }
           }
         }
       }, (err) => handleFirestoreError("gps_locations", err));
@@ -7270,119 +7435,162 @@ CMRGI | 08:50" required=""></textarea>
 
 
     /* =========================================================
-       6. ROLE SWITCHING & AUTHENTICATION (PRD Section 9)
+       6. AUTHENTICATION & ROLE-BASED DASHBOARDS (PRD Section 9)
        ========================================================= */
 
-    let currentRole = "Admin";
+    // All authentication is managed via real Firebase Authentication in login.html & signup.html.
+    // Zero hardcoded demo credentials, zero fake login bypasses.
 
-    const demoCredentials = {
-      Admin:     { email: "admin@cmrcet.ac.in", pass: "admin123", role: "Admin", label: "👑 Admin" },
-      Driver:    { email: "driver.route16@cmrgi.ac.in", pass: "driver123", role: "Driver", label: "🚌 Driver" },
-      Student:   { email: "student.cse@cmrcet.ac.in", pass: "student123", role: "Student", label: "🎓 Student" },
-      Incharge:  { email: "incharge.cmrec@cmrgi.ac.in", pass: "incharge123", role: "Incharge", label: "📞 Incharge" },
-      Emergency: { email: "emergency.desk@cmrgi.ac.in", pass: "emergency123", role: "Emergency", label: "🚨 Emergency" }
-    };
+    async function renderUserManagementTable() {
+      const tbody = document.getElementById('userMgmtTableBody');
+      if (!tbody) return;
 
-    function toggleLoginPasswordVisibility() {
-      const passInput = document.getElementById('loginPass');
-      const toggleBtn = document.getElementById('loginPassToggleBtn');
-      if (!passInput) return;
-      if (passInput.type === 'password') {
-        passInput.type = 'text';
-        if (toggleBtn) toggleBtn.textContent = '🙈';
-      } else {
-        passInput.type = 'password';
-        if (toggleBtn) toggleBtn.textContent = '👁️';
-      }
-    }
-    window.toggleLoginPasswordVisibility = toggleLoginPasswordVisibility;
-
-    function quickFillCredentials(role) {
-      currentRole = role;
-      const cred = demoCredentials[role] || demoCredentials.Admin;
-      
-      const emailEl = document.getElementById('loginEmail');
-      const passEl = document.getElementById('loginPass');
-      const roleElem = document.getElementById('loginRole');
-      
-      if (emailEl) emailEl.value = cred.email;
-      if (passEl) passEl.value = cred.pass;
-      if (roleElem) roleElem.value = role;
-
-      document.querySelectorAll('.role-quick-chips .chip').forEach(c => {
-        c.classList.toggle('active', c.textContent.includes(role));
-      });
-      showToast(`Selected ${role} credentials (${cred.email})`, "🔑");
-    }
-    window.quickFillCredentials = quickFillCredentials;
-    window.quickSelectRole = quickFillCredentials;
-    window.updateRolePreset = quickFillCredentials;
-
-    function doLogin() {
-      const emailEl = document.getElementById('loginEmail');
-      const passEl = document.getElementById('loginPass');
-      const roleElem = document.getElementById('loginRole');
-
-      const email = emailEl ? emailEl.value.trim() : "";
-      const pass = passEl ? passEl.value : "";
-
-      if (!email || !pass) {
-        showToast("Please enter institutional email and password.", "⚠️");
+      if (!isAdmin()) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:20px;color:#f87171;">⚠️ Access Restricted: Only Transport Fleet Superadmin can view and approve accounts.</td></tr>`;
         return;
       }
 
-      // Automatically determine role based on email or dropdown
-      let role = roleElem ? roleElem.value : "Admin";
-      for (const [rKey, c] of Object.entries(demoCredentials)) {
-        if (c.email.toLowerCase() === email.toLowerCase()) {
-          role = rKey;
-          break;
-        }
-      }
-      currentRole = role;
-
-      const authContainer = document.getElementById('auth-container');
-      const appContainer = document.getElementById('app-container');
-
-      if (authContainer) authContainer.style.display = 'none';
-      if (appContainer) appContainer.style.display = 'flex';
-
-      applyRolePermissions(currentRole);
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text-muted);">⏳ Fetching registered users from Firestore...</td></tr>`;
 
       try {
-        if (typeof window.initMap === 'function' && !window.leafletMap) {
-          window.initMap();
+        if (!window.RouteIQFirebase || typeof window.RouteIQFirebase.fetchAllUsers !== 'function') {
+          throw new Error('Firestore service initializing');
         }
-      } catch (mapErr) {
-        console.warn("Map init error:", mapErr);
+
+        const res = await window.RouteIQFirebase.fetchAllUsers();
+        if (!res.success) {
+          tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:20px;color:#f87171;">⚠️ Error loading accounts: ${res.error}</td></tr>`;
+          return;
+        }
+
+        const users = res.data || [];
+        const statTotal = document.getElementById('statTotalUsers');
+        const statPending = document.getElementById('statPendingUsers');
+        const statActive = document.getElementById('statActiveUsers');
+
+        let pendingCount = 0;
+        let activeCount = 0;
+
+        users.forEach(u => {
+          if (u.role === 'pending' || u.status === 'pending') pendingCount++;
+          else activeCount++;
+        });
+
+        if (statTotal) statTotal.textContent = users.length;
+        if (statPending) statPending.textContent = pendingCount;
+        if (statActive) statActive.textContent = activeCount;
+
+        if (users.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--text-muted);">No registered users in Firestore.</td></tr>`;
+          return;
+        }
+
+        const roleColors = {
+          Admin: '#f59e0b',
+          Driver: '#38bdf8',
+          Student: '#a855f7',
+          Staff: '#38bdf8',
+          Incharge: '#ec4899',
+          Emergency: '#f87171',
+          pending: '#94a3b8'
+        };
+
+        tbody.innerHTML = users.map(u => {
+          const color = roleColors[u.role] || '#94a3b8';
+          const isPending = (u.role === 'pending' || u.status === 'pending');
+          const statusBadge = isPending 
+            ? `<span style="background:rgba(245,158,11,0.15);color:#f59e0b;padding:3px 8px;border-radius:4px;font-weight:700;font-size:11px;">⏳ Pending</span>`
+            : `<span style="background:rgba(16,185,129,0.15);color:#10b981;padding:3px 8px;border-radius:4px;font-weight:700;font-size:11px;">✅ Active</span>`;
+
+          const createdDate = u.createdAt ? new Date(u.createdAt).toLocaleDateString() : '—';
+          const selectId = `roleSelect_${u.uid}`;
+
+          return `
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <td style="padding:10px 12px;">
+                <div style="font-weight:700;color:#fff;">${u.displayName || 'Institutional User'}</div>
+                <div style="font-size:11.5px;color:var(--text-muted);">${u.email}</div>
+              </td>
+              <td style="padding:10px 12px;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">
+                ${u.uid ? u.uid.substring(0, 10) + '...' : '—'}
+              </td>
+              <td style="padding:10px 12px;font-size:11.5px;color:var(--text-muted);">${createdDate}</td>
+              <td style="padding:10px 12px;">
+                <span style="background:${color}20;color:${color};border:1px solid ${color}40;padding:3px 8px;border-radius:4px;font-weight:700;font-size:11px;">
+                  ${u.role || 'Student'}
+                </span>
+              </td>
+              <td style="padding:10px 12px;">${statusBadge}</td>
+              <td style="padding:10px 12px;text-align:right;">
+                <div style="display:inline-flex;gap:6px;align-items:center;">
+                  <select id="${selectId}" style="background:rgba(15,23,42,0.9);border:1px solid rgba(255,255,255,0.15);color:#fff;border-radius:4px;padding:4px 6px;font-size:11.5px;">
+                    <option value="Admin" ${u.role === 'Admin' ? 'selected' : ''}>Admin</option>
+                    <option value="Driver" ${u.role === 'Driver' ? 'selected' : ''}>Driver</option>
+                    <option value="Student" ${u.role === 'Student' ? 'selected' : ''}>Student</option>
+                    <option value="Staff" ${u.role === 'Staff' ? 'selected' : ''}>Staff</option>
+                    <option value="Incharge" ${u.role === 'Incharge' ? 'selected' : ''}>Incharge</option>
+                    <option value="Emergency" ${u.role === 'Emergency' ? 'selected' : ''}>Emergency</option>
+                    <option value="pending" ${u.role === 'pending' ? 'selected' : ''}>Pending</option>
+                  </select>
+                  <button class="btn btn-xs btn-primary" onclick="handleAdminRoleApproval('${u.uid}', '${selectId}')" style="padding:4px 8px;font-size:11px;">
+                    Save
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:20px;color:#f87171;">⚠️ Exception loading accounts: ${err.message}</td></tr>`;
       }
-
-      // Initialize Driver checklist for active route
-      renderDriverChecklist(currentDriverRoute);
-
-      // Initialize Firestore listeners gracefully
-      if (typeof window.initFirebaseIntegration === 'function') {
-        window.initFirebaseIntegration();
-      }
-
-      showToast(`Welcome to RouteIQ, ${currentRole}! (${email})`, "🚌");
     }
-    window.doLogin = doLogin;
+    window.renderUserManagementTable = renderUserManagementTable;
 
-    function doLogout() {
-      const authContainer = document.getElementById('auth-container');
-      const appContainer = document.getElementById('app-container');
-      if (appContainer) appContainer.style.display = 'none';
-      if (authContainer) authContainer.style.display = 'flex';
-      showToast("Signed out. Select credentials to re-enter.", "🔒");
+    async function handleAdminRoleApproval(targetUid, selectId) {
+      if (!isAdmin()) {
+        showToast('Access Denied: Only Administrator can assign roles.', '🔒');
+        return;
+      }
+      const select = document.getElementById(selectId);
+      if (!select) return;
+      const newRole = select.value;
+
+      showToast(`Updating user role to ${newRole}...`, '⏳');
+      try {
+        if (!window.RouteIQFirebase || typeof window.RouteIQFirebase.updateUserRole !== 'function') {
+          throw new Error('Firestore service initializing');
+        }
+        const res = await window.RouteIQFirebase.updateUserRole(targetUid, newRole);
+        if (res.success) {
+          showToast(`User role updated to ${newRole}!`, '✅');
+          renderUserManagementTable();
+        } else {
+          showToast(res.error, '⚠️');
+          alert('Role update failed: ' + res.error);
+        }
+      } catch (err) {
+        showToast(err.message || 'Error updating role', '⚠️');
+      }
+    }
+    window.handleAdminRoleApproval = handleAdminRoleApproval;
+
+    async function doLogout() {
+      try {
+        if (window.RouteIQFirebase && typeof window.RouteIQFirebase.logoutUser === 'function') {
+          await window.RouteIQFirebase.logoutUser();
+        }
+        if (window.RouteIQFirebase && typeof window.RouteIQFirebase.unsubscribeAll === 'function') {
+          window.RouteIQFirebase.unsubscribeAll();
+        }
+      } catch (err) {
+        console.warn("Logout note:", err);
+      }
+      authenticatedUser = null;
+      authorizedRole = null;
+      currentRole = null;
+      window.location.replace('login.html?notice=signed_out');
     }
     window.doLogout = doLogout;
-
-    function changeRole(newRole) {
-      currentRole = newRole;
-      applyRolePermissions(newRole);
-      showToast(`Switched active view to: ${newRole}`, "🔄");
-    }
 
 
     /* =========================================================
@@ -7390,6 +7598,16 @@ CMRGI | 08:50" required=""></textarea>
        ========================================================= */
 
     function switchPage(pageId, navElement) {
+      // Strict role-based navigation guards
+      if (pageId === 'user-mgmt' && !isAdmin()) {
+        showToast("Access Restricted: Only Transport Administrators can access User Role Management.", "🔒");
+        return;
+      }
+      if (pageId === 'driver-cockpit' && !isDriver()) {
+        showToast("Access Restricted: Driver Cockpit is restricted to authorized bus pilots.", "🔒");
+        return;
+      }
+
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       const target = document.getElementById(pageId);
       if (target) target.classList.add('active');
@@ -7403,6 +7621,7 @@ CMRGI | 08:50" required=""></textarea>
       if (pageId === 'students') renderStudentsTable();
       if (pageId === 'routes-mgmt') renderRouteDetailsTable('ALL');
       if (pageId === 'alerts') renderAlerts();
+      if (pageId === 'user-mgmt') renderUserManagementTable();
     }
 
     function openModal(id) {
@@ -7509,8 +7728,7 @@ CMRGI | 08:50" required=""></textarea>
 
     window.addEventListener('DOMContentLoaded', () => {
       initStudentDatabase();
-    loadFleetDataFromServer();
-      removeStudentsFromEachRoute();
+      loadFleetDataFromServer();
       addRouteFormToPage();
       renderAlerts();
       renderOverviewRouteCards();
@@ -7521,7 +7739,45 @@ CMRGI | 08:50" required=""></textarea>
       updateNewStudentStops("Route 16");
       updateLiveJourneyAndSchedule();
 
-      // User stays on login screen until Firebase Auth resolves
+      // Listen for Real Firebase Authentication State
+      const authSubscriptionInterval = setInterval(() => {
+        if (window.RouteIQFirebase && typeof window.RouteIQFirebase.subscribeToAuthChanges === 'function') {
+          clearInterval(authSubscriptionInterval);
+          window.RouteIQFirebase.subscribeToAuthChanges((sessionUser) => {
+            const loadingOverlay = document.getElementById('auth-loading-overlay');
+            const appContainer = document.getElementById('app-container');
+
+            if (!sessionUser) {
+              console.log("🔒 No active Firebase Auth session. Redirecting to login.html...");
+              window.location.replace('login.html');
+              return;
+            }
+
+            // Pending approval check
+            if (sessionUser.roleLower === 'pending') {
+              console.log("🔒 Session pending approval:", sessionUser.email);
+              window.location.replace('login.html?notice=pending');
+              return;
+            }
+
+            console.log(`🔒 Firebase Auth session active: ${sessionUser.email} [Role: ${sessionUser.role}]`);
+            authenticatedUser = sessionUser;
+            authorizedRole = sessionUser.role || 'Student';
+            currentRole = authorizedRole;
+
+            if (loadingOverlay) loadingOverlay.style.display = 'none';
+            if (appContainer) appContainer.style.display = 'flex';
+
+            applyRolePermissions(authorizedRole);
+
+            if (typeof window.initMap === 'function' && !window.leafletMap) {
+              window.initMap();
+            }
+            initFirebaseIntegration();
+            showToast(`Signed in as ${sessionUser.displayName || sessionUser.email} (${authorizedRole})`, "🔒");
+          });
+        }
+      }, 100);
     });
   
   </script>

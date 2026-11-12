@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Institutional Account — CMR RouteIQ</title>
+  <meta name="description" content="Register for student or staff transport access on CMR RouteIQ Smart College Bus Tracking System.">
+  <link rel="icon" type="image/png" href="cmr_logo.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #080c14;
+      --bg-card: rgba(15, 23, 42, 0.75);
+      --bg-card-border: rgba(255, 255, 255, 0.1);
+      --bg-input: rgba(15, 23, 42, 0.85);
+      --border-input: rgba(255, 255, 255, 0.14);
+      --border-focus: #38bdf8;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent-amber: #f59e0b;
+      --accent-cyan: #38bdf8;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image:
+        radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.18) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(245, 158, 11, 0.15) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(6, 182, 212, 0.12) 0px, transparent 50%);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 16px;
+      position: relative;
+    }
+
+    .bg-grid-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .auth-wrapper {
+      width: 100%;
+      max-width: 490px;
+      position: relative;
+      z-index: 10;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .auth-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--bg-card-border);
+      border-radius: var(--radius-lg);
+      padding: 34px 30px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.2);
+    }
+
+    .brand-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .logo-container {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .brand-logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2.5px solid var(--accent-amber);
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.35);
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .brand-title span.highlight {
+      color: var(--accent-amber);
+    }
+
+    .brand-subtitle {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .back-link {
+      font-size: 12px;
+      color: var(--accent-cyan);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.15s;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 5px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 13px;
+      font-size: 14px;
+      color: var(--text-dim);
+      pointer-events: none;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 42px;
+      padding: 0 42px 0 38px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-input);
+      border-radius: var(--radius-sm);
+      color: #ffffff;
+      font-size: 13px;
+      font-family: var(--font-main);
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .btn-toggle-pass {
+      position: absolute;
+      right: 10px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 15px;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-toggle-pass:hover {
+      color: #ffffff;
+    }
+
+    /* Account Type Selector */
+    .account-type-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .account-type-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1.5px solid var(--border-input);
+      border-radius: var(--radius-sm);
+      padding: 10px 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      user-select: none;
+    }
+
+    .account-type-card:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .account-type-card.selected {
+      border-color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.12);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+    }
+
+    .account-type-card.restricted {
+      border-style: dashed;
+    }
+
+    .account-type-card[data-type="Student"].selected {
+      border-color: #a855f7;
+      background: rgba(168, 85, 247, 0.12);
+      box-shadow: 0 0 12px rgba(168, 85, 247, 0.2);
+    }
+    .account-type-card[data-type="Student"].selected .radio-circle {
+      border-color: #a855f7;
+    }
+    .account-type-card[data-type="Student"].selected .radio-circle::after {
+      background: #a855f7;
+    }
+
+    .account-type-card[data-type="Staff"].selected {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.12);
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+    }
+    .account-type-card[data-type="Staff"].selected .radio-circle {
+      border-color: #10b981;
+    }
+    .account-type-card[data-type="Staff"].selected .radio-circle::after {
+      background: #10b981;
+    }
+
+    .account-type-card[data-type="Driver"].selected {
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+    }
+    .account-type-card[data-type="Driver"].selected .radio-circle {
+      border-color: #38bdf8;
+    }
+    .account-type-card[data-type="Driver"].selected .radio-circle::after {
+      background: #38bdf8;
+    }
+
+    .account-type-card[data-type="Administrator"].selected {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.12);
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+    }
+    .account-type-card[data-type="Administrator"].selected .radio-circle {
+      border-color: #f59e0b;
+    }
+    .account-type-card[data-type="Administrator"].selected .radio-circle::after {
+      background: #f59e0b;
+    }
+
+    .account-type-card input[type="radio"] {
+      display: none;
+    }
+
+    .radio-circle {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid var(--text-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+
+    .role-badge-pill {
+      display: inline-block;
+      font-size: 9.5px;
+      font-weight: 700;
+      border-radius: 4px;
+      padding: 1px 5px;
+      margin-top: 3px;
+    }
+
+    .badge-open {
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .badge-restricted {
+      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .role-text-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .role-text-desc {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    /* Policy Badge */
+    .policy-box {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.22);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      font-size: 11.5px;
+      color: #fde68a;
+      line-height: 1.45;
+      margin: 14px 0 16px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .policy-box.policy-restricted {
+      background: rgba(239, 68, 68, 0.08);
+      border-color: rgba(239, 68, 68, 0.25);
+      color: #fca5a5;
+    }
+
+    .btn-submit.btn-restricted {
+      background: linear-gradient(135deg, #475569, #334155);
+      box-shadow: none;
+      cursor: not-allowed;
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .password-strength-bar {
+      height: 3px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 2px;
+      margin-top: 5px;
+      overflow: hidden;
+    }
+
+    .password-strength-fill {
+      height: 100%;
+      width: 0%;
+      transition: all 0.3s ease;
+      background: var(--accent-red);
+    }
+
+    .btn-submit {
+      width: 100%;
+      height: 46px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-sm);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: var(--font-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+      margin-top: 6px;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .alert-banner {
+      display: none;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 11px 13px;
+      border-radius: var(--radius-sm);
+      font-size: 12.5px;
+      line-height: 1.45;
+      margin-bottom: 16px;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .alert-banner.error {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+
+    .alert-banner.success {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #6ee7b7;
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .auth-footer a {
+      color: var(--accent-cyan);
+      font-weight: 700;
+      text-decoration: none;
+      margin-left: 5px;
+    }
+
+    .auth-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Success Card after Registration */
+    .success-card {
+      display: none;
+      text-align: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .success-icon {
+      font-size: 52px;
+      margin-bottom: 12px;
+    }
+
+    .success-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .success-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 22px;
+    }
+
+    .email-highlight {
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 3px 10px;
+      border-radius: 4px;
+      color: var(--accent-cyan);
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-grid-layer"></div>
+
+  <div class="auth-wrapper">
+    <div class="auth-card">
+
+      <!-- Header -->
+      <div class="brand-header">
+        <div class="logo-container">
+          <img src="cmr_logo.png" alt="CMR RouteIQ Logo" class="brand-logo" onerror="this.onerror=null; this.src='bus_logo.png';">
+        </div>
+        <h1 class="brand-title">CMR Route<span class="highlight">IQ</span></h1>
+        <p class="brand-subtitle">Smart College Bus Tracking &amp; Fleet System</p>
+      </div>
+
+      <!-- MAIN REGISTRATION VIEW -->
+      <div id="registerView">
+        <div class="section-title">
+          <span>Create Institutional Account</span>
+          <a href="login.html" class="back-link">← Sign In</a>
+        </div>
+
+        <div id="alertBanner" class="alert-banner" role="alert">
+          <span id="alertIcon">⚠️</span>
+          <span id="alertText"></span>
+        </div>
+
+        <form id="registerForm" onsubmit="handleRegisterSubmit(event)" autocomplete="off">
+          <!-- Full Name -->
+          <div class="form-group">
+            <label class="form-label" for="regFullName">Full Legal Name</label>
+            <div class="input-wrapper">
+              <span class="input-icon">👤</span>
+              <input 
+                type="text" 
+                id="regFullName" 
+                class="form-input" 
+                placeholder="e.g. Ramesh Reddy" 
+                required 
+                autofocus
+                autocomplete="name"
+              >
+            </div>
+          </div>
+
+          <!-- Institutional Email -->
+          <div class="form-group">
+            <label class="form-label" for="regEmail">
+              <span>Institutional Email Address</span>
+              <span style="color: var(--text-dim); font-size: 10.5px;">@cmrcet.ac.in / @cmrgi.ac.in</span>
+            </label>
+            <div class="input-wrapper">
+              <span class="input-icon">📧</span>
+              <input 
+                type="email" 
+                id="regEmail" 
+                class="form-input" 
+                placeholder="rollnumber@cmrcet.ac.in" 
+                required
+                autocomplete="email"
+              >
+            </div>
+          </div>
+
+          <!-- Account Type (Student, Staff, Driver, Administrator) -->
+          <div class="form-group">
+            <label class="form-label">
+              <span>Account Type</span>
+              <span id="regRoleCategoryBadge" style="color: #a855f7; font-size: 11px; font-weight: 700;">Open Institutional Registration</span>
+            </label>
+            <div class="account-type-grid">
+              <label class="account-type-card selected" id="cardRoleStudent" data-type="Student" onclick="selectAccountType('Student')">
+                <input type="radio" name="accountType" value="Student" checked>
+                <div class="radio-circle"></div>
+                <div>
+                  <div class="role-text-title">🎓 Student</div>
+                  <div class="role-text-desc">UG / PG Passenger</div>
+                  <span class="role-badge-pill badge-open">Open</span>
+                </div>
+              </label>
+
+              <label class="account-type-card" id="cardRoleStaff" data-type="Staff" onclick="selectAccountType('Staff')">
+                <input type="radio" name="accountType" value="Staff">
+                <div class="radio-circle"></div>
+                <div>
+                  <div class="role-text-title">💼 Staff</div>
+                  <div class="role-text-desc">Faculty &amp; Department</div>
+                  <span class="role-badge-pill badge-open">Open</span>
+                </div>
+              </label>
+
+              <label class="account-type-card restricted" id="cardRoleDriver" data-type="Driver" onclick="selectAccountType('Driver')">
+                <input type="radio" name="accountType" value="Driver">
+                <div class="radio-circle"></div>
+                <div>
+                  <div class="role-text-title">🚌 Bus Driver</div>
+                  <div class="role-text-desc">Vehicle Pilot &amp; SOS</div>
+                  <span class="role-badge-pill badge-restricted">🔒 Provisioned</span>
+                </div>
+              </label>
+
+              <label class="account-type-card restricted" id="cardRoleAdministrator" data-type="Administrator" onclick="selectAccountType('Administrator')">
+                <input type="radio" name="accountType" value="Administrator">
+                <div class="radio-circle"></div>
+                <div>
+                  <div class="role-text-title">🛡️ Admin</div>
+                  <div class="role-text-desc">Root Fleet Control</div>
+                  <span class="role-badge-pill badge-restricted">🔒 Provisioned</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Policy Notice -->
+          <div class="policy-box" id="accountPolicyNotice">
+            <span id="policyNoticeIcon">🎓</span>
+            <div id="policyNoticeContent">
+              <b>Student Registration:</b> Open to all enrolled CMRCET, CMREC, and CMRIT students using your official institutional roll number email. Instant access to live routes and stops.
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <div class="form-label">
+              <label for="regPassword">Password</label>
+              <span id="passStrengthLabel" style="color: var(--text-dim); font-size: 11px;">Min 8 characters</span>
+            </div>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input 
+                type="password" 
+                id="regPassword" 
+                class="form-input" 
+                placeholder="Create strong password (min 8 chars)" 
+                required
+                autocomplete="new-password"
+                oninput="checkPasswordStrength(this.value)"
+              >
+              <button 
+                type="button" 
+                class="btn-toggle-pass" 
+                onclick="togglePasswordVisibility('regPassword', this)" 
+                title="Show or hide password"
+              >
+                👁️
+              </button>
+            </div>
+            <div class="password-strength-bar">
+              <div id="passStrengthFill" class="password-strength-fill"></div>
+            </div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="form-group">
+            <div class="form-label">
+              <label for="regConfirmPassword">Confirm Password</label>
+              <span id="passMatchLabel" style="font-size: 11px;"></span>
+            </div>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input 
+                type="password" 
+                id="regConfirmPassword" 
+                class="form-input" 
+                placeholder="Re-enter password" 
+                required
+                autocomplete="new-password"
+                oninput="checkPasswordMatch()"
+              >
+              <button 
+                type="button" 
+                class="btn-toggle-pass" 
+                onclick="togglePasswordVisibility('regConfirmPassword', this)" 
+                title="Show or hide password"
+              >
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="btnRegister" class="btn-submit">
+            <span id="btnRegText">Create Account</span>
+            <span id="btnRegArrow">→</span>
+          </button>
+        </form>
+
+        <div class="auth-footer">
+          Already have an institutional account?
+          <a href="login.html">Sign In</a>
+        </div>
+      </div>
+
+      <!-- SUCCESS CONFIRMATION VIEW -->
+      <div id="successView" class="success-card">
+        <div class="success-icon">🎉</div>
+        <h2 class="success-title">Account Created Successfully!</h2>
+        <p class="success-desc">
+          Your institutional account has been created for:<br>
+          <span id="successEmailText" class="email-highlight">user@cmrcet.ac.in</span>
+        </p>
+
+        <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 14px; margin-bottom: 22px; font-size: 12.5px; color: #a7f3d0; text-align: left; line-height: 1.5;">
+          ✅ <b>Direct Access Enabled:</b> Your account is registered and authenticated. You can now access your RouteIQ campus transit dashboard immediately without email verification.
+        </div>
+
+        <button type="button" class="btn-submit" onclick="window.location.replace('index.html')">
+          <span>Enter RouteIQ Dashboard</span> <span>→</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Firebase Modular SDK Script -->
+  <script type="module">
+    import * as authService from './auth-service.js';
+    import * as fbConfig from './firebase-config.js';
+
+    window.AuthService = authService;
+    window.FbConfig = fbConfig;
+
+    // Verify and log initialization
+    (async () => {
+      try {
+        if (typeof authService.waitForAuthInit === 'function') {
+          await authService.waitForAuthInit(10000);
+        }
+        console.log("🔥 RouteIQ Firebase Auth initialized (Project: routeiq-d2104)");
+        window.dispatchEvent(new CustomEvent('authServiceReady', { detail: { authService, fbConfig } }));
+      } catch (e) {
+        console.error("❌ Firebase Auth initialization failure:", e.message || e);
+        window.dispatchEvent(new CustomEvent('authServiceError', { detail: { error: e } }));
+      }
+    })();
+  </script>
+
+  <script>
+    // PWA Service Worker management: safely handle local development vs production
+    if ('serviceWorker' in navigator) {
+      if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+        // In local development, unregister any stale/corrupted service workers to avoid fetch interception
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          for (const reg of registrations) {
+            reg.unregister().then(unregistered => {
+              if (unregistered) console.log("Cleaned up dev service worker registration:", reg.scope);
+            }).catch(() => {});
+          }
+        }).catch(() => {});
+      } else {
+        // In production, register sw.js
+        navigator.serviceWorker.register('sw.js').catch(err => {
+          console.warn('Service Worker registration note:', err);
+        });
+      }
+    }
+
+    let selectedAccountType = "Student";
+
+    function selectAccountType(type) {
+      selectedAccountType = type;
+      ['Student', 'Staff', 'Driver', 'Administrator'].forEach(t => {
+        const card = document.getElementById(`cardRole${t}`);
+        if (!card) return;
+        const isMatch = (t === type);
+        card.classList.toggle('selected', isMatch);
+        const radio = card.querySelector('input[type="radio"]');
+        if (radio) radio.checked = isMatch;
+      });
+
+      const catBadge = document.getElementById('regRoleCategoryBadge');
+      const policyBox = document.getElementById('accountPolicyNotice');
+      const policyIcon = document.getElementById('policyNoticeIcon');
+      const policyContent = document.getElementById('policyNoticeContent');
+      const submitBtn = document.getElementById('btnRegister');
+      const submitText = document.getElementById('btnRegText');
+
+      if (type === 'Driver') {
+        if (catBadge) { catBadge.textContent = 'Restricted • Official Fleet Provisioning Required'; catBadge.style.color = '#38bdf8'; }
+        if (policyBox) policyBox.className = 'policy-box policy-restricted';
+        if (policyIcon) policyIcon.textContent = '🔒';
+        if (policyContent) {
+          policyContent.innerHTML = `<b>Restricted Role:</b> Bus Driver accounts require official bus allotment, vehicle assignment, and background verification by Central Transport Administration. Self-registration is strictly restricted. To request a driver account, contact the Fleet Coordinator at <b>admin@cmrcet.ac.in</b>.`;
+        }
+        if (submitBtn) submitBtn.classList.add('btn-restricted');
+        if (submitText) submitText.textContent = 'Driver Access Restricted — Contact Admin';
+      } else if (type === 'Administrator') {
+        if (catBadge) { catBadge.textContent = 'Restricted • Transport Superadmin Only'; catBadge.style.color = '#f59e0b'; }
+        if (policyBox) policyBox.className = 'policy-box policy-restricted';
+        if (policyIcon) policyIcon.textContent = '🛡️';
+        if (policyContent) {
+          policyContent.innerHTML = `<b>Restricted Role:</b> Master administrative credentials govern the entire CMR fleet and cannot be self-registered publicly. Authorized administrators are provisioned via server-side security workflows. For questions, contact <b>admin@cmrcet.ac.in</b>.`;
+        }
+        if (submitBtn) submitBtn.classList.add('btn-restricted');
+        if (submitText) submitText.textContent = 'Admin Access Restricted — Contact Admin';
+      } else if (type === 'Staff') {
+        if (catBadge) { catBadge.textContent = 'Open Institutional Registration'; catBadge.style.color = '#10b981'; }
+        if (policyBox) policyBox.className = 'policy-box';
+        if (policyIcon) policyIcon.textContent = '💼';
+        if (policyContent) {
+          policyContent.innerHTML = `<b>Staff Registration Policy:</b> CMRGI faculty and staff accounts register with official institutional email (@cmrcet.ac.in or @cmrgi.ac.in) for priority campus transport tracking.`;
+        }
+        if (submitBtn) submitBtn.classList.remove('btn-restricted');
+        if (submitText) submitText.textContent = 'Create Staff Account';
+      } else {
+        if (catBadge) { catBadge.textContent = 'Open Institutional Registration'; catBadge.style.color = '#a855f7'; }
+        if (policyBox) policyBox.className = 'policy-box';
+        if (policyIcon) policyIcon.textContent = '🎓';
+        if (policyContent) {
+          policyContent.innerHTML = `<b>Student Registration:</b> Open to all enrolled CMRCET, CMREC, and CMRIT students using your official institutional roll number email. Instant access to live routes and stops.`;
+        }
+        if (submitBtn) submitBtn.classList.remove('btn-restricted');
+        if (submitText) submitText.textContent = 'Create Student Account';
+      }
+    }
+
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        btn.textContent = '👁️';
+      }
+    }
+
+    function checkPasswordStrength(pass) {
+      const fill = document.getElementById('passStrengthFill');
+      const label = document.getElementById('passStrengthLabel');
+      if (!pass) {
+        fill.style.width = '0%';
+        label.textContent = 'Min 8 characters';
+        label.style.color = 'var(--text-dim)';
+        return;
+      }
+
+      let score = 0;
+      if (pass.length >= 8) score++;
+      if (pass.length >= 12) score++;
+      if (/[A-Z]/.test(pass) && /[a-z]/.test(pass)) score++;
+      if (/[0-9]/.test(pass)) score++;
+      if (/[^A-Za-z0-9]/.test(pass)) score++;
+
+      if (score <= 1) {
+        fill.style.width = '25%';
+        fill.style.background = '#ef4444';
+        label.textContent = 'Weak';
+        label.style.color = '#ef4444';
+      } else if (score <= 3) {
+        fill.style.width = '65%';
+        fill.style.background = '#f59e0b';
+        label.textContent = 'Moderate';
+        label.style.color = '#f59e0b';
+      } else {
+        fill.style.width = '100%';
+        fill.style.background = '#10b981';
+        label.textContent = 'Strong';
+        label.style.color = '#10b981';
+      }
+    }
+
+    function checkPasswordMatch() {
+      const p1 = document.getElementById('regPassword').value;
+      const p2 = document.getElementById('regConfirmPassword').value;
+      const label = document.getElementById('passMatchLabel');
+
+      if (!p2) {
+        label.textContent = '';
+        return true;
+      }
+
+      if (p1 === p2) {
+        label.textContent = '✓ Passwords match';
+        label.style.color = '#10b981';
+        return true;
+      } else {
+        label.textContent = '✕ Passwords do not match';
+        label.style.color = '#ef4444';
+        return false;
+      }
+    }
+
+    function showAlert(msg, type = 'error') {
+      const banner = document.getElementById('alertBanner');
+      const text = document.getElementById('alertText');
+      const icon = document.getElementById('alertIcon');
+      if (!banner || !text) return;
+
+      banner.className = `alert-banner ${type}`;
+      text.textContent = msg;
+      icon.textContent = (type === 'error') ? '⚠️' : '✅';
+      banner.style.display = 'flex';
+    }
+
+    function hideAlert() {
+      const banner = document.getElementById('alertBanner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    async function handleRegisterSubmit(e) {
+      e.preventDefault();
+      hideAlert();
+
+      const nameInput = document.getElementById('regFullName');
+      const emailInput = document.getElementById('regEmail');
+      const passInput = document.getElementById('regPassword');
+      const confirmInput = document.getElementById('regConfirmPassword');
+      const btn = document.getElementById('btnRegister');
+      const btnText = document.getElementById('btnRegText');
+      const btnArrow = document.getElementById('btnRegArrow');
+
+      const fullName = nameInput ? nameInput.value.trim() : '';
+      const email = emailInput ? emailInput.value.trim() : '';
+      const password = passInput ? passInput.value : '';
+      const confirmPass = confirmInput ? confirmInput.value : '';
+
+      if (!fullName || fullName.length < 2) {
+        showAlert('Please enter your full legal name.', 'error');
+        return;
+      }
+      if (!email || !email.includes('@')) {
+        showAlert('Please enter a valid institutional email address.', 'error');
+        return;
+      }
+      if (!password || password.length < 8) {
+        showAlert('Password must contain at least 8 characters.', 'error');
+        return;
+      }
+      if (password !== confirmPass) {
+        showAlert('Passwords do not match. Please re-enter confirm password.', 'error');
+        return;
+      }
+
+      // Read actual selected account type directly from checked radio button
+      const checkedRadio = document.querySelector('input[name="accountType"]:checked');
+      const activeAccountType = checkedRadio ? checkedRadio.value : selectedAccountType;
+
+      if (activeAccountType === 'Driver' || activeAccountType === 'Administrator') {
+        showAlert(`Public self-registration for '${activeAccountType}' is restricted. To request administrative or driver provisioning, please contact the Central Transport Fleet Coordinator at admin@cmrcet.ac.in.`, 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btnText.textContent = 'Creating account...';
+      btnArrow.innerHTML = '<span class="spinner"></span>';
+
+      try {
+        // Ensure AuthService module has loaded
+        if (!window.AuthService) {
+          const waitStart = Date.now();
+          while (!window.AuthService && (Date.now() - waitStart < 8000)) {
+            await new Promise(r => setTimeout(r, 100));
+          }
+        }
+
+        if (!window.AuthService || typeof window.AuthService.registerWithEmail !== 'function') {
+          throw new Error('Authentication service failed to load. Please check your internet connection and refresh.');
+        }
+
+        // Wait for Firebase Auth instance to finish initializing
+        if (typeof window.AuthService.waitForAuthInit === 'function') {
+          await window.AuthService.waitForAuthInit(8000);
+        }
+
+        const res = await window.AuthService.registerWithEmail(email, password, fullName, activeAccountType);
+
+        if (!res.success) {
+          showAlert(res.error || 'Registration failed.', 'error');
+          return;
+        }
+
+        // Show confirmation view and auto-redirect to app
+        document.getElementById('registerView').style.display = 'none';
+        document.getElementById('successEmailText').textContent = email;
+        document.getElementById('successView').style.display = 'block';
+
+        // Auto-redirect to dashboard after 1.2s for direct seamless entry
+        setTimeout(() => {
+          window.location.replace('index.html');
+        }, 1200);
+
+      } catch (err) {
+        console.error('Registration error:', err);
+        showAlert(err.message || 'Registration failed unexpectedly.', 'error');
+      } finally {
+        btn.disabled = false;
+        btnText.textContent = 'Create Account';
+        btnArrow.textContent = '→';
+      }
+    }
+  </script>
+</body>
+</html>

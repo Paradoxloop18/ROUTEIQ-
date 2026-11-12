@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — CMR RouteIQ Bus Tracker</title>
+  <meta name="description" content="Secure institutional login portal for CMR RouteIQ Smart College Bus Tracking & Fleet Management System.">
+  <link rel="icon" type="image/png" href="cmr_logo.png">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #080c14;
+      --bg-card: rgba(15, 23, 42, 0.75);
+      --bg-card-border: rgba(255, 255, 255, 0.1);
+      --bg-input: rgba(15, 23, 42, 0.85);
+      --border-input: rgba(255, 255, 255, 0.14);
+      --border-focus: #38bdf8;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --accent-amber: #f59e0b;
+      --accent-cyan: #38bdf8;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image:
+        radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.18) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(245, 158, 11, 0.15) 0px, transparent 50%),
+        radial-gradient(at 50% 100%, rgba(6, 182, 212, 0.12) 0px, transparent 50%);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Background animated glowing grid line elements */
+    .bg-grid-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .auth-wrapper {
+      width: 100%;
+      max-width: 460px;
+      position: relative;
+      z-index: 10;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .auth-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--bg-card-border);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.2);
+    }
+
+    .brand-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .logo-container {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 16px;
+    }
+
+    .brand-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--accent-amber);
+      box-shadow: 0 0 24px rgba(245, 158, 11, 0.4);
+    }
+
+    .brand-title {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    .brand-title span.highlight {
+      color: var(--accent-amber);
+    }
+
+    .brand-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    .campus-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      padding: 4px 10px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 20px;
+      font-size: 11px;
+      color: var(--accent-cyan);
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .security-tag {
+      font-size: 11px;
+      color: var(--accent-green);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 6px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      font-size: 15px;
+      color: var(--text-dim);
+      pointer-events: none;
+      transition: color 0.2s;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 44px;
+      padding: 0 44px 0 42px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-input);
+      border-radius: var(--radius-sm);
+      color: #ffffff;
+      font-size: 13.5px;
+      font-family: var(--font-main);
+      transition: all 0.2s ease;
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    .form-input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .btn-toggle-pass {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 16px;
+      padding: 6px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s;
+    }
+
+    .btn-toggle-pass:hover {
+      color: #ffffff;
+    }
+
+    /* Login Role Selector */
+    .login-role-section {
+      margin-bottom: 16px;
+    }
+
+    .login-role-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .login-role-chip {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1.5px solid var(--border-input);
+      border-radius: var(--radius-sm);
+      padding: 9px 4px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+      font-family: var(--font-main);
+      user-select: none;
+      outline: none;
+    }
+
+    .login-role-chip:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+      background: rgba(15, 23, 42, 0.85);
+      color: #ffffff;
+    }
+
+    .login-role-chip.selected {
+      border-color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.14);
+      color: #ffffff;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+    }
+
+    .login-role-chip[data-role="Administrator"].selected {
+      border-color: var(--accent-amber);
+      background: rgba(245, 158, 11, 0.14);
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+    }
+
+    .login-role-chip[data-role="Driver"].selected {
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.14);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+    }
+
+    .login-role-chip[data-role="Staff"].selected {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.14);
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+    }
+
+    .login-role-chip[data-role="Student"].selected {
+      border-color: #a855f7;
+      background: rgba(168, 85, 247, 0.14);
+      box-shadow: 0 0 12px rgba(168, 85, 247, 0.2);
+    }
+
+    .login-role-chip .chip-icon {
+      font-size: 16px;
+    }
+
+    .login-role-chip .chip-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      white-space: nowrap;
+    }
+
+    .link-forgot {
+      font-size: 11.5px;
+      color: var(--accent-amber);
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+
+    .link-forgot:hover {
+      text-decoration: underline;
+      opacity: 0.85;
+    }
+
+    .btn-submit {
+      width: 100%;
+      height: 46px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-sm);
+      color: #ffffff;
+      font-size: 14.5px;
+      font-weight: 700;
+      font-family: var(--font-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+      margin-top: 8px;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background: linear-gradient(135deg, #1d4ed8, #1e40af);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+    }
+
+    .btn-submit:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      filter: grayscale(20%);
+    }
+
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .alert-banner {
+      display: none;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 12.5px;
+      line-height: 1.45;
+      margin-bottom: 18px;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .alert-banner.error {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+
+    .alert-banner.success {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #6ee7b7;
+    }
+
+    .alert-banner.warning {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #fde68a;
+    }
+
+    .alert-banner.info {
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #7dd3fc;
+    }
+
+    .auth-footer {
+      text-align: center;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .auth-footer a {
+      color: var(--accent-cyan);
+      font-weight: 700;
+      text-decoration: none;
+      margin-left: 5px;
+      transition: color 0.15s;
+    }
+
+    .auth-footer a:hover {
+      text-decoration: underline;
+      color: #7dd3fc;
+    }
+
+    /* Modal Styling for Password Reset */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #0f172a;
+      border: 1px solid var(--bg-card-border);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+      animation: fadeIn 0.25s ease;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .modal-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 18px;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #e2e8f0;
+      padding: 9px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Barrier Cards (Email Verification & Pending) */
+    .barrier-view {
+      display: none;
+      text-align: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .barrier-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .barrier-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .barrier-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .barrier-email-pill {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 6px;
+      color: var(--accent-cyan);
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      margin: 4px 0 16px 0;
+    }
+
+    .barrier-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .legal-footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 11.5px;
+      color: var(--text-dim);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-grid-layer"></div>
+
+  <div class="auth-wrapper">
+    <div class="auth-card">
+
+      <!-- Brand Header -->
+      <div class="brand-header">
+        <div class="logo-container">
+          <img src="cmr_logo.png" alt="CMR RouteIQ Official Logo" class="brand-logo" onerror="this.onerror=null; this.src='bus_logo.png';">
+        </div>
+        <h1 class="brand-title">CMR Route<span class="highlight">IQ</span></h1>
+        <p class="brand-subtitle">Smart College Bus Tracking &amp; Fleet System</p>
+        <div class="campus-badge">
+          <span>🏛️</span>
+          <span>CMR Group of Institutions (CMRCET • CMREC • CMRIT)</span>
+        </div>
+      </div>
+
+      <!-- MAIN SIGN IN VIEW -->
+      <div id="loginView">
+        <div class="section-title">
+          <span>Sign In to Institutional Portal</span>
+          <span class="security-tag">🔒 Real Firebase Auth</span>
+        </div>
+
+        <!-- Dynamic Message Banner -->
+        <div id="alertBanner" class="alert-banner" role="alert">
+          <span id="alertIcon">⚠️</span>
+          <span id="alertText"></span>
+        </div>
+
+        <form id="loginForm" onsubmit="handleLoginSubmit(event)" autocomplete="off">
+          <!-- Role Intended Selection (Administrator, Driver, Student, Staff) -->
+          <div class="login-role-section">
+            <div class="form-label">
+              <span>Sign In As (Role Selection)</span>
+              <span id="roleNoticeBadge" style="color: #a855f7; font-size: 11px; font-weight: 700;">Student Transit Portal</span>
+            </div>
+            <div class="login-role-grid" id="loginRoleGrid" role="radiogroup" aria-label="Portal Selection">
+              <button type="button" class="login-role-chip selected" data-role="Student" onclick="selectLoginRole('Student')" title="Student Passenger Portal">
+                <span class="chip-icon">🎓</span>
+                <span class="chip-label">Student</span>
+              </button>
+              <button type="button" class="login-role-chip" data-role="Staff" onclick="selectLoginRole('Staff')" title="CMRGI Faculty & Staff Portal">
+                <span class="chip-icon">💼</span>
+                <span class="chip-label">Staff</span>
+              </button>
+              <button type="button" class="login-role-chip" data-role="Driver" onclick="selectLoginRole('Driver')" title="Bus Pilot Driver Cockpit">
+                <span class="chip-icon">🚌</span>
+                <span class="chip-label">Driver</span>
+              </button>
+              <button type="button" class="login-role-chip" data-role="Administrator" onclick="selectLoginRole('Administrator')" title="Fleet Superadmin Portal">
+                <span class="chip-icon">🛡️</span>
+                <span class="chip-label">Admin</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Email / Institutional ID -->
+          <div class="form-group">
+            <label class="form-label" for="loginEmail">
+              <span>Institutional Email Address</span>
+              <span style="color: var(--text-dim); font-size: 11px;">@cmrcet.ac.in / @cmrgi.ac.in</span>
+            </label>
+            <div class="input-wrapper">
+              <span class="input-icon">📧</span>
+              <input 
+                type="email" 
+                id="loginEmail" 
+                name="email"
+                class="form-input" 
+                placeholder="name@cmrcet.ac.in" 
+                required 
+                autofocus
+                autocomplete="username"
+              >
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group">
+            <div class="form-label">
+              <label for="loginPassword">Password</label>
+              <a href="javascript:void(0)" class="link-forgot" onclick="openForgotModal()">Forgot Password?</a>
+            </div>
+            <div class="input-wrapper">
+              <span class="input-icon">🔒</span>
+              <input 
+                type="password" 
+                id="loginPassword" 
+                name="password"
+                class="form-input" 
+                placeholder="Enter account password" 
+                required
+                autocomplete="current-password"
+              >
+              <button 
+                type="button" 
+                class="btn-toggle-pass" 
+                id="togglePassBtn"
+                onclick="togglePasswordVisibility('loginPassword', this)" 
+                title="Show or hide password"
+                aria-label="Toggle password visibility"
+              >
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="btnSignIn" class="btn-submit">
+            <span id="btnSignInText">Sign In to RouteIQ</span>
+            <span id="btnSignInArrow">→</span>
+          </button>
+        </form>
+
+        <div class="auth-footer">
+          Don't have an institutional account?
+          <a href="signup.html">Create Account</a>
+        </div>
+      </div>
+
+      <!-- VIEW: PENDING ADMINISTRATOR APPROVAL BARRIER -->
+      <div id="barrierPendingView" class="barrier-view">
+        <div class="barrier-icon">⏳</div>
+        <h2 class="barrier-title">Account Awaiting Approval</h2>
+        <p class="barrier-desc">
+          Welcome, <b id="barrierPendingName" style="color:#f59e0b;">Scholar / Staff</b>!<br>
+          Your account is currently waiting for Transport Fleet Administration to confirm your transport allotment.
+        </p>
+        <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 8px; padding: 14px; margin-bottom: 20px; font-size: 12px; color: #fde68a; text-align: left;">
+          🛡️ <b>Transport Fleet Policy:</b> Real-time fleet controls and passenger manifests require verified authorization from the Transport Coordinator. Check back shortly.
+        </div>
+        <div class="barrier-actions">
+          <button type="button" class="btn-submit" onclick="handleRefreshApproval()">
+            <span>🔄 Refresh Approval Status</span>
+          </button>
+          <button type="button" class="btn-secondary" style="border: none; background: transparent; color: var(--text-dim);" onclick="handleReturnToLogin()">
+            <span>← Sign Out</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="legal-footer">
+      CMR RouteIQ • Mobile GNSS Bus Tracking • Hyderabad, India
+    </div>
+  </div>
+
+  <!-- PASSWORD RESET MODAL -->
+  <div id="forgotModal" class="modal-overlay">
+    <div class="modal-card">
+      <h3 class="modal-title">Password Recovery</h3>
+      <p class="modal-desc">
+        Enter your registered institutional email address. Firebase Authentication will transmit a secure password reset link to your official inbox.
+      </p>
+
+      <div id="modalAlertBanner" class="alert-banner">
+        <span id="modalAlertIcon">⚠️</span>
+        <span id="modalAlertText"></span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="forgotEmail">Institutional Email Address</label>
+        <div class="input-wrapper">
+          <span class="input-icon">📧</span>
+          <input 
+            type="email" 
+            id="forgotEmail" 
+            class="form-input" 
+            placeholder="name@cmrcet.ac.in" 
+            required
+          >
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" onclick="closeForgotModal()">Cancel</button>
+        <button type="button" id="btnSendReset" class="btn-submit" style="width: auto; padding: 0 20px;" onclick="handleSendPasswordReset()">
+          <span id="btnSendResetText">Send Reset Link</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Modular SDK Script -->
+  <script type="module">
+    import * as authService from './auth-service.js';
+    import * as fbConfig from './firebase-config.js';
+
+    window.AuthService = authService;
+    window.FbConfig = fbConfig;
+
+    // Ensure single Firebase instance & wait for auth readiness
+    if (typeof authService.waitForAuthInit === 'function') {
+      authService.waitForAuthInit(10000).then(() => {
+        console.log('[RouteIQ Login] Firebase Auth initialized for project:', fbConfig.firebaseConfig ? fbConfig.firebaseConfig.projectId : 'routeiq-d2104');
+      }).catch((err) => {
+        console.warn('[RouteIQ Login] Auth init wait warning:', err);
+      });
+    }
+
+    // Refresh/clear stale service workers on localhost to prevent stale caching during dev
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(regs => {
+          for (const reg of regs) {
+            reg.update();
+          }
+        }).catch(() => {});
+      }
+    }
+
+    // Check if user is already authenticated
+    authService.subscribeToAuthChanges((sessionUser) => {
+      if (!sessionUser) return;
+
+      // Handle pending approval session
+      if (sessionUser.roleLower === 'pending') {
+        const loginView = document.getElementById('loginView');
+        const pendingView = document.getElementById('barrierPendingView');
+        const namePill = document.getElementById('barrierPendingName');
+        if (loginView && pendingView) {
+          loginView.style.display = 'none';
+          if (namePill) namePill.textContent = sessionUser.displayName || sessionUser.email;
+          pendingView.style.display = 'block';
+        }
+        return;
+      }
+
+      // Approved session -> forward to dashboard
+      console.log("[RouteIQ Login] Active session detected. Directing to RouteIQ dashboard...");
+      window.location.replace('index.html');
+    });
+  </script>
+
+  <script>
+    let isSubmittingLogin = false;
+
+    let selectedLoginRole = 'Student';
+
+    function selectLoginRole(role) {
+      selectedLoginRole = role;
+      document.querySelectorAll('#loginRoleGrid .login-role-chip').forEach(chip => {
+        const chipRole = chip.getAttribute('data-role');
+        chip.classList.toggle('selected', chipRole === role);
+      });
+      const badge = document.getElementById('roleNoticeBadge');
+      if (badge) {
+        if (role === 'Administrator') {
+          badge.textContent = 'Fleet Superadmin Access';
+          badge.style.color = '#f59e0b';
+        } else if (role === 'Driver') {
+          badge.textContent = 'Driver Cockpit & GPS Stream';
+          badge.style.color = '#38bdf8';
+        } else if (role === 'Staff') {
+          badge.textContent = 'Faculty & Staff Portal';
+          badge.style.color = '#10b981';
+        } else {
+          badge.textContent = 'Student Transit Portal';
+          badge.style.color = '#a855f7';
+        }
+      }
+    }
+    window.selectLoginRole = selectLoginRole;
+
+    function showAlert(msg, type = 'error') {
+      const banner = document.getElementById('alertBanner');
+      const text = document.getElementById('alertText');
+      const icon = document.getElementById('alertIcon');
+      if (!banner || !text) return;
+
+      banner.className = `alert-banner ${type}`;
+      text.textContent = msg;
+      icon.textContent = (type === 'error') ? '⚠️' : ((type === 'success') ? '✅' : 'ℹ️');
+      banner.style.display = 'flex';
+    }
+
+    function hideAlert() {
+      const banner = document.getElementById('alertBanner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        btn.textContent = '👁️';
+      }
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      hideAlert();
+
+      // Duplicate submission guard
+      if (isSubmittingLogin) return;
+
+      const emailInput = document.getElementById('loginEmail');
+      const passInput = document.getElementById('loginPassword');
+      const btn = document.getElementById('btnSignIn');
+      const btnText = document.getElementById('btnSignInText');
+      const btnArrow = document.getElementById('btnSignInArrow');
+
+      // Trim surrounding whitespace from email ONLY; DO NOT alter password
+      const email = emailInput ? emailInput.value.trim() : '';
+      const password = passInput ? passInput.value : '';
+
+      if (!email || !password) {
+        showAlert('Please enter both your institutional email address and password.', 'error');
+        return;
+      }
+
+      // Prevent duplicate submission and set loading state
+      isSubmittingLogin = true;
+      if (btn) btn.disabled = true;
+      if (btnText) btnText.textContent = 'Verifying credentials...';
+      if (btnArrow) btnArrow.innerHTML = '<span class="spinner"></span>';
+
+      try {
+        if (!window.AuthService) {
+          showAlert('Authentication service is loading. Please wait a moment...', 'warning');
+          return;
+        }
+
+        if (typeof window.AuthService.waitForAuthInit === 'function') {
+          await window.AuthService.waitForAuthInit(8000).catch(() => {});
+        }
+
+        if (typeof window.AuthService.loginWithEmail !== 'function') {
+          throw new Error('Authentication service is initializing. Please retry in a moment.');
+        }
+
+        const res = await window.AuthService.loginWithEmail(email, password, selectedLoginRole);
+
+        if (!res.success) {
+          // Check for Role Authorization Mismatch
+          if (res.roleMismatch) {
+            console.warn('[RouteIQ Auth] Role mismatch for:', email, 'Expected:', res.expectedRole, 'Actual:', res.actualRole);
+            showAlert(`Role Mismatch: This institutional account is registered as "${res.actualRole}", not "${selectedLoginRole}". Please select "${res.actualRole}" above to sign in.`, 'error');
+            return;
+          }
+
+          // Log exact Firebase error code for developer diagnostics without logging password/secrets
+          console.warn('[RouteIQ Auth] Sign-in failed. Error code:', res.code, 'Message:', res.error);
+          showAlert(res.error || 'Authentication failed. Please verify credentials.', 'error');
+          return;
+        }
+
+        const user = res.user;
+
+        // Check Pending Approval Barrier
+        if (user.roleLower === 'pending') {
+          console.info('[RouteIQ Auth] Account awaiting transport fleet allotment approval:', user.email);
+          const loginView = document.getElementById('loginView');
+          const pendingView = document.getElementById('barrierPendingView');
+          const namePill = document.getElementById('barrierPendingName');
+          if (loginView && pendingView) {
+            loginView.style.display = 'none';
+            if (namePill) namePill.textContent = user.displayName || user.email;
+            pendingView.style.display = 'block';
+          }
+          return;
+        }
+
+        // Direct Success: Redirect according to authorized role
+        showAlert(`Signed in as ${user.displayName || user.email} (${user.role}). Redirecting...`, 'success');
+        setTimeout(() => {
+          if (user.roleLower === 'driver') {
+            window.location.replace('index.html#driver-cockpit');
+          } else if (user.roleLower === 'admin' || user.roleLower === 'administrator') {
+            window.location.replace('index.html#overview');
+          } else {
+            window.location.replace('index.html');
+          }
+        }, 400);
+
+      } catch (err) {
+        console.error('[RouteIQ Auth] Unexpected sign-in error:', err);
+        showAlert(err.message || 'An unexpected error occurred during sign-in. Please try again.', 'error');
+      } finally {
+        isSubmittingLogin = false;
+        if (btn) btn.disabled = false;
+        if (btnText) btnText.textContent = 'Sign In to RouteIQ';
+        if (btnArrow) btnArrow.textContent = '→';
+      }
+    }
+
+    async function handleRefreshApproval() {
+      const btn = event?.currentTarget;
+      try {
+        if (!window.AuthService) return;
+        const status = await window.AuthService.checkVerificationAndApproval();
+        if (!status.isAuthenticated) {
+          handleReturnToLogin();
+          return;
+        }
+        if (status.isPending) {
+          alert('Your account is awaiting transport fleet allotment approval from the Transport Coordinator.');
+          return;
+        }
+        window.location.replace('index.html');
+      } catch (err) {
+        alert(err.message || 'Error checking approval status.');
+      }
+    }
+
+    async function handleReturnToLogin() {
+      try {
+        if (window.AuthService && typeof window.AuthService.logoutUser === 'function') {
+          await window.AuthService.logoutUser();
+        }
+      } catch (e) {}
+      document.getElementById('barrierPendingView').style.display = 'none';
+      document.getElementById('loginView').style.display = 'block';
+      hideAlert();
+    }
+
+    function openForgotModal() {
+      const emailVal = document.getElementById('loginEmail') ? document.getElementById('loginEmail').value.trim() : '';
+      if (emailVal) {
+        document.getElementById('forgotEmail').value = emailVal;
+      }
+      document.getElementById('forgotModal').classList.add('active');
+    }
+
+    function closeForgotModal() {
+      document.getElementById('forgotModal').classList.remove('active');
+      const banner = document.getElementById('modalAlertBanner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    async function handleSendPasswordReset() {
+      const emailInput = document.getElementById('forgotEmail');
+      const btn = document.getElementById('btnSendReset');
+      const btnText = document.getElementById('btnSendResetText');
+      const email = emailInput ? emailInput.value.trim() : '';
+
+      if (!email || !email.includes('@')) {
+        alert('Please enter a valid institutional email address.');
+        return;
+      }
+
+      btn.disabled = true;
+      btnText.textContent = 'Transmitting...';
+
+      try {
+        if (!window.AuthService || typeof window.AuthService.resetPassword !== 'function') {
+          throw new Error('Authentication service is initializing.');
+        }
+
+        const res = await window.AuthService.resetPassword(email);
+        alert(res.message || `Password reset link dispatched to ${email}.`);
+        closeForgotModal();
+      } catch (err) {
+        alert(err.message || 'Error requesting password reset.');
+      } finally {
+        btn.disabled = false;
+        btnText.textContent = 'Send Reset Link';
+      }
+    }
+
+    // Check for query parameters (e.g. ?registered=true or ?notice=signed_out)
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('registered') === 'true') {
+        showAlert('Account registered successfully! Welcome to RouteIQ.', 'success');
+      } else if (params.get('notice') === 'signed_out') {
+        showAlert('You have been securely signed out of RouteIQ.', 'success');
+      }
+    });
+  </script>
+</body>
+</html>

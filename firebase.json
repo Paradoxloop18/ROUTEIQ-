@@ -1,0 +1,21 @@
+{
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "routeiq-d2104-*.json",
+      "*.zip",
+      "*.rules"
+    ],
+    "rewrites": [
+      { "source": "/login", "destination": "/login.html" },
+      { "source": "/signup", "destination": "/signup.html" },
+      { "source": "/register", "destination": "/signup.html" }
+    ]
+  }
+}

@@ -1,7 +1,7 @@
 // firebase-config.js
 // Firebase Modular SDK Initialization for RouteIQ (Project: routeiq-d2104)
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -15,11 +15,28 @@ export const firebaseConfig = {
   measurementId: "G-Y6C6L02L71"
 };
 
-// Initialize Firebase App
-export const app = initializeApp(firebaseConfig);
+// Singleton initialization: initialize the existing Firebase app and Auth instance exactly once
+let appInstance = null;
+let authInstance = null;
+let dbInstance = null;
+let firebaseInitError = null;
 
-// Initialize Firebase Authentication
-export const auth = getAuth(app);
+try {
+  const existingApps = getApps();
+  if (existingApps && existingApps.length > 0) {
+    appInstance = getApp();
+  } else {
+    appInstance = initializeApp(firebaseConfig);
+  }
+  authInstance = getAuth(appInstance);
+  dbInstance = getFirestore(appInstance);
+} catch (err) {
+  console.error("Firebase initialization error (Project: routeiq-d2104):", err);
+  firebaseInitError = err;
+}
 
-// Initialize Cloud Firestore Database
-export const db = getFirestore(app);
+export const app = appInstance;
+export const auth = authInstance;
+export const db = dbInstance;
+export { firebaseInitError };
+
